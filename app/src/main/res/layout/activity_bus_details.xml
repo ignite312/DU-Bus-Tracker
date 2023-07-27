@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/activity_bus_details.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- TextView to display the selected bus name -->
+    <TextView
+        android:id="@+id/tvBusName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp" />
+
+    <!-- TableLayout for Up Time -->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:padding="8dp"
+        android:background="@android:color/darker_gray">
+
+        <!-- Table header -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Up Time"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:padding="8dp"
+                android:layout_weight="1" />
+
+            <!-- Add more header columns here if needed -->
+        </TableRow>
+
+        <!-- Table rows for up time data -->
+        <!-- Add TableRow elements with TextViews to display up time data -->
+    </TableLayout>
+
+    <!-- TableLayout for Down Time -->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@android:color/darker_gray">
+
+        <!-- Table header -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Down Time"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:padding="8dp"
+                android:layout_weight="1" />
+
+            <!-- Add more header columns here if needed -->
+        </TableRow>
+
+        <!-- Table rows for down time data -->
+        <!-- Add TableRow elements with TextViews to display down time data -->
+    </TableLayout>
+
+</LinearLayout>

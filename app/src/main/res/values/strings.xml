@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Octagon DU</string>
+    <string name="Welcome">Welcome to Dhaka University Bus Schedule Mobile Application. This App Is Currently Under Construction. Will coming soon</string>
+    <string name="login_rules">Contact The Developer To Get Email And Password</string>
+    <string-array name="bus_name_options">
+        <item>Anando</item>
+        <item>Boishakhi</item>
+        <item>Boshonto</item>
+        <item>Choitaly</item>
+        <item>Falguni</item>
+        <item>Hemonto</item>
+        <item>Isha Kha</item>
+        <item>Khonika</item>
+        <item>Kinchit</item>
+        <item>Moitree</item>
+        <item>Srabon</item>
+        <item>Torongo</item>
+        <item>Ullash</item>
+        <item>Wari</item>
+
+        <!-- Add more bus name options as needed -->
+    </string-array>
+
+    <string-array name="bus_type_options">
+        <item>Up</item>
+        <item>Down</item>
+        <!-- Add more bus type options as needed -->
+    </string-array>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "853998991524",
+    "project_id": "octagon-du",
+    "storage_bucket": "octagon-du.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853998991524:android:b0f28933b58086e58d0e31",
+        "android_client_info": {
+          "package_name": "com.octagon.octagondu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853998991524-qvg6sjsmm8963td0q98t37sudnslspe1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNuwmezyvzjCyEQSBFzOo0mlvlDgMXlCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853998991524-qvg6sjsmm8963td0q98t37sudnslspe1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
