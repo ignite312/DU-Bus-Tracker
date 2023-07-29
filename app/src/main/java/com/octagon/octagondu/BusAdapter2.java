@@ -49,10 +49,10 @@ public class BusAdapter2 extends RecyclerView.Adapter<BusAdapter2.BusViewHolder>
         }
 
         public void bind(BusInformation bus) {
-            busTypeTextView.setText(bus.getBusType());
-            busIdTextView.setText(bus.getBusId());
-            startLocationTextView.setText(bus.getStartLocation());
-            destinationLocationTextView.setText(bus.getDestinationLocation());
+            busTypeTextView.setText("Bus Type: " + bus.getBusType());
+            busIdTextView.setText("Bus Number: " + bus.getBusId());
+            startLocationTextView.setText("Start Location: " + bus.getStartLocation());
+            destinationLocationTextView.setText("Destination Location: " + bus.getDestinationLocation());
         }
     }
 }

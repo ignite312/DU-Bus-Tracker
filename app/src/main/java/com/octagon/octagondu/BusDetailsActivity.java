@@ -20,8 +20,8 @@ import java.util.List;
 
 public class BusDetailsActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    private RecyclerView recyclerView;
-    private BusAdapter2 busAdapter;
+    private RecyclerView recyclerView, recyclerView3;
+    private BusAdapter2 busAdapter, busAdapter3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +30,7 @@ public class BusDetailsActivity extends AppCompatActivity {
         // Retrieve the selected bus name from extras
         String busName = getIntent().getStringExtra("busName");
         busName = busName.substring(3);
-        Toast.makeText(BusDetailsActivity.this, busName, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(BusDetailsActivity.this, busName, Toast.LENGTH_SHORT).show();
         // Initialize Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);
@@ -40,17 +40,28 @@ public class BusDetailsActivity extends AppCompatActivity {
         busAdapter = new BusAdapter2(new ArrayList<>());
         recyclerView.setAdapter(busAdapter);
 
+        recyclerView3 = findViewById(R.id.recycler_view3);
+        recyclerView3.setLayoutManager(new LinearLayoutManager(this));
+        busAdapter3 = new BusAdapter2(new ArrayList<>());
+        recyclerView3.setAdapter(busAdapter3);
+
         // Fetch data from Firebase
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<BusInformation> busList = new ArrayList<>();
+                List<BusInformation> busList1 = new ArrayList<>();
+                List<BusInformation> busList3 = new ArrayList<>();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         BusInformation bus = snapshot.getValue(BusInformation.class);
                         if (bus != null) {
-                            Toast.makeText(BusDetailsActivity.this, "YEEEEh", Toast.LENGTH_SHORT).show();
-                            busList.add(bus);
+                            String temp = String.valueOf(snapshot.child("busType").getValue());
+                            //Toast.makeText(BusDetailsActivity.this, temp, Toast.LENGTH_SHORT).show();
+                            if ("Up".equals(temp)) {
+                                busList1.add(bus);
+                            }else {
+                                busList3.add(bus);
+                            }
                         } else {
                             Toast.makeText(BusDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
@@ -59,7 +70,9 @@ public class BusDetailsActivity extends AppCompatActivity {
                     // No data found for the given bus name
                     Toast.makeText(BusDetailsActivity.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
                 }
-                busAdapter = new BusAdapter2(busList);
+                busAdapter3 = new BusAdapter2(busList3);
+                recyclerView3.setAdapter(busAdapter3);
+                busAdapter = new BusAdapter2(busList1);
                 recyclerView.setAdapter(busAdapter);
             }
 
