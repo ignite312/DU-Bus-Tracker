@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!-- res/layout/activity_bus_details.xml -->
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +20,32 @@
             android:layout_gravity="center"
             android:textColor="@android:color/black"
             android:layout_marginBottom="16dp" />
+        <!-- Notice Section -->
+        <TextView
+            android:text="**Notice Section**"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#3F51B5" />
+        <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/notice_background"
+            android:padding="16dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/noticeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="There is no update currently!"
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
 
+        </LinearLayout>
         <!-- First RecyclerView -->
         <TextView
             android:text="Up Schedule"
@@ -30,7 +54,7 @@
             android:layout_gravity="center"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_green_dark" />
+            android:textColor="#176A53" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -40,7 +64,9 @@
         <!-- Gap between RecyclerViews -->
         <Space
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="20dp" />
+
+        <!-- Second RecyclerView -->
         <TextView
             android:text="Down Schedule"
             android:layout_width="wrap_content"
@@ -48,7 +74,7 @@
             android:layout_gravity="center"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="#872241" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view3"
             android:layout_width="match_parent"

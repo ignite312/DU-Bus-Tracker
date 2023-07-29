@@ -1,0 +1,6 @@
+<!-- res/drawable/notice_background.xml -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#ACAAAA" /> <!-- Replace with your desired background color -->
+    <corners android:radius="8dp" /> <!-- Adjust this value to change the corner radius -->
+</shape>
