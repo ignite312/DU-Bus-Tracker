@@ -15,7 +15,7 @@
         android:textColor="@android:color/black" />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="30dp"
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

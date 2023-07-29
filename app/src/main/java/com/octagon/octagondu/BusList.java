@@ -1,5 +1,6 @@
 package com.octagon.octagondu;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ public class BusList extends AppCompatActivity {
     private BusAdapter busAdapter;
     private List<String> busNames;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public class BusList extends AppCompatActivity {
         busNames.add("Srabon");
         busNames.add("Moitree");
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Sort the list alphabetically by name
