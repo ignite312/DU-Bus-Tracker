@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/bg_home"
     tools:context=".MainActivity">
 
     <TextView
@@ -15,6 +16,8 @@
         android:gravity="center"
         android:textSize="30dp"
         android:text="@string/Welcome"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
