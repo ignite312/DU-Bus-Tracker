@@ -17,13 +17,10 @@
         <item>Torongo</item>
         <item>Ullash</item>
         <item>Wari</item>
-
-        <!-- Add more bus name options as needed -->
     </string-array>
 
     <string-array name="bus_type_options">
         <item>Up</item>
         <item>Down</item>
-        <!-- Add more bus type options as needed -->
     </string-array>
 </resources>
