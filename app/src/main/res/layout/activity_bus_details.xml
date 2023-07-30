@@ -1,6 +1,5 @@
 <!-- res/layout/activity_bus_details.xml -->
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,46 +14,49 @@
             android:id="@+id/tvBusName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="50sp"
-            android:textStyle="bold"
             android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
             android:textColor="@android:color/black"
-            android:layout_marginBottom="16dp" />
+            android:textSize="50sp"
+            android:textStyle="bold" />
         <!-- Notice Section -->
         <TextView
-            android:text="**Notice Section**"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:text="**Notice Section**"
+            android:textColor="#3F51B5"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="#3F51B5" />
+            android:textStyle="bold" />
+
         <LinearLayout
-            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/notice_background"
-            android:padding="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <TextView
                 android:id="@+id/noticeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="There is no update currently!"
-                android:textSize="16sp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
         </LinearLayout>
         <!-- First RecyclerView -->
         <TextView
-            android:text="Up Schedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:text="Up Schedule"
+            android:textColor="#176A53"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="#176A53" />
+            android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -68,13 +70,14 @@
 
         <!-- Second RecyclerView -->
         <TextView
-            android:text="Down Schedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:text="Down Schedule"
+            android:textColor="#872241"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="#872241" />
+            android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view3"
             android:layout_width="match_parent"
