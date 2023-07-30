@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Octagon</string>
     <string name="Welcome">Welcome to Dhaka University Bus Schedule Mobile Application. This App Is Currently Under Construction. Will Coming Soon</string>
-    <string name="login_rules">Contact The Developer To Get Email And password</string>
+    <string name="login_rules">Contact The Developer To Get Email And Password</string>
     <string-array name="bus_name_options">
         <item>Anando</item>
         <item>Boishakhi</item>
