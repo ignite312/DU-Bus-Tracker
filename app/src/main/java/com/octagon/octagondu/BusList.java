@@ -39,6 +39,7 @@ public class BusList extends AppCompatActivity {
         busNames.add("Kinchit");
         busNames.add("Srabon");
         busNames.add("Moitree");
+        busNames.add("Wari");
 
         recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
