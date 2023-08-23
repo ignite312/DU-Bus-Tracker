@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference reference;
     TextView textView;
     Button button;
+    ImageView imageView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,6 +68,39 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), BusList.class);
                 startActivity(intent);
             }
+        });
+        button = findViewById(R.id.developer);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Developers.class);
+                startActivity(intent);
+            }
+        });
+        imageView = findViewById(R.id.sendEmailIcon);
+        imageView.setOnClickListener(view -> {
+            String emailsend = "emon@gmail.com";
+            String emailsubject = "fsff";
+            String emailbody = "fjfsf";
+
+            // define Intent object with action attribute as ACTION_SEND
+            Intent intent = new Intent(Intent.ACTION_SEND);
+
+            // add three fields to intent using putExtra function
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{emailsend});
+            intent.putExtra(Intent.EXTRA_SUBJECT, emailsubject);
+            intent.putExtra(Intent.EXTRA_TEXT, emailbody);
+
+            // set type of intent
+            intent.setType("message/rfc822");
+
+            // startActivity with intent with chooser as Email client using createChooser function
+            startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+        });
+        imageView = findViewById(R.id.callIcon);
+        imageView.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SMS.class);
+            startActivity(intent);
         });
     }
 }
