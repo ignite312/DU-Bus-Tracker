@@ -23,4 +23,9 @@
         <item>Up</item>
         <item>Down</item>
     </string-array>
+    <string-array name="devNumber">
+        <item>Emon Khan</item>
+        <item>Atikur Hridoy</item>
+        <item>Sajid Hasan</item>
+    </string-array>
 </resources>

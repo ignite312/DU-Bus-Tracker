@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference reference;
     TextView textView;
     Button button;
+    ImageView imageView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,6 +68,24 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), BusList.class);
                 startActivity(intent);
             }
+        });
+        button = findViewById(R.id.developer);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Developers.class);
+                startActivity(intent);
+            }
+        });
+        imageView = findViewById(R.id.sendEmailIcon);
+        imageView.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), Email.class);
+            startActivity(intent);
+        });
+        imageView = findViewById(R.id.callIcon);
+        imageView.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SMS.class);
+            startActivity(intent);
         });
     }
 }
