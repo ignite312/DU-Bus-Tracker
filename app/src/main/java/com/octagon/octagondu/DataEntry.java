@@ -40,6 +40,7 @@ public class DataEntry extends AppCompatActivity {
         imageViewTime = findViewById(R.id.setTime);
         textViewRouteSt = findViewById(R.id.textViewRouteSt);
         textViewRoute = findViewById(R.id.textViewRoute);
+        viewtime = findViewById(R.id.viewTime);
         inputTime = "12:00";
 
         // Set click listener for the Submit button
@@ -90,12 +91,12 @@ public class DataEntry extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         // Update the selected time in the TextView
                         DataEntry.this.inputTime = String.format("%02d:%02d", hourOfDay, minute);
-//                        viewtime.setText(inputTime);
+                        viewtime.setText(DataEntry.this.inputTime);
                     }
                 },
                 hour,
                 minute,
-                false // Use true if you want 24-hour format, false for 12-hour format
+                true // Use true if you want 24-hour format, false for 12-hour format
         );
 
         // Show the dialog
