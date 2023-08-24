@@ -99,17 +99,22 @@
             android:text="Departure Time:"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:id="@+id/viewTime"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textViewTime"
-                android:hint="Enter Departure Time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:background="@drawable/border_shape"
+            android:layout_marginLeft="30dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/setTime"
+            android:src="@drawable/clock"
+            android:onClick="showTimePickerDialog"/>
 
         <!-- Start Location -->
         <TextView
