@@ -1,69 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@drawable/bg_home"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="30dp"
-        android:text="@string/Welcome"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <Button
-        android:layout_marginTop="20dp"
-        android:id="@+id/DataEntry"
-        android:text="Data Input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/schedule"
-        android:text="Show Bus Schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/developer"
-        android:text="Developers Details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    android:layout_height="match_parent">
+    <!-- Your main content layout -->
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:gravity="center"
-        android:padding="16dp">
+        android:background="@drawable/bg_home"
+        tools:context=".MainActivity">
 
-        <!-- ImageView for sending an email -->
-        <ImageView
-            android:background="@drawable/border_shape"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/sendEmailIcon"
-            android:src="@drawable/ic_email"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:text="@string/Welcome"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/DataEntry"
+            android:text="Data Input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/schedule"
+            android:text="Show Bus Schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/developer"
+            android:text="Developers Details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:padding="16dp">
 
-        <!-- ImageView for making a phone call -->
-        <ImageView
-            android:background="@drawable/border_shape"
-            android:layout_marginLeft="30dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/callIcon"
-            android:src="@drawable/ic_call"/>
+            <!-- ImageView for sending an email -->
+            <ImageView
+                android:background="@drawable/border_shape"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/sendEmailIcon"
+                android:src="@drawable/ic_email"/>
+
+            <!-- ImageView for making a phone call -->
+            <ImageView
+                android:background="@drawable/border_shape"
+                android:layout_marginLeft="30dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/callIcon"
+                android:src="@drawable/ic_call"/>
+        </LinearLayout>
+
     </LinearLayout>
 
+    <!-- NavigationView -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/main_menu"
+        android:layout_gravity="start">
 
-</LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
