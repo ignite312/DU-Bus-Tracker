@@ -19,7 +19,45 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static android.app.ProgressDialog.show;
+import static android.widget.Toast.makeText;
+import static com.octagon.octagondu.R.id.home;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.material.navigation.NavigationView;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 public class MainActivity extends AppCompatActivity {
+    private DrawerLayout drawerLayout;
     DatabaseReference reference;
     TextView textView;
     Button button;
@@ -79,13 +117,54 @@ public class MainActivity extends AppCompatActivity {
         });
         imageView = findViewById(R.id.sendEmailIcon);
         imageView.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), Email.class);
-            startActivity(intent);
+            String emailsend = "emon@gmail.com";
+            String emailsubject = "fsff";
+            String emailbody = "fjfsf";
+
+            // define Intent object with action attribute as ACTION_SEND
+            Intent intent = new Intent(Intent.ACTION_SEND);
+
+            // add three fields to intent using putExtra function
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{emailsend});
+            intent.putExtra(Intent.EXTRA_SUBJECT, emailsubject);
+            intent.putExtra(Intent.EXTRA_TEXT, emailbody);
+
+            // set type of intent
+            intent.setType("message/rfc822");
+
+            // startActivity with intent with chooser as Email client using createChooser function
+            startActivity(Intent.createChooser(intent, "Choose an Email client :"));
         });
         imageView = findViewById(R.id.callIcon);
         imageView.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), SMS.class);
             startActivity(intent);
+        });
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        // Set up the toggle for the navigation drawer
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+        // Set up the navigation item click listener
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.home) {
+                    Toast.makeText(MainActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
+                } else if (itemId == R.id.support) {
+                    Toast.makeText(MainActivity.this, "Support selected", Toast.LENGTH_SHORT).show();
+                } else if (itemId == R.id.share) {
+                    Toast.makeText(MainActivity.this, "Share selected", Toast.LENGTH_SHORT).show();
+                }
+                drawerLayout.closeDrawers();
+                return true;
+            }
         });
     }
 }
