@@ -38,29 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        textView = findViewById(R.id.uni);
-//        reference = FirebaseDatabase.getInstance().getReference("Bus Name");
-//        reference.child("Khonika").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @SuppressLint("SetTextI18n")
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if(task.isSuccessful()) {
-//                    if(task.getResult().exists()) {
-//                        DataSnapshot snapshot = task.getResult();
-//                        String uni = String.valueOf(snapshot.child("type").getValue());
-//                        String year = String.valueOf(snapshot.child("number").getValue());
-//                        textView.setText("University " + uni);
-//                        textView = findViewById(R.id.year);
-//                        textView.setText("Session : " + year);
-//                    }else {
-//                        Toast.makeText(MainActivity.this, "Bus Name not found", Toast.LENGTH_SHORT).show();
-//                    }
-//                    Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    Toast.makeText(MainActivity.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
         button = findViewById(R.id.DataEntry);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,16 +91,18 @@ public class MainActivity extends AppCompatActivity {
                         int itemId = menuItem.getItemId();
 
                         if (itemId == R.id.nav_item1) {
-                            // Handle Item 1 click
-                            showToast("Item 1 clicked");
+                            Intent intent = new Intent(getApplicationContext(), DataEntry.class);
+                            startActivity(intent);
                         } else if (itemId == R.id.nav_item2) {
-                            // Handle Item 2 click
-                            showToast("Item 2 clicked");
+                            Intent intent = new Intent(getApplicationContext(), Developers.class);
+                            startActivity(intent);
                         } else if (itemId == R.id.nav_item3) {
-                            // Handle Item 3 click
-                            showToast("Item 3 clicked");
+                            Intent intent = new Intent(getApplicationContext(), Email.class);
+                            startActivity(intent);
+                        }else if (itemId == R.id.nav_item4) {
+                            Intent intent = new Intent(getApplicationContext(), SMS.class);
+                            startActivity(intent);
                         }
-
                         drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     }
