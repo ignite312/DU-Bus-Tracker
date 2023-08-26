@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +26,13 @@ public class BusDetailsActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView, recyclerView3;
     private BusAdapter2 busAdapter, busAdapter3;
+    private ProgressBar progressBar1, progressBar2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_details);
-
+        progressBar1 = findViewById(R.id.progress_bar1);
+        progressBar2 = findViewById(R.id.progress_bar2);
         // Retrieve the selected bus name from extras
         String busName = getIntent().getStringExtra("busName");
         busName = busName.substring(3);
@@ -70,6 +76,10 @@ public class BusDetailsActivity extends AppCompatActivity {
                             Toast.makeText(BusDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    progressBar1.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                    progressBar1.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                    progressBar1.setVisibility(View.INVISIBLE);
+                    progressBar2.setVisibility(View.INVISIBLE);
                 } else {
                     // No data found for the given bus name
                     Toast.makeText(BusDetailsActivity.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
