@@ -30,7 +30,11 @@ public class BusDetailsActivity extends AppCompatActivity {
         // Retrieve the selected bus name from extras
         String busName = getIntent().getStringExtra("busName");
         busName = busName.substring(3);
-        //Toast.makeText(BusDetailsActivity.this, busName, Toast.LENGTH_SHORT).show();
+        while(!((busName.charAt(0) >= 'a' && busName.charAt(0) <= 'z') ||
+                (busName.charAt(0) >= 'A' && busName.charAt(0) <= 'Z'))) {
+            busName = busName.substring(1);
+        }
+        Toast.makeText(BusDetailsActivity.this, busName, Toast.LENGTH_SHORT).show();
         // Initialize Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);

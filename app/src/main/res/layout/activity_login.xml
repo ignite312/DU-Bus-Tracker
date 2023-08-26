@@ -9,7 +9,10 @@
     android:padding="15dp"
     tools:context=".Login"
     >
-
+    <ImageView
+        android:layout_width="370dp"
+        android:layout_height="225dp"
+        android:src="@drawable/login2"/>
     <TextView
         android:textStyle="bold"
         android:textSize="25sp"
