@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                         int itemId = menuItem.getItemId();
 
                         if (itemId == R.id.nav_item1) {
-                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                            Intent intent = new Intent(getApplicationContext(), Admin.class);
                             startActivity(intent);
                         } else if (itemId == R.id.nav_item2) {
                             Intent intent = new Intent(getApplicationContext(), Developers.class);

@@ -1,8 +1,8 @@
 package com.octagon.octagondu;
 
-// BusDetailsActivity.java
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +28,7 @@ public class BusDetailsActivity extends AppCompatActivity {
     private RecyclerView recyclerView, recyclerView3;
     private BusAdapter2 busAdapter, busAdapter3;
     private ProgressBar progressBar1, progressBar2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +38,11 @@ public class BusDetailsActivity extends AppCompatActivity {
         // Retrieve the selected bus name from extras
         String busName = getIntent().getStringExtra("busName");
         busName = busName.substring(3);
-        while(!((busName.charAt(0) >= 'a' && busName.charAt(0) <= 'z') ||
+        while (!((busName.charAt(0) >= 'a' && busName.charAt(0) <= 'z') ||
                 (busName.charAt(0) >= 'A' && busName.charAt(0) <= 'Z'))) {
             busName = busName.substring(1);
         }
-        Toast.makeText(BusDetailsActivity.this, busName, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(BusDetailsActivity.this, busName, Toast.LENGTH_SHORT).show();
         // Initialize Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);
@@ -69,7 +71,7 @@ public class BusDetailsActivity extends AppCompatActivity {
                             //Toast.makeText(BusDetailsActivity.this, temp, Toast.LENGTH_SHORT).show();
                             if ("Up".equals(temp)) {
                                 busList1.add(bus);
-                            }else {
+                            } else {
                                 busList3.add(bus);
                             }
                         } else {
