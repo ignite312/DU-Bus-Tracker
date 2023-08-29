@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">DU Bus Tracker</string>
+    <string name="app_name">Octagon</string>
+    <string name="open">Open navigation drawer</string>
+    <string name="close">Close navigation drawer</string>
     <string name="Welcome">Welcome to Dhaka University Bus Schedule Mobile Application. This App Is Currently Under Construction. Will Coming Soon</string>
     <string name="login_rules">Contact The Developer To Get Email And Password</string>
-    <string name="navigation_drawer_open">Open</string>
-    <string name="navigation_drawer_close">Close</string>
     <string-array name="bus_name_options">
         <item>Anando</item>
         <item>Boishakhi</item>
