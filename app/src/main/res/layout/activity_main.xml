@@ -11,39 +11,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:background="@drawable/curzon"
         android:gravity="start"
-        android:background="@drawable/bg_home"
+        android:orientation="vertical"
         tools:context=".MainActivity">
+
+<!--        <ImageView-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@drawable/curzon"-->
+<!--            android:foregroundGravity="center" />-->
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@color/white"
+            android:background="@color/material_dynamic_neutral80"
             android:elevation="4dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:text="@string/Welcome"
-            android:textColor="@color/white"
-            android:textStyle="bold"
             android:layout_marginTop="200dp"
+            android:gravity="center"
+            android:text="@string/Welcome"
+            android:textColor="#CAE3E3"
+            android:textSize="30dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/schedule"
-            android:text="Show Bus Schedule"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/circle_border"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:text="Show Bus Schedule"
+            android:background="@drawable/button_selector" />
 
     </LinearLayout>
 

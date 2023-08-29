@@ -108,7 +108,6 @@
             android:layout_height="wrap_content"/>
 
         <ImageView
-            android:background="@drawable/border_shape"
             android:layout_marginLeft="30dp"
             android:layout_width="80dp"
             android:layout_height="80dp"

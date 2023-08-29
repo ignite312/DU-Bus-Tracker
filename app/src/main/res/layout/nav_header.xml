@@ -7,6 +7,6 @@
     <ImageView
         android:layout_marginTop="1dp"
         android:layout_width="360dp"
-        android:layout_height="225dp"
-        android:background="@drawable/f"/>
+        android:layout_height="270dp"
+        android:background="@drawable/bg_drawer"/>
 </LinearLayout>
