@@ -2,9 +2,13 @@ package com.octagon.octagondu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.Intent;
@@ -15,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.SmsManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,10 +28,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.Objects;
 
 public class SMS extends AppCompatActivity {
-
+    private DrawerLayout drawerLayout;
     private Button send;
     private EditText sms;
     private EditText mail;
@@ -39,7 +46,6 @@ public class SMS extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms);
-
         send = findViewById(R.id.send);
         sms = findViewById(R.id.sms);
         Spinner spinnerNumber = findViewById(R.id.spinnerNumber);
@@ -68,6 +74,47 @@ public class SMS extends AppCompatActivity {
                 } else {
                     ActivityCompat.requestPermissions(SMS.this, new String[]{Manifest.permission.SEND_SMS}, 100);
                 }
+            }
+        });
+
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        // Set up the toggle for the navigation drawer
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.home) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.admin) {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.entry) {
+                    Intent intent = new Intent(getApplicationContext(), Admin.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.bug) {
+//                    Intent intent = new Intent(getApplicationContext(), Bug.class);
+//                    startActivity(intent);
+                    showToast("Will added later");
+                }else if (itemId == R.id.details) {
+                    Intent intent = new Intent(getApplicationContext(), Developers.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.sms) {
+                    Intent intent = new Intent(getApplicationContext(), SMS.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.email) {
+                    Intent intent = new Intent(getApplicationContext(), Email.class);
+                    startActivity(intent);
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
             }
         });
     }
@@ -132,5 +179,8 @@ public class SMS extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
         }
+    }
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
