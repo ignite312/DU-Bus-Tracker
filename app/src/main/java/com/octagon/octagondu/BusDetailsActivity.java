@@ -88,14 +88,14 @@ public class BusDetailsActivity extends AppCompatActivity {
                     progressBar2.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
                     progressBar1.setVisibility(View.INVISIBLE);
                     progressBar2.setVisibility(View.INVISIBLE);
+                    busAdapter3 = new BusAdapter2(busList3);
+                    recyclerView3.setAdapter(busAdapter3);
+                    busAdapter = new BusAdapter2(busList1);
+                    recyclerView.setAdapter(busAdapter);
                 } else {
                     // No data found for the given bus name
                     Toast.makeText(BusDetailsActivity.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
                 }
-                busAdapter3 = new BusAdapter2(busList3);
-                recyclerView3.setAdapter(busAdapter3);
-                busAdapter = new BusAdapter2(busList1);
-                recyclerView.setAdapter(busAdapter);
             }
 
             @Override

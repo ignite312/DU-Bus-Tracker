@@ -23,7 +23,6 @@ public class BusAdapter extends RecyclerView.Adapter<BusAdapter.BusViewHolder> {
         this.context = context;
         this.busNames = busNames;
     }
-
     @NonNull
     @Override
     public BusViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

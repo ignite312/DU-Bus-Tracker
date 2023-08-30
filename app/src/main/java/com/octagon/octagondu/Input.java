@@ -73,9 +73,10 @@ public class Input extends AppCompatActivity {
                 String time = inputTime;
                 String startLocation = textViewRouteSt.getText().toString();
                 String destinationLocation = textViewRoute.getText().toString();
+                String status = "1";
                 if (!busId.isEmpty() && !time.isEmpty() && !startLocation.isEmpty() && !destinationLocation.isEmpty()) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    BusInformation busInformation = new BusInformation(busType, busId, startLocation, destinationLocation);
+                    BusInformation busInformation = new BusInformation(busType, busId, startLocation, destinationLocation, time, status);
                     databaseReference.child("Bus Name").child(busName).child(time).setValue(busInformation);
                     Toast.makeText(Input.this, "Successfully Submitted Response", Toast.LENGTH_SHORT).show();
                     clearForm();
