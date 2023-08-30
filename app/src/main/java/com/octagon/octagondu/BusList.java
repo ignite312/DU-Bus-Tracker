@@ -1,11 +1,21 @@
 package com.octagon.octagondu;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +33,6 @@ public class BusList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_list);
-
         busNames = new ArrayList<>();
         busNames.add("Khonika");
         busNames.add("Falguni");
@@ -62,5 +71,8 @@ public class BusList extends AppCompatActivity {
         // Pass the Context and List to the BusAdapter constructor
         busAdapter = new BusAdapter(this, busNamesWithIndex);
         recyclerView.setAdapter(busAdapter);
+    }
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

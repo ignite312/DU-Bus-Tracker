@@ -33,7 +33,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Objects;
 
 public class SMS extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
     private Button send;
     private EditText sms;
     private EditText mail;
@@ -76,47 +75,7 @@ public class SMS extends AppCompatActivity {
                 }
             }
         });
-
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        // Set up the toggle for the navigation drawer
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == R.id.home) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                }else if (itemId == R.id.admin) {
-                    Intent intent = new Intent(getApplicationContext(), Login.class);
-                    startActivity(intent);
-                }else if (itemId == R.id.entry) {
-                    Intent intent = new Intent(getApplicationContext(), Admin.class);
-                    startActivity(intent);
-                }else if (itemId == R.id.bug) {
-//                    Intent intent = new Intent(getApplicationContext(), Bug.class);
-//                    startActivity(intent);
-                    showToast("Will added later");
-                }else if (itemId == R.id.details) {
-                    Intent intent = new Intent(getApplicationContext(), Developers.class);
-                    startActivity(intent);
-                }else if (itemId == R.id.sms) {
-                    Intent intent = new Intent(getApplicationContext(), SMS.class);
-                    startActivity(intent);
-                }else if (itemId == R.id.email) {
-                    Intent intent = new Intent(getApplicationContext(), Email.class);
-                    startActivity(intent);
-                }
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
+        init();
     }
 
     @Override
@@ -182,5 +141,47 @@ public class SMS extends AppCompatActivity {
     }
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+    void init() {
+        DrawerLayout drawerLayout;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        // Set up the toggle for the navigation drawer
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.home) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.admin) {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.entry) {
+                    Intent intent = new Intent(getApplicationContext(), Admin.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.bug) {
+//                    Intent intent = new Intent(getApplicationContext(), Bug.class);
+//                    startActivity(intent);
+                    showToast("Will added later");
+                }else if (itemId == R.id.details) {
+                    Intent intent = new Intent(getApplicationContext(), Developers.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.sms) {
+                    Intent intent = new Intent(getApplicationContext(), SMS.class);
+                    startActivity(intent);
+                }else if (itemId == R.id.email) {
+                    Intent intent = new Intent(getApplicationContext(), Email.class);
+                    startActivity(intent);
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
     }
 }
