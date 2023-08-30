@@ -49,7 +49,6 @@ public class BusDetailsActivity extends AppCompatActivity {
                 (busName.charAt(0) >= 'A' && busName.charAt(0) <= 'Z'))) {
             busName = busName.substring(1);
         }
-//        Toast.makeText(BusDetailsActivity.this, busName, Toast.LENGTH_SHORT).show();
         // Initialize Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);
@@ -86,7 +85,7 @@ public class BusDetailsActivity extends AppCompatActivity {
                         }
                     }
                     progressBar1.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-                    progressBar1.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                    progressBar2.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
                     progressBar1.setVisibility(View.INVISIBLE);
                     progressBar2.setVisibility(View.INVISIBLE);
                 } else {

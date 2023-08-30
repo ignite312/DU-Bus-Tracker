@@ -26,7 +26,9 @@
             android:orientation="vertical"
             android:padding="15dp"
             tools:context=".Login">
-
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <LinearLayout
 
                 android:layout_width="match_parent"
@@ -192,6 +194,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Submit" />
             </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
 
     </LinearLayout>

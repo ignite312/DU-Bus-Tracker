@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:orientation="vertical"
-    android:background="@drawable/border_shape"
+    android:background="@drawable/button_selector"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginBottom="15dp"> <!-- Add bottom margin here -->

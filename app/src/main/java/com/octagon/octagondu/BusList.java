@@ -27,8 +27,6 @@ public class BusList extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BusAdapter busAdapter;
     private List<String> busNames;
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
