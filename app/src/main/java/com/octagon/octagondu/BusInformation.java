@@ -3,33 +3,20 @@ package com.octagon.octagondu;
 public class BusInformation {
     private String busType;
     private String busId;
-    private String busTime;
+    private String time;
     private String startLocation;
     private String destinationLocation;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    private String status;
 
     public BusInformation() {
         // Default constructor required for Firebase Realtime Database
     }
-
-    public BusInformation(String busType, String busId, String startLocation, String destinationLocation, String busTime, String status) {
+    public BusInformation(String busType, String busId, String startLocation, String destinationLocation, String time) {
         this.busType = busType;
         this.busId = busId;
+        this.time = time;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
-        this.busTime = busTime;
-        this.status = status;
     }
-
     public String getBusType() {
         return busType;
     }
@@ -47,13 +34,11 @@ public class BusInformation {
     }
 
     public String getTime() {
-        return busTime;
+        return time;
     }
-
-    public void setTime(String busTime) {
-        this.busTime = busTime;
+    public void setTime(String time) {
+        this.time = time;
     }
-
     public String getStartLocation() {
         return startLocation;
     }
