@@ -1,6 +1,7 @@
 package com.octagon.octagondu;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,14 @@ public class BusAdapter2 extends RecyclerView.Adapter<BusAdapter2.BusViewHolder>
                         .setMessage("Choose an option:")
                         .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Handle the update action here
-                                // You can start an update activity or perform any action you need
+                                Intent intent = new Intent(view.getContext(), Update.class);
+                                intent.putExtra("busId", bus.getBusId());
+                                intent.putExtra("busName", bus.getBusName());
+                                intent.putExtra("busType", bus.getBusType());
+                                intent.putExtra("destinationLocation", bus.getDestinationLocation());
+                                intent.putExtra("startLocation", bus.getStartLocation());
+                                intent.putExtra("time", bus.getTime());
+                                view.getContext().startActivity(intent);
                             }
                         })
                         .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
