@@ -1,8 +1,5 @@
 package com.octagon.octagondu;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -14,13 +11,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -33,20 +31,22 @@ public class Update extends AppCompatActivity {
     private TextView textViewRoute;
     private TextView viewtime;
     private String inputTime;
+    private String pastTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
+
+        // Initialize your form fields with the received data
         String busId = getIntent().getStringExtra("busId");
         String busName = getIntent().getStringExtra("busName");
         String busType = getIntent().getStringExtra("busType");
         String destinationLocation = getIntent().getStringExtra("destinationLocation");
         String startLocation = getIntent().getStringExtra("startLocation");
         String time = getIntent().getStringExtra("time");
-        String pastTime = time;
+        pastTime = time;
 
-        // Initialize your form fields with the received data
         spinnerBusName = findViewById(R.id.spinnerBusName);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -70,7 +70,7 @@ public class Update extends AppCompatActivity {
         textViewRouteSt.setText(startLocation);
         textViewRoute.setText(destinationLocation);
         viewtime.setText(time);
-        if(busType.equals("Up"))spinnerBusType.setSelection(0);
+        if (busType.equals("Up")) spinnerBusType.setSelection(0);
         else spinnerBusType.setSelection(1);
         inputTime = time; // Set the received time as the default value
 
@@ -79,26 +79,24 @@ public class Update extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteBus(busName, pastTime);
-                // Get the selected values from the spinners and the input fields
                 String busName = spinnerBusName.getSelectedItem().toString();
                 String busType = spinnerBusType.getSelectedItem().toString();
                 String busId = textViewBusId.getText().toString();
                 String time = inputTime;
                 String startLocation = textViewRouteSt.getText().toString();
                 String destinationLocation = textViewRoute.getText().toString();
+
                 if (!busId.isEmpty() && !time.isEmpty() && !startLocation.isEmpty() && !destinationLocation.isEmpty()) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                     BusInformation busInformation = new BusInformation(busName, busType, busId, startLocation, destinationLocation, time);
-                    databaseReference.child("Bus Name").child(busName).child(time).setValue(busInformation);
-                    showToast("Successfully Submitted Response");
+
+                    // First, delete the existing data
+                    deleteBus(busName, pastTime, databaseReference);
                 } else {
                     showToast("Please Fill Completely");
                 }
-                finish();
             }
         });
-
     }
 
     public void showTimePickerDialog(View view) {
@@ -126,43 +124,48 @@ public class Update extends AppCompatActivity {
         // Show the dialog
         timePickerDialog.show();
     }
+
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void deleteBus(String busName, String pastTime) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        // Construct the path to the data you want to update
+    private void deleteBus(String busName, String pastTime, DatabaseReference databaseReference) {
         String pathToDelete = "Bus Name/" + busName + "/" + pastTime;
 
-        databaseReference.child(pathToDelete).addListenerForSingleValueEvent(new ValueEventListener() {
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Data exists, proceed with deletion
-                    databaseReference.child(pathToDelete).removeValue()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        // Data deleted successfully
-                                        showToast("Data Deleted Successfully");
-                                    } else {
-                                        // Failed to delete data
-                                        showToast("Failed to Delete Data");
-                                    }
-                                }
-                            });
-                } else {
-                    // Data does not exist for the specified bus name and time
-                    showToast("Data Not Found for Bus Name: " + busName);
-                }
-            }
+        databaseReference.child(pathToDelete).removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Data deleted successfully, now insert the new data
+                            insertBus(busName, inputTime);
+                        } else {
+                            showToast("Failed to Delete Data");
+                        }
+                    }
+                });
+    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here, if needed
-            }
-        });
+    private void insertBus(String busName, String time) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        BusInformation busInformation = new BusInformation(busName, spinnerBusType.getSelectedItem().toString(),
+                textViewBusId.getText().toString(), textViewRouteSt.getText().toString(), textViewRoute.getText().toString(), time);
 
+        String pathToInsert = "Bus Name/" + busName + "/" + time;
+
+        databaseReference.child(pathToInsert).setValue(busInformation)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Data inserted successfully
+                            showToast("Successfully Submitted Response");
+                            finish();
+                        } else {
+                            // Failed to insert data
+                            showToast("Failed to Insert Data");
+                        }
+                    }
+                });
     }
 }
