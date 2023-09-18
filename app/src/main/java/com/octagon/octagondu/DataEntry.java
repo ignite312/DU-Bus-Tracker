@@ -65,7 +65,7 @@ public class DataEntry extends AppCompatActivity {
                 String destinationLocation = textViewRoute.getText().toString();
                 if (!busId.isEmpty() && !time.isEmpty() && !startLocation.isEmpty() && !destinationLocation.isEmpty()) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    BusInformation busInformation = new BusInformation(busType, busId, startLocation, destinationLocation, time);
+                    BusInformation busInformation = new BusInformation(busName, busType, busId, startLocation, destinationLocation, time);
                     databaseReference.child("Bus Name").child(busName).child(time).setValue(busInformation);
                     Toast.makeText(DataEntry.this, "Successfully Submitted Response", Toast.LENGTH_SHORT).show();
                     clearForm();
