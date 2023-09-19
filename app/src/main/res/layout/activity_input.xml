@@ -122,23 +122,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Departure Time:"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-
-                <TextView
+                    android:text="Departure Time: 0:00"
                     android:id="@+id/viewTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:textSize="25sp"
                     android:textStyle="bold" />
-
                 <ImageView
                     android:id="@+id/setTime"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="110dp"
                     android:background="@drawable/border_shape"
                     android:onClick="showTimePickerDialog"
                     android:src="@drawable/clock" />

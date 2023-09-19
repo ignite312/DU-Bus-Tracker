@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } else if (itemId == R.id.admin) {
-                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    Intent intent = new Intent(getApplicationContext(), DataEntry.class);
                     startActivity(intent);
                 } else if (itemId == R.id.entry) {
                     Intent intent = new Intent(getApplicationContext(), Admin.class);

@@ -80,7 +80,7 @@ public class DataEntry extends AppCompatActivity {
         textViewBusId.setText("");
         textViewRouteSt.setText("");
         textViewRoute.setText("");
-
+        viewtime.setText("Departure Time : 00:00");
         // Reset Spinners to default selection (usually the first item)
         spinnerBusName.setSelection(0);
         spinnerBusType.setSelection(0);
@@ -99,7 +99,7 @@ public class DataEntry extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         // Update the selected time in the TextView
                         DataEntry.this.inputTime = String.format("%02d:%02d", hourOfDay, minute);
-                        viewtime.setText(DataEntry.this.inputTime);
+                        viewtime.setText("Departure Time "+DataEntry.this.inputTime);
                     }
                 },
                 hour,

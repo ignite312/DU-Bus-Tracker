@@ -1,12 +1,8 @@
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,8 +13,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="15dp"
-            tools:context=".Login">
+            android:padding="15dp">
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -114,23 +109,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="Departure Time:"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
-
-                    <TextView
+                        android:text="Departure Time: 0:00"
                         android:id="@+id/viewTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:textSize="25sp"
                         android:textStyle="bold" />
-
                     <ImageView
                         android:id="@+id/setTime"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="110dp"
                         android:background="@drawable/border_shape"
                         android:onClick="showTimePickerDialog"
                         android:src="@drawable/clock" />
@@ -184,22 +172,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="24dp"
-                        android:text="Submit" />
+                        android:text="Update" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
 
     </LinearLayout>
 
-    <!-- NavigationView -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/main_menu">
-
-    </com.google.android.material.navigation.NavigationView>
-</androidx.drawerlayout.widget.DrawerLayout>
-
+</LinearLayout>

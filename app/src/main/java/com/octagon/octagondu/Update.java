@@ -69,7 +69,7 @@ public class Update extends AppCompatActivity {
         textViewBusId.setText(busId);
         textViewRouteSt.setText(startLocation);
         textViewRoute.setText(destinationLocation);
-        viewtime.setText(time);
+        viewtime.setText("Departure Time "+time);
         if (busType.equals("Up")) spinnerBusType.setSelection(0);
         else spinnerBusType.setSelection(1);
         inputTime = time; // Set the received time as the default value
@@ -113,7 +113,7 @@ public class Update extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         // Update the selected time in the TextView
                         Update.this.inputTime = String.format("%02d:%02d", hourOfDay, minute);
-                        viewtime.setText(Update.this.inputTime);
+                        viewtime.setText("Departure Time: " + Update.this.inputTime);
                     }
                 },
                 hour,
