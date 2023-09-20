@@ -18,7 +18,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     Button button;
@@ -71,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (itemId == R.id.email) {
                     Intent intent = new Intent(getApplicationContext(), Email.class);
+                    startActivity(intent);
+                } else if (itemId == R.id.profile) {
+                    Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
                     startActivity(intent);
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);

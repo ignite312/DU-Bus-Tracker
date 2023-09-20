@@ -30,5 +30,9 @@
             android:id="@+id/email"
             android:icon="@drawable/baseline_email_24"
             android:title="Send Email" />
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/baseline_person_24"
+            android:title="User Profile" />
     </group>
 </menu>
