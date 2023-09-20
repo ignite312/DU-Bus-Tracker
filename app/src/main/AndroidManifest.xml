@@ -26,6 +26,9 @@
             android:name=".UserProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".Feeds"
+            android:exported="false" />
+        <activity
             android:name=".Update"
             android:exported="false" />
         <activity
