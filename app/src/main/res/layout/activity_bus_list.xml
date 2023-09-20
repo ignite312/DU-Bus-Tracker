@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".BusList">
+
     <TextView
-        android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Select the Bus you want to view information"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:textColor="@android:color/black" />
-    <androidx.recyclerview.widget.RecyclerView
+        android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:id="@+id/recyclerView2"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Select The Bus Name You Want To View Information"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:scrollbars="vertical" />
 
 </LinearLayout>

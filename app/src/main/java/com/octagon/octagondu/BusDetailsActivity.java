@@ -44,11 +44,6 @@ public class BusDetailsActivity extends AppCompatActivity {
         progressBar2 = findViewById(R.id.progress_bar2);
         // Retrieve the selected bus name from extras
         String busName = getIntent().getStringExtra("busName");
-        busName = busName.substring(3);
-        while (!((busName.charAt(0) >= 'a' && busName.charAt(0) <= 'z') ||
-                (busName.charAt(0) >= 'A' && busName.charAt(0) <= 'Z'))) {
-            busName = busName.substring(1);
-        }
         // Initialize Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);
