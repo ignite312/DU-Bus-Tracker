@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
+            android:name=".Feeds"
+            android:exported="false" />
+        <activity
             android:name=".Update"
             android:exported="false" />
         <activity
