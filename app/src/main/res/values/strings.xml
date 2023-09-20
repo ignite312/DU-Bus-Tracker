@@ -30,6 +30,12 @@
         <item>Atikur Hridoy</item>
         <item>Sajid Hasan</item>
     </string-array>
+    <string-array name="helpType">
+        <item>Blood</item>
+        <item>Tuition</item>
+        <item>Help</item>
+        <item>Others</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -37,7 +37,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <Button
+            android:id="@+id/news"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:text="Community News"
+            android:background="@drawable/button_selector" />
         <Button
             android:id="@+id/schedule"
             android:layout_width="wrap_content"
@@ -47,6 +55,7 @@
             android:textSize="20sp"
             android:text="Show Bus Schedule"
             android:background="@drawable/button_selector" />
+
 
     </LinearLayout>
 
