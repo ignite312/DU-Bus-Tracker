@@ -36,7 +36,7 @@ public class CreatePost extends AppCompatActivity {
 
 
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ref = database.getReference("Feed/cnt");
+                DatabaseReference ref = database.getReference("Feed/Count");
                 final AtomicInteger cnt = new AtomicInteger(0);
 
                 ref.addValueEventListener(new ValueEventListener() {
@@ -71,9 +71,10 @@ public class CreatePost extends AppCompatActivity {
                                 String helptype = spinner.getSelectedItem().toString();
                                 String body = textView.getText().toString();
                                 String id = String.valueOf(cnt.get()+1);
-                                ;                PostInfo post = new PostInfo(R.drawable.bus, "Khonikaa", "Emon", "CSE", "18 Sept.", body, 0, "Admin");
+                                PostInfo post = new PostInfo(R.drawable.bus, "Khonikaa", "Emon", "CSE", "18 Sept.", body, 0, "Admin");
                                 if(!body.isEmpty()) {
-                                        databaseReference.child("Feed").child(id).setValue(post);
+                                        databaseReference.child("Feed").child("Count").setValue(cnt.get()+1);
+                                        databaseReference.child("Feed").child("Posts").child(id).setValue(post);
                                         Intent intent = new Intent(getApplicationContext(), Feeds.class);
                                         startActivity(intent);
                                 }
