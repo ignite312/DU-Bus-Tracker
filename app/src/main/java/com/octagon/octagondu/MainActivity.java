@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), Admin.class);
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
-//                    Intent intent = new Intent(getApplicationContext(), Bug.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), Feeds.class);
+                    startActivity(intent);
                     showToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), Developers.class);
