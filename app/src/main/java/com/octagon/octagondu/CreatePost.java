@@ -71,7 +71,7 @@ public class CreatePost extends AppCompatActivity {
                                 String helptype = spinner.getSelectedItem().toString();
                                 String body = textView.getText().toString();
                                 String id = String.valueOf(cnt.get()+1);
-                                PostInfo post = new PostInfo(R.drawable.bus, "Khonikaa", "Emon", "CSE", "18 Sept.", body, 0, "Admin");
+                                PostInfo post = new PostInfo(R.drawable.bus, "Konika", "Emon", "CSE", "18 Sept.", body, 0, "Admin");
                                 if(!body.isEmpty()) {
                                         databaseReference.child("Feed").child("Count").setValue(cnt.get()+1);
                                         databaseReference.child("Feed").child("Posts").child(id).setValue(post);
