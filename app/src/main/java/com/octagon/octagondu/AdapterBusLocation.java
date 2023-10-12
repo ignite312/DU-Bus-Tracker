@@ -28,7 +28,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
     @NonNull
     @Override
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shared_location, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bus_location, parent, false);
         return new LocationViewHolder(itemView);
     }
     @Override
@@ -44,7 +44,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 double latitude = Double.parseDouble(clickedLocation.getLat());
                 double longitude = Double.parseDouble(clickedLocation.getLon());
 
-                Intent intent = new Intent(view.getContext(), ViewLocation.class); // Use view.getContext() to get the context
+                Intent intent = new Intent(view.getContext(), LocationOthers.class); // Use view.getContext() to get the context
                 intent.putExtra("latitude", latitude);
                 intent.putExtra("longitude", longitude);
                 view.getContext().startActivity(intent);

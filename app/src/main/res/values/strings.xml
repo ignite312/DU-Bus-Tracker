@@ -2,7 +2,6 @@
     <string name="app_name">Octagon</string>
     <string name="open">Open navigation drawer</string>
     <string name="close">Close navigation drawer</string>
-    <string name="Welcome">Welcome to Dhaka University Bus Schedule Mobile Application. This App Is Currently Under Construction. Will Coming Soon</string>
     <string name="login_rules">Contact The Developer To Get Email And Password</string>
     <string-array name="bus_name_options">
         <item>Anando</item>
@@ -36,8 +35,6 @@
         <item>Help</item>
         <item>Others</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="demo_post">I hope you\'re doing well. I\'m currently working on a Java project, and I\'m facing some challenges that I could use some assistance with. The project involves [briefly describe your project\'s purpose or main goals].
 I\'m looking for someone who has experience with Java and is willing to help me with:
 I\'m sorry, but I\'m just a text-based AI model and cannot facilitate blood donation or post requests. If you need blood or want to make a request for a specific blood type, it\'s important to contact a local blood bank, hospital, or a relevant organization that can assist with such requests. They can provide you with the necessary guidance and support for your request. Remember that blood donation is a critical and regulated process to ensure the safety of both donors and recipients.

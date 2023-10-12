@@ -22,18 +22,22 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
-            android:name=".MyLocation"
+            android:name=".FragmentProfile"
+            android:exported="false" />
+        <activity
+            android:name=".FragmentFindBusLocation"
+            android:exported="false" />
+        <activity
+            android:name=".LocationMy"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
-            android:name=".ViewLocation"
+            android:name=".LocationOthers"
             android:exported="false" />
         <activity
             android:name=".MapFragment"
             android:exported="false" />
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCiZDfdN01zCLURmF-APohotLgaH3W-wLA" />
@@ -52,10 +56,10 @@
             android:name=".CreatePost"
             android:exported="false" />
         <activity
-            android:name=".ListNewsFeed"
+            android:name=".FragmentNewsFeed"
             android:exported="false" />
         <activity
-            android:name=".Update"
+            android:name=".BusDetailsUpdate"
             android:exported="false" />
         <activity
             android:name=".LoginAdmin"
@@ -75,7 +79,7 @@
         <activity
             android:name=".LoginDeveloper"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".DataEntry"
             android:exported="false"

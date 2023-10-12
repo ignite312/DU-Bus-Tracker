@@ -26,7 +26,7 @@ public class ListBusLocation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); // Add this line
-        setContentView(R.layout.activity_list_location);
+        setContentView(R.layout.activity_list_bus_location);
 
         String busName = "khonika";
         String busIime = "6:00";

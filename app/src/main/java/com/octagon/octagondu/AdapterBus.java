@@ -29,7 +29,7 @@ public class AdapterBus extends RecyclerView.Adapter<AdapterBus.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule_bus, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bus, parent, false);
         return new ViewHolder(view);
     }
 

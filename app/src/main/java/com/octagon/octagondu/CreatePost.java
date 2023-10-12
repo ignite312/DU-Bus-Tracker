@@ -73,7 +73,7 @@ public class CreatePost extends AppCompatActivity {
                                 if(!body.isEmpty()) {
                                         databaseReference.child("Feed").child("Count").setValue(cnt.get()+1);
                                         databaseReference.child("Feed").child("Posts").child(id).setValue(post);
-                                        Intent intent = new Intent(getApplicationContext(), ListNewsFeed.class);
+                                        Intent intent = new Intent(getApplicationContext(), FragmentNewsFeed.class);
                                         startActivity(intent);
                                 }
                         }

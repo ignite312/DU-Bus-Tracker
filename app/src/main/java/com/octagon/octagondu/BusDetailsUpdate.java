@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
-public class Update extends AppCompatActivity {
+public class BusDetailsUpdate extends AppCompatActivity {
     private Spinner spinnerBusName;
     private Spinner spinnerBusType;
     private TextView textViewBusId;
@@ -35,7 +35,7 @@ public class Update extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update);
+        setContentView(R.layout.activity_bus_details_update);
 
         // Initialize your form fields with the received data
         String busId = getIntent().getStringExtra("busId");
@@ -111,8 +111,8 @@ public class Update extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         // Update the selected time in the TextView
-                        Update.this.inputTime = String.format("%02d:%02d", hourOfDay, minute);
-                        viewtime.setText("Departure Time: " + Update.this.inputTime);
+                        BusDetailsUpdate.this.inputTime = String.format("%02d:%02d", hourOfDay, minute);
+                        viewtime.setText("Departure Time: " + BusDetailsUpdate.this.inputTime);
                     }
                 },
                 hour,

@@ -1,7 +1,5 @@
 package com.octagon.octagondu;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListNewsFeed extends Fragment {
+public class FragmentNewsFeed extends Fragment {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
@@ -32,18 +30,8 @@ public class ListNewsFeed extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_feeds, container, false);
+        View view = inflater.inflate(R.layout.activity_fragment_news_feed, container, false);
 
-        // Initialize the TextView
-//        textView = view.findViewById(R.id.createPost);
-//        textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Use getActivity() to get the activity's context
-//                Intent intent = new Intent(getActivity(), CreatePost.class);
-//                startActivity(intent);
-//            }
-//        });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Feed").child("Posts");
@@ -66,13 +54,11 @@ public class ListNewsFeed extends Fragment {
                     }
                     adapter = new AdapterNewsFeed(getContext(), PostList); // Pass the context here
                     recyclerView.setAdapter(adapter);
-                    // Toast.makeText(getContext(), "data found for this bus name", Toast.LENGTH_SHORT).show();
                 } else {
                     // No data found for the given bus name
                     showToast("No data found for this bus name");
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
@@ -82,7 +68,6 @@ public class ListNewsFeed extends Fragment {
         return view;
     }
 
-    // Create a method to show Toast messages
     private void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }

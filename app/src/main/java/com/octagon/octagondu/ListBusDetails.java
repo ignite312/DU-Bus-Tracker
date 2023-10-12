@@ -32,7 +32,7 @@ public class ListBusDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_details);
+        setContentView(R.layout.activity_list_bus_details);
         progressBar1 = findViewById(R.id.progress_bar1);
         progressBar2 = findViewById(R.id.progress_bar2);
         // Retrieve the selected bus name from extras

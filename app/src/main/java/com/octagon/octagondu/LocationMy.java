@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class MyLocation extends FragmentActivity implements OnMapReadyCallback {
+public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
     private Button updateLocationButton;
@@ -43,7 +43,7 @@ public class MyLocation extends FragmentActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_location);
+        setContentView(R.layout.activity_location_my);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFragment);

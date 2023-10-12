@@ -24,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     FragmentSchedule fragmentSchedule;
     FragmentHome fragmentHome;
-    MapFragment mapFragment;
-    ListNewsFeed listNewsFeed;
+    FragmentNewsFeed fragmentNewsFeed;
+    FragmentFindBusLocation fragmentFindBusLocation;
+    FragmentProfile fragmentProfile;
+
     private  Toolbar toolbar;
 
     @SuppressLint("MissingInflatedId")
@@ -34,10 +36,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        fragmentSchedule = new FragmentSchedule();
+
         fragmentHome = new FragmentHome();
-        mapFragment = new MapFragment();
-        listNewsFeed = new ListNewsFeed();
+        fragmentSchedule = new FragmentSchedule();
+        fragmentNewsFeed = new FragmentNewsFeed();
+        fragmentFindBusLocation = new FragmentFindBusLocation();
+        fragmentProfile = new FragmentProfile();
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -50,18 +55,17 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 if(item.getItemId() == R.id.location_button) {
-//                    Intent intent = new Intent(getApplicationContext(), MyLocation.class);
-//                    startActivity(intent);
-                    openScheduleFragment();
+                    openFindBusLocation();
                     return true;
                 }
                 if(item.getItemId() == R.id.feed_button) {
-//                    Intent intent = new Intent(getApplicationContext(), MyLocation.class);
-//                    startActivity(intent);
                     openFeedFragment();
                     return true;
                 }
-
+                if(item.getItemId() == R.id.profile_button) {
+                    openProfileFragment();
+                    return true;
+                }
                 return false;
             }
         });
@@ -120,20 +124,25 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.main_fragment_container, fragmentSchedule)
                 .commit();
     }
-    private void openMapFragment() {
+    private void openFindBusLocation() {
         toolbar.setVisibility(View.GONE);
-        getSupportActionBar().setTitle("Location");
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_fragment_container, mapFragment)
+                .replace(R.id.main_fragment_container, fragmentFindBusLocation)
                 .commit();
     }
     private void openFeedFragment() {
         toolbar.setVisibility(View.GONE);
-        getSupportActionBar().setTitle("News Feed");
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_fragment_container, listNewsFeed)
+                .replace(R.id.main_fragment_container, fragmentNewsFeed)
+                .commit();
+    }
+    private void openProfileFragment() {
+        toolbar.setVisibility(View.GONE);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, fragmentProfile)
                 .commit();
     }
     private void showToast(String message) {

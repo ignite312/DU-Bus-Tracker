@@ -32,7 +32,7 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
     @NonNull
     @Override
     public BusViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bus, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bus_details, parent, false);
         return new BusViewHolder(itemView);
     }
 
@@ -48,7 +48,7 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
                         .setMessage("Choose an option:")
                         .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(view.getContext(), Update.class);
+                                Intent intent = new Intent(view.getContext(), BusDetailsUpdate.class);
                                 intent.putExtra("busId", bus.getBusId());
                                 intent.putExtra("busName", bus.getBusName());
                                 intent.putExtra("busType", bus.getBusType());
