@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".ScheduleFragment">
+    tools:context=".FragmentSchedule">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/Schedule"
+        android:id="@+id/scheduleAppBar"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"

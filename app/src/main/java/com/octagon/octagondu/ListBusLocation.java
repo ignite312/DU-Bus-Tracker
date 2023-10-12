@@ -3,7 +3,6 @@ package com.octagon.octagondu;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-import android.view.View; // Import the missing View class
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +17,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
-public class LocationList extends AppCompatActivity {
+public class ListBusLocation extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
-    private LocationInfoAdapter locationInfoAdapter;
+    private AdapterBusLocation adapterBusLocation;
     private int delay = 10000; // 5 seconds
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); // Add this line
-        setContentView(R.layout.activity_location_list);
+        setContentView(R.layout.activity_list_location);
 
         String busName = "khonika";
         String busIime = "6:00";
@@ -38,25 +36,25 @@ public class LocationList extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.locationRecycleView); // Use findViewById to find the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Use 'this' since you are inside an Activity
-        locationInfoAdapter = new LocationInfoAdapter(new ArrayList<>());
-        recyclerView.setAdapter(locationInfoAdapter);
+        adapterBusLocation = new AdapterBusLocation(new ArrayList<>());
+        recyclerView.setAdapter(adapterBusLocation);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<LocationInfo> list = new ArrayList<>();
+                List<InfoBusLocation> list = new ArrayList<>();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        LocationInfo location = snapshot.getValue(LocationInfo.class);
+                        InfoBusLocation location = snapshot.getValue(InfoBusLocation.class);
                         if (location != null) {
                             list.add(location);
                         }
                     }
-                    locationInfoAdapter = new LocationInfoAdapter(list);
-                    recyclerView.setAdapter(locationInfoAdapter);
+                    adapterBusLocation = new AdapterBusLocation(list);
+                    recyclerView.setAdapter(adapterBusLocation);
                 } else {
                     // No data found for the given bus name
-                    Toast.makeText(LocationList.this, "No data found for this bus name", Toast.LENGTH_SHORT).show(); // Use 'LocationList.this'
+                    Toast.makeText(ListBusLocation.this, "No data found for this bus name", Toast.LENGTH_SHORT).show(); // Use 'LocationList.this'
                 }
             }
 

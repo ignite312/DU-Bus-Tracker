@@ -1,7 +1,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#C30646" /> <!-- Change this color to the desired pressed color -->
-    <corners android:radius="10dp" />
+    <solid android:color="#00BCD4" /> <!-- Change this color to the desired pressed color -->
+    <corners android:radius="0dp" />
     <stroke
-        android:width="2dp"
-        android:color="#4CAF50" /> <!-- Change this color to the desired border color -->
+        android:width="10dp"
+        android:color="#00BCD4" /> <!-- Change this color to the desired border color -->
 </shape>

@@ -44,7 +44,7 @@
                     android:textStyle="bold"
                     android:gravity="center_vertical" />
 
-                <!-- Add the User/Admin label after the department name -->
+                <!-- Add the User/LoginAdmin label after the department name -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

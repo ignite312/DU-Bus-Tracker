@@ -1,10 +1,10 @@
 package com.octagon.octagondu;
 
-public class ListData {
+public class InfoBus {
     String name;
     int image;
 
-    public ListData(String name, int image) {
+    public InfoBus(String name, int image) {
         this.name = name;
         this.image = image;
     }

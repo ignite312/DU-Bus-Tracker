@@ -1,7 +1,6 @@
 package com.octagon.octagondu;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -58,7 +57,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 String date = "1 April";
                 String lat = "20.5937";
                 String lon = "78.9629";
-                LocationInfo info = new LocationInfo(regNum, name, dept, picture, lastLocation, time, date, lat, lon);
+                InfoBusLocation info = new InfoBusLocation(regNum, name, dept, picture, lastLocation, time, date, lat, lon);
                 if(true) {
                     databaseReference.child("Location").child(busName).child(busTime).child(String.valueOf(regNum)).setValue(info);
                 }

@@ -2,10 +2,9 @@ package com.octagon.octagondu;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -13,14 +12,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -40,7 +33,9 @@ public class DataEntry extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_entry);
-        // Find views
+        String busName = getIntent().getStringExtra("BUS_NAME_EXTRA");
+        String flag = getIntent().getStringExtra("FLAG");
+
         spinnerBusName = findViewById(R.id.spinnerBusName);
         spinnerBusType = findViewById(R.id.spinnerBusType);
         textViewBusId = findViewById(R.id.textViewBusId);
@@ -50,7 +45,16 @@ public class DataEntry extends AppCompatActivity {
         viewtime = findViewById(R.id.viewTime);
         inputTime = "12:00";
 
-        // Set click listener for the Submit button
+        if(flag.equals("1")) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    android.R.id.text1
+            );
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter.add(busName);
+            spinnerBusName.setAdapter(adapter);
+        }
         Button buttonSubmit = findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,8 +68,8 @@ public class DataEntry extends AppCompatActivity {
                 String destinationLocation = textViewRoute.getText().toString();
                 if (!busId.isEmpty() && !time.isEmpty() && !startLocation.isEmpty() && !destinationLocation.isEmpty()) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    BusInformation busInformation = new BusInformation(busName, busType, busId, startLocation, destinationLocation, time);
-                    databaseReference.child("Bus Name").child(busName).child(time).setValue(busInformation);
+                    InfoBusDetails infoBusDetails = new InfoBusDetails(busName, busType, busId, startLocation, destinationLocation, time);
+                    databaseReference.child("Bus Name").child(busName).child(time).setValue(infoBusDetails);
                     Toast.makeText(DataEntry.this, "Successfully Submitted Response", Toast.LENGTH_SHORT).show();
                     clearForm();
                 } else {

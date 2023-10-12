@@ -1,6 +1,5 @@
 package com.octagon.octagondu;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +8,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.octagon.octagondu.R;
-
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
-    private ArrayList<ListData> dataArrayList;
+public class AdapterBus extends RecyclerView.Adapter<AdapterBus.ViewHolder> {
+    private ArrayList<InfoBus> dataArrayList;
     private OnItemClickListener itemClickListener;
 
-    public ListAdapter(ArrayList<ListData> dataArrayList) {
+    public AdapterBus(ArrayList<InfoBus> dataArrayList) {
         this.dataArrayList = dataArrayList;
     }
 
@@ -38,10 +35,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListData listData = dataArrayList.get(position);
+        InfoBus infoBus = dataArrayList.get(position);
 
-        holder.busImage.setImageResource(listData.image);
-        holder.busName.setText(listData.name);
+        holder.busImage.setImageResource(infoBus.image);
+        holder.busName.setText(infoBus.name);
     }
 
     @Override

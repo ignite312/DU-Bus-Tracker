@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ScheduleFragment extends Fragment {
+public class FragmentSchedule extends Fragment {
     RecyclerView recyclerView;
-    ListAdapter listAdapter;
-    ArrayList<ListData> dataArrayList = new ArrayList<>();
-    ListData listData;
+    AdapterBus adapterBus;
+    ArrayList<InfoBus> dataArrayList = new ArrayList<>();
+    InfoBus infoBus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_schedule_fragment, container, false);
+        View view = inflater.inflate(R.layout.activity_fragment_schedule, container, false);
 
         recyclerView = view.findViewById(R.id.scheduleRecycleView);
         dataArrayList.clear();
@@ -56,21 +56,21 @@ public class ScheduleFragment extends Fragment {
             }
         }
         for (int i = 0; i < imageList.length; i++) {
-            listData = new ListData(nameList[i], imageList[i]);
-            dataArrayList.add(listData);
+            infoBus = new InfoBus(nameList[i], imageList[i]);
+            dataArrayList.add(infoBus);
         }
 
         // Initialize and set the adapter for the RecyclerView
-        listAdapter = new ListAdapter(dataArrayList);
+        adapterBus = new AdapterBus(dataArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(listAdapter);
+        recyclerView.setAdapter(adapterBus);
 
         // Set item click listener for RecyclerView items
-        listAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
+        adapterBus.setOnItemClickListener(new AdapterBus.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 // Handle item click here
-                Intent intent = new Intent(getActivity(), BusDetailsActivity.class);
+                Intent intent = new Intent(getActivity(), ListBusDetails.class);
                 intent.putExtra("busName", dataArrayList.get(position).getName());
                 startActivity(intent);
             }

@@ -16,8 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CreatePost extends AppCompatActivity {
@@ -71,11 +69,11 @@ public class CreatePost extends AppCompatActivity {
                                 String helptype = spinner.getSelectedItem().toString();
                                 String body = textView.getText().toString();
                                 String id = String.valueOf(cnt.get()+1);
-                                PostInfo post = new PostInfo(R.drawable.bus, "Konika", "Emon", "CSE", "18 Sept.", body, 0, "Admin");
+                                InfoNewsFeed post = new InfoNewsFeed(R.drawable.bus, "Konika", "Emon", "CSE", "18 Sept.", body, 0, "LoginAdmin");
                                 if(!body.isEmpty()) {
                                         databaseReference.child("Feed").child("Count").setValue(cnt.get()+1);
                                         databaseReference.child("Feed").child("Posts").child(id).setValue(post);
-                                        Intent intent = new Intent(getApplicationContext(), Feeds.class);
+                                        Intent intent = new Intent(getApplicationContext(), ListNewsFeed.class);
                                         startActivity(intent);
                                 }
                         }

@@ -10,29 +10,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.octagon.octagondu.FeedAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Feeds extends AppCompatActivity {
+public class ListNewsFeed extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
-    private FeedAdapter adapter;
+    private AdapterNewsFeed adapter;
     private TextView textView;
 
     @SuppressLint("MissingInflatedId")
@@ -63,22 +59,22 @@ public class Feeds extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<PostInfo> PostList = new ArrayList<>();
+                List<InfoNewsFeed> PostList = new ArrayList<>();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        PostInfo posts = snapshot.getValue(PostInfo.class);
+                        InfoNewsFeed posts = snapshot.getValue(InfoNewsFeed.class);
                         if (posts != null) {
                             PostList.add(posts);
                         } else {
-                            Toast.makeText(Feeds.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ListNewsFeed.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    adapter = new FeedAdapter(context, PostList);  // Pass the context here
+                    adapter = new AdapterNewsFeed(context, PostList);  // Pass the context here
                     recyclerView.setAdapter(adapter);
                     //Toast.makeText(Feeds.this, "data found for this bus name", Toast.LENGTH_SHORT).show();
                 } else {
                     // No data found for the given bus name
-                    Toast.makeText(Feeds.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListNewsFeed.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
                 }
             }
 

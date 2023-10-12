@@ -2,13 +2,9 @@ package com.octagon.octagondu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.Intent;
@@ -19,7 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.SmsManager;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,11 +23,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
-
 import java.util.Objects;
 
-public class SMS extends AppCompatActivity {
+public class SendSMS extends AppCompatActivity {
     private Button send;
     private EditText sms;
     private EditText mail;
@@ -44,7 +37,7 @@ public class SMS extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sms);
+        setContentView(R.layout.activity_send_sms);
         send = findViewById(R.id.send);
         sms = findViewById(R.id.sms);
         Spinner spinnerNumber = findViewById(R.id.spinnerNumber);
@@ -68,10 +61,10 @@ public class SMS extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(SMS.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(SendSMS.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                     sendSms();
                 } else {
-                    ActivityCompat.requestPermissions(SMS.this, new String[]{Manifest.permission.SEND_SMS}, 100);
+                    ActivityCompat.requestPermissions(SendSMS.this, new String[]{Manifest.permission.SEND_SMS}, 100);
                 }
             }
         });

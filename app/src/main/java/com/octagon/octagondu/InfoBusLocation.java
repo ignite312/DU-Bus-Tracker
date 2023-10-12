@@ -1,20 +1,17 @@
 package com.octagon.octagondu;
 
-import java.sql.Time;
-
-public class LocationInfo {
+public class InfoBusLocation {
     private int RegNum;
     private String Name;
     private String Dept;
     private int picture;
-
     private String lastLocation;
     private String time;
     private String date;
     private String lat;
     private String lon;
 
-    public LocationInfo(int regNum, String name, String dept, int picture, String lastLocation, String time, String date, String lat, String lon) {
+    public InfoBusLocation(int regNum, String name, String dept, int picture, String lastLocation, String time, String date, String lat, String lon) {
         RegNum = regNum;
         Name = name;
         Dept = dept;
@@ -26,7 +23,7 @@ public class LocationInfo {
         this.lon = lon;
     }
 
-    public LocationInfo() {
+    public InfoBusLocation() {
 
     }
     public int getRegNum() {

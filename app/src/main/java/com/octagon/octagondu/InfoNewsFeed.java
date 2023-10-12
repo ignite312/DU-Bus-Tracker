@@ -1,6 +1,6 @@
 package com.octagon.octagondu;
 
-public class PostInfo {
+public class InfoNewsFeed {
     private  int image;
     private String busName;
     private String posted_by;
@@ -9,7 +9,7 @@ public class PostInfo {
     private String date;
     private String desc;
     private int cnt;
-    public PostInfo(int image, String busName, String posted_by, String dept, String date, String desc, int cnt, String userType) {
+    public InfoNewsFeed(int image, String busName, String posted_by, String dept, String date, String desc, int cnt, String userType) {
         this.image = image;
         this.busName = busName;
         this.userType = userType;
@@ -19,7 +19,7 @@ public class PostInfo {
         this.desc = desc;
         this.cnt = cnt;
     }
-    public PostInfo() {
+    public InfoNewsFeed() {
 
     }
     public int getImage() {

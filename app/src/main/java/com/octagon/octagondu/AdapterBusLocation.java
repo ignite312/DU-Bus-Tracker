@@ -19,10 +19,10 @@ import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapter.LocationViewHolder> {
-    private List<LocationInfo> locationList;
+public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.LocationViewHolder> {
+    private List<InfoBusLocation> locationList;
 
-    public LocationInfoAdapter(List<LocationInfo> locationList) {
+    public AdapterBusLocation(List<InfoBusLocation> locationList) {
         this.locationList = locationList;
     }
     @NonNull
@@ -33,13 +33,13 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
     }
     @Override
     public void onBindViewHolder(@NonNull LocationViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        LocationInfo location = locationList.get(position);
+        InfoBusLocation location = locationList.get(position);
         holder.bind(location);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Get data for the clicked item
-                LocationInfo clickedLocation = locationList.get(position);
+                InfoBusLocation clickedLocation = locationList.get(position);
 
                 double latitude = Double.parseDouble(clickedLocation.getLat());
                 double longitude = Double.parseDouble(clickedLocation.getLon());
@@ -60,7 +60,7 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
         return locationList.size();
     }
 
-    public void setList(List<LocationInfo> locationList) {
+    public void setList(List<InfoBusLocation> locationList) {
         this.locationList = locationList;
         notifyDataSetChanged();
     }
@@ -84,7 +84,7 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
             lastDate = itemView.findViewById(R.id.lastDate);
             countdown = itemView.findViewById(R.id.countdown);
         }
-        public void bind(LocationInfo location) {
+        public void bind(InfoBusLocation location) {
             circleImageView.setImageResource(location.getPicture());
             name.setText(location.getName());
             dept.setText(location.getDept());

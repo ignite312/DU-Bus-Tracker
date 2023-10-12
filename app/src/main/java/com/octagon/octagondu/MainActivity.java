@@ -4,14 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.MediaRouteButton;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 import android.view.MenuItem;
 
@@ -27,8 +22,8 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     BottomNavigationView bottomNavigationView;
-    ScheduleFragment scheduleFragment;
-    HomeFragment homeFragment;
+    FragmentSchedule fragmentSchedule;
+    FragmentHome fragmentHome;
     MapFragment mapFragment;
     private  Toolbar toolbar;
 
@@ -38,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        scheduleFragment = new ScheduleFragment();
-        homeFragment = new HomeFragment();
+        fragmentSchedule = new FragmentSchedule();
+        fragmentHome = new FragmentHome();
         mapFragment = new MapFragment();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -53,11 +48,12 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 if(item.getItemId() == R.id.location_button) {
-                    Intent intent = new Intent(getApplicationContext(), MyLocation.class);
-                    startActivity(intent);
-//                    openMapFragment();
+//                    Intent intent = new Intent(getApplicationContext(), MyLocation.class);
+//                    startActivity(intent);
+                    openScheduleFragment();
                     return true;
                 }
+
                 return false;
             }
         });
@@ -76,23 +72,23 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.admin) {
-                    Intent intent = new Intent(getApplicationContext(), DataEntry.class);
+                    Intent intent = new Intent(getApplicationContext(), LoginDeveloper.class);
                     startActivity(intent);
                 } else if (itemId == R.id.entry) {
-                    Intent intent = new Intent(getApplicationContext(), Admin.class);
+                    Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
-                    Intent intent = new Intent(getApplicationContext(), LocationList.class);
+                    Intent intent = new Intent(getApplicationContext(), ListBusLocation.class);
                     startActivity(intent);
                     showToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);
                 } else if (itemId == R.id.sms) {
-                    Intent intent = new Intent(getApplicationContext(), SMS.class);
+                    Intent intent = new Intent(getApplicationContext(), SendSMS.class);
                     startActivity(intent);
                 } else if (itemId == R.id.email) {
-                    Intent intent = new Intent(getApplicationContext(), Email.class);
+                    Intent intent = new Intent(getApplicationContext(), SendEmail.class);
                     startActivity(intent);
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -105,16 +101,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Octagon");
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_fragment_container, homeFragment)
+                .replace(R.id.main_fragment_container, fragmentHome)
                 .commit();
 
     }
     private void openScheduleFragment() {
         toolbar.setVisibility(View.GONE);
-        getSupportActionBar().setTitle("Schedule");
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_fragment_container, scheduleFragment)
+                .replace(R.id.main_fragment_container, fragmentSchedule)
                 .commit();
     }
     private void openMapFragment() {

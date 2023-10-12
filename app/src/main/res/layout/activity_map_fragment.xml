@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".ScheduleFragment">
+    tools:context=".FragmentSchedule">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/Schedule"

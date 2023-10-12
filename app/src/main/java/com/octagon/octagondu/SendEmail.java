@@ -1,10 +1,5 @@
 package com.octagon.octagondu;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,11 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
-
 import java.util.Objects;
 
-public class Email extends AppCompatActivity {
+public class SendEmail extends AppCompatActivity {
     private EditText subject;
     private EditText body;
     private Button send;
@@ -34,7 +27,8 @@ public class Email extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_email);
+        setContentView(R.layout.activity_send_email);
+
         subject = findViewById(R.id.subject);
         body = findViewById(R.id.body);
         Spinner spinnerNumber = findViewById(R.id.spinnerNumber);

@@ -22,10 +22,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class BusAdapter2 extends RecyclerView.Adapter<BusAdapter2.BusViewHolder> {
-    private List<BusInformation> busList;
+public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.BusViewHolder> {
+    private List<InfoBusDetails> busList;
 
-    public BusAdapter2(List<BusInformation> busList) {
+    public AdapterBusDetails(List<InfoBusDetails> busList) {
         this.busList = busList;
     }
 
@@ -38,7 +38,7 @@ public class BusAdapter2 extends RecyclerView.Adapter<BusAdapter2.BusViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull BusViewHolder holder, int position) {
-        BusInformation bus = busList.get(position);
+        InfoBusDetails bus = busList.get(position);
         holder.bind(bus);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +140,7 @@ public class BusAdapter2 extends RecyclerView.Adapter<BusAdapter2.BusViewHolder>
             time = itemView.findViewById(R.id.text_view_bus_time);
         }
 
-        public void bind(BusInformation bus) {
+        public void bind(InfoBusDetails bus) {
             busTypeTextView.setText("Bus Type: " + bus.getBusType());
             busIdTextView.setText("Bus Number: " + bus.getBusId());
             startLocationTextView.setText("Start Location: " + bus.getStartLocation());

@@ -9,15 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.octagon.octagondu.PostInfo;
-
 import java.util.List;
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder> {
-    private List<PostInfo> postList;
+public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostViewHolder> {
+    private List<InfoNewsFeed> postList;
     private Context context;
 
-    public FeedAdapter(Context context, List<PostInfo> postList) {
+    public AdapterNewsFeed(Context context, List<InfoNewsFeed> postList) {
         this.context = context;
         this.postList = postList;
     }
@@ -31,8 +29,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        PostInfo postInfo = postList.get(position);
-        holder.bind(postInfo);
+        InfoNewsFeed infoNewsFeed = postList.get(position);
+        holder.bind(infoNewsFeed);
     }
 
     @Override
@@ -64,15 +62,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
             upvoteCountTextView = itemView.findViewById(R.id.upvoteCount);
         }
 
-        public void bind(PostInfo postInfo) {
-            busImage.setImageResource(postInfo.getImage());
-            busNameTextView.setText(postInfo.getBusName());
-            userTypeTextView.setText(postInfo.getUserType());
-            postedByTextView.setText(postInfo.getPosted_by());
-            departmentNameTextView.setText(postInfo.getDept());
-            postDateTextView.setText(postInfo.getDate());
-            postContentTextView.setText(postInfo.getDesc());
-            upvoteCountTextView.setText(String.valueOf(postInfo.getCnt()));
+        public void bind(InfoNewsFeed infoNewsFeed) {
+            busImage.setImageResource(infoNewsFeed.getImage());
+            busNameTextView.setText(infoNewsFeed.getBusName());
+            userTypeTextView.setText(infoNewsFeed.getUserType());
+            postedByTextView.setText(infoNewsFeed.getPosted_by());
+            departmentNameTextView.setText(infoNewsFeed.getDept());
+            postDateTextView.setText(infoNewsFeed.getDate());
+            postContentTextView.setText(infoNewsFeed.getDesc());
+            upvoteCountTextView.setText(String.valueOf(infoNewsFeed.getCnt()));
         }
     }
 }

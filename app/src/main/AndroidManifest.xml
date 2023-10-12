@@ -34,17 +34,6 @@
         <activity
             android:name=".MapsActivity"
             android:exported="false" />
-        <!--
-             TODO: Before you run your application, you need a Google Maps API key.
-
-             To get one, follow the directions here:
-
-                https://developers.google.com/maps/documentation/android-sdk/get-api-key
-
-             Once you have your API key (it starts with "AIza"), define a new property in your
-             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
-             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCiZDfdN01zCLURmF-APohotLgaH3W-wLA" />
@@ -54,54 +43,45 @@
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
-            android:name=".HomeFragment"
+            android:name=".FragmentHome"
             android:exported="false" />
         <activity
-            android:name=".ScheduleFragment"
+            android:name=".FragmentSchedule"
             android:exported="false" />
         <activity
             android:name=".CreatePost"
             android:exported="false" />
         <activity
-            android:name=".UpdateProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UserProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Feeds"
+            android:name=".ListNewsFeed"
             android:exported="false" />
         <activity
             android:name=".Update"
             android:exported="false" />
         <activity
-            android:name=".Input"
+            android:name=".LoginAdmin"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
-            android:name=".Admin"
+            android:name=".SendEmail"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".SendSMS"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".ListBusDetails"
             android:exported="false" />
         <activity
-            android:name=".Email"
+            android:name=".LoginDeveloper"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
-        <activity
-            android:name=".SMS"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
-        <activity
-            android:name=".BusDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
         <activity
             android:name=".DataEntry"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
-            android:name=".LocationList"
+            android:name=".ListBusLocation"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity

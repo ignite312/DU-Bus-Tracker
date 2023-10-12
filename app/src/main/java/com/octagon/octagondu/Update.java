@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -88,7 +87,7 @@ public class Update extends AppCompatActivity {
 
                 if (!busId.isEmpty() && !time.isEmpty() && !startLocation.isEmpty() && !destinationLocation.isEmpty()) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    BusInformation busInformation = new BusInformation(busName, busType, busId, startLocation, destinationLocation, time);
+                    InfoBusDetails infoBusDetails = new InfoBusDetails(busName, busType, busId, startLocation, destinationLocation, time);
 
                     // First, delete the existing data
                     deleteBus(busName, pastTime, databaseReference);
@@ -148,12 +147,12 @@ public class Update extends AppCompatActivity {
 
     private void insertBus(String busName, String time) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        BusInformation busInformation = new BusInformation(busName, spinnerBusType.getSelectedItem().toString(),
+        InfoBusDetails infoBusDetails = new InfoBusDetails(busName, spinnerBusType.getSelectedItem().toString(),
                 textViewBusId.getText().toString(), textViewRouteSt.getText().toString(), textViewRoute.getText().toString(), time);
 
         String pathToInsert = "Bus Name/" + busName + "/" + time;
 
-        databaseReference.child(pathToInsert).setValue(busInformation)
+        databaseReference.child(pathToInsert).setValue(infoBusDetails)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
