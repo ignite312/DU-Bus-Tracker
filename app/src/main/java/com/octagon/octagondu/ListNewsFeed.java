@@ -1,18 +1,17 @@
 package com.octagon.octagondu;
 
-import android.annotation.SuppressLint;
-import android.content.Context;  // Import Context class
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,36 +24,32 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListNewsFeed extends AppCompatActivity {
+public class ListNewsFeed extends Fragment {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
     private TextView textView;
 
-    @SuppressLint("MissingInflatedId")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feeds);
-        textView = findViewById(R.id.createPost);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreatePost.class);
-                startActivity(intent);
-            }
-        });
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_feeds, container, false);
 
-        // Get the context of the activity
-        Context context = this;
+        // Initialize the TextView
+//        textView = view.findViewById(R.id.createPost);
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Use getActivity() to get the activity's context
+//                Intent intent = new Intent(getActivity(), CreatePost.class);
+//                startActivity(intent);
+//            }
+//        });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String id = "1";
         databaseReference = database.getReference("Feed").child("Posts");
 
-        recyclerView = findViewById(R.id.recycler_view_feed);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        recyclerView = view.findViewById(R.id.recycler_view_feed);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  // Use getActivity() to get the activity's context
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,15 +61,15 @@ public class ListNewsFeed extends AppCompatActivity {
                         if (posts != null) {
                             PostList.add(posts);
                         } else {
-                            Toast.makeText(ListNewsFeed.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                            showToast("Something went wrong");
                         }
                     }
-                    adapter = new AdapterNewsFeed(context, PostList);  // Pass the context here
+                    adapter = new AdapterNewsFeed(getContext(), PostList); // Pass the context here
                     recyclerView.setAdapter(adapter);
-                    //Toast.makeText(Feeds.this, "data found for this bus name", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), "data found for this bus name", Toast.LENGTH_SHORT).show();
                 } else {
                     // No data found for the given bus name
-                    Toast.makeText(ListNewsFeed.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
+                    showToast("No data found for this bus name");
                 }
             }
 
@@ -83,9 +78,12 @@ public class ListNewsFeed extends AppCompatActivity {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
             }
         });
+
+        return view;
     }
 
+    // Create a method to show Toast messages
     private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

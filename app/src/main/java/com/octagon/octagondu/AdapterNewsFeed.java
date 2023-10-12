@@ -39,7 +39,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder {
-        private ImageView busImage;
+        private ImageView userImage;
         private TextView busNameTextView;
         private  TextView userTypeTextView;
         private TextView postedByTextView;
@@ -51,26 +51,22 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
 
         public PostViewHolder(View itemView) {
             super(itemView);
-            busImage = itemView.findViewById(R.id.busImage);
-            busNameTextView = itemView.findViewById(R.id.busName);
-            userTypeTextView = itemView.findViewById(R.id.userTypeLabel);
-            postedByTextView = itemView.findViewById(R.id.postedBy);
-            departmentNameTextView = itemView.findViewById(R.id.departmentName);
+            busNameTextView = itemView.findViewById(R.id.username);
+            userTypeTextView = itemView.findViewById(R.id.userType);
+            postedByTextView = itemView.findViewById(R.id.username);
+            departmentNameTextView = itemView.findViewById(R.id.deptName);
             postDateTextView = itemView.findViewById(R.id.postDate);
-            postContentTextView = itemView.findViewById(R.id.postContent);
-            upvoteImageView = itemView.findViewById(R.id.upvoteImageView);
-            upvoteCountTextView = itemView.findViewById(R.id.upvoteCount);
+            postContentTextView = itemView.findViewById(R.id.mainPost);
+            upvoteCountTextView = itemView.findViewById(R.id.voteCount);
         }
 
         public void bind(InfoNewsFeed infoNewsFeed) {
-            busImage.setImageResource(infoNewsFeed.getImage());
-            busNameTextView.setText(infoNewsFeed.getBusName());
-            userTypeTextView.setText(infoNewsFeed.getUserType());
-            postedByTextView.setText(infoNewsFeed.getPosted_by());
-            departmentNameTextView.setText(infoNewsFeed.getDept());
-            postDateTextView.setText(infoNewsFeed.getDate());
-            postContentTextView.setText(infoNewsFeed.getDesc());
-            upvoteCountTextView.setText(String.valueOf(infoNewsFeed.getCnt()));
+//            userTypeTextView.setText("Admin ");
+//            postedByTextView.setText(infoNewsFeed.getPosted_by());
+//            departmentNameTextView.setText(infoNewsFeed.getDept());
+//            postDateTextView.setText(infoNewsFeed.getDate());
+//            postContentTextView.setText(infoNewsFeed.getDesc());
+//            upvoteCountTextView.setText(String.valueOf(infoNewsFeed.getCnt()));
         }
     }
 }

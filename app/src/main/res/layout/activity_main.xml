@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             app:backgroundTint="@color/white"
             app:itemIconTint="@drawable/bottom_nav_icon_selector"
-            app:menu="@menu/bottom_nav_menu"
+            app:menu="@menu/bottom_menu"
             tools:ignore="MissingConstraints,VisualLintBottomNav" />
 
     </LinearLayout>

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentSchedule fragmentSchedule;
     FragmentHome fragmentHome;
     MapFragment mapFragment;
+    ListNewsFeed listNewsFeed;
     private  Toolbar toolbar;
 
     @SuppressLint("MissingInflatedId")
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentSchedule = new FragmentSchedule();
         fragmentHome = new FragmentHome();
         mapFragment = new MapFragment();
+        listNewsFeed = new ListNewsFeed();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -51,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
 //                    Intent intent = new Intent(getApplicationContext(), MyLocation.class);
 //                    startActivity(intent);
                     openScheduleFragment();
+                    return true;
+                }
+                if(item.getItemId() == R.id.feed_button) {
+//                    Intent intent = new Intent(getApplicationContext(), MyLocation.class);
+//                    startActivity(intent);
+                    openFeedFragment();
                     return true;
                 }
 
@@ -118,6 +126,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, mapFragment)
+                .commit();
+    }
+    private void openFeedFragment() {
+        toolbar.setVisibility(View.GONE);
+        getSupportActionBar().setTitle("News Feed");
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, listNewsFeed)
                 .commit();
     }
     private void showToast(String message) {

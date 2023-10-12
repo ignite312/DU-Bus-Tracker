@@ -27,7 +27,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/locationRecycleView"
         android:layout_width="match_parent"
