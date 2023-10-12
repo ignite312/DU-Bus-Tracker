@@ -4,35 +4,71 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.octagon.octagondu.R;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+    private ArrayList<ListData> dataArrayList;
+    private OnItemClickListener itemClickListener;
 
-public class ListAdapter extends ArrayAdapter<ListData> {
-    public ListAdapter(@NonNull Context context, ArrayList<ListData> dataArrayList) {
-        super(context, R.layout.bus_list_item, dataArrayList);
+    public ListAdapter(ArrayList<ListData> dataArrayList) {
+        this.dataArrayList = dataArrayList;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        itemClickListener = listener;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        ListData listData = getItem(position);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule_bus, parent, false);
+        return new ViewHolder(view);
+    }
 
-        if (view == null){
-            view = LayoutInflater.from(getContext()).inflate(R.layout.bus_list_item, parent, false);
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ListData listData = dataArrayList.get(position);
+
+        holder.busImage.setImageResource(listData.image);
+        holder.busName.setText(listData.name);
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataArrayList.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView busImage;
+        TextView busName;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            busImage = itemView.findViewById(R.id.busImage);
+            busName = itemView.findViewById(R.id.busName);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (itemClickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            itemClickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
-
-        ImageView listImage = view.findViewById(R.id.listImage);
-        TextView listName = view.findViewById(R.id.listName);
-
-        listImage.setImageResource(listData.image);
-        listName.setText(listData.name);
-
-        return view;
     }
 }

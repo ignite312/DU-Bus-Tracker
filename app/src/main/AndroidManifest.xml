@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="ExtraText" >
+    tools:ignore="ExtraText">
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -20,7 +20,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".MyLocation"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".ViewLocation"
+            android:exported="false" />
+        <activity
+            android:name=".MapFragment"
+            android:exported="false" />
         <activity
             android:name=".MapsActivity"
             android:exported="false" />
@@ -39,6 +49,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCiZDfdN01zCLURmF-APohotLgaH3W-wLA" />
 
+        <activity
+            android:name=".DeveloperDetails"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".HomeFragment"
+            android:exported="false" />
+        <activity
+            android:name=".ScheduleFragment"
+            android:exported="false" />
         <activity
             android:name=".CreatePost"
             android:exported="false" />
@@ -60,8 +80,7 @@
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".Admin"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".Email"
             android:exported="false"
@@ -71,14 +90,7 @@
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
-            android:name=".Developers"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
-        <activity
             android:name=".BusDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BusList"
             android:exported="false" />
         <activity
             android:name=".Login"
@@ -89,9 +101,13 @@
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
+            android:name=".LocationList"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" >
+            android:theme="@style/Theme.Material3.Light.NoActionBar">
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

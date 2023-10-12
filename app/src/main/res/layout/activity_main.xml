@@ -11,51 +11,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/curzon"
-        android:gravity="start"
         android:orientation="vertical"
+        android:background="@color/white"
         tools:context=".MainActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             android:elevation="4dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="200dp"
-            android:gravity="center"
-            android:text="@string/Welcome"
-            android:textColor="#CAE3E3"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <Button
-            android:id="@+id/news"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            android:text="Location"
-            android:background="@drawable/button_selector" />
-        <Button
-            android:id="@+id/schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            android:text="Show Bus Schedule"
-            android:background="@drawable/button_selector" />
+        <FrameLayout
+            android:id="@+id/main_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/white"
+            app:itemIconTint="@drawable/bottom_nav_icon_selector"
+            app:menu="@menu/bottom_nav_menu"
+            tools:ignore="MissingConstraints,VisualLintBottomNav" />
 
     </LinearLayout>
 

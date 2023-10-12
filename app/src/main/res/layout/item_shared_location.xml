@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    android:id="@+id/locationCardView"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/image"
+            android:background="@color/white">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/photo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/spectre"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emon Khan"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/deptName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CSE 20-21"
+                android:textStyle="bold"
+                android:textSize="8sp"
+                android:textColor="@color/green"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="0dp" />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/lastLocation"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:text="Last Location: Karwan Bazar"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_toEndOf="@id/image"
+            android:layout_marginStart="10dp" />
+        <TextView
+            android:id="@+id/lastTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Last Time: 7:19"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:layout_toEndOf="@id/image"
+            android:layout_below="@id/lastLocation"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/dark_grey_color"
+            tools:ignore="SmallSp" />
+        <TextView
+            android:id="@+id/lastDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: 19 Sept 2023"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:layout_toEndOf="@id/image"
+            android:layout_below="@id/lastTime"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/dark_grey_color"
+            tools:ignore="SmallSp" />
+        <TextView
+            android:id="@+id/countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seen 10 min ago"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:layout_toEndOf="@id/image"
+            android:layout_below="@id/lastDate"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/blue"
+            tools:ignore="SmallSp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
