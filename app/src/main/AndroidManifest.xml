@@ -34,9 +34,6 @@
         <activity
             android:name=".LocationOthers"
             android:exported="false" />
-        <activity
-            android:name=".MapFragment"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -75,7 +72,8 @@
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".ListBusDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".LoginDeveloper"
             android:exported="false"

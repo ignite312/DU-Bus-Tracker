@@ -1,56 +1,60 @@
-<!-- item_bus.xml -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/locationCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:orientation="vertical"
-    android:background="@drawable/border_shape"
-    android:layout_marginRight="2dp"
-    android:layout_marginLeft="2dp"
-    android:layout_marginBottom="5dp">
+    android:background="@color/white"
+    app:cardUseCompatPadding="true">
 
-    <TextView
-        android:layout_marginEnd="20dp"
-        android:id="@+id/text_view_bus_type"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="4dp"/>
-    <TextView
-        android:layout_marginEnd="20dp"
-        android:id="@+id/text_view_bus_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="4dp"/>
-    <TextView
-        android:layout_marginEnd="20dp"
-        android:id="@+id/text_view_bus_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="4dp"/>
+        android:background="@color/white"
+        android:padding="15dp">
 
-    <TextView
-        android:layout_marginEnd="20dp"
-        android:id="@+id/text_view_start_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/text_view_bus_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:text="Departure Time: 6:10"
+            android:textColor="@android:color/black"/>
+        <TextView
+            android:id="@+id/text_view_bus_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:text="Bus ID: 1000"
+            android:layout_below="@id/text_view_bus_time"
+           android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/text_view_start_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_bus_id"
+            android:text="Start Location: Carzon"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:textColor="@color/dark_grey_color"
+            tools:ignore="SmallSp" />
 
-    <TextView
-        android:layout_marginEnd="20dp"
-        android:id="@+id/text_view_destination_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/black"/>
+        <TextView
+            android:id="@+id/text_view_destination_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_start_location"
+            android:text="Destination Location: TSC"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:textColor="@color/dark_grey_color"
+            tools:ignore="SmallSp" />
 
-</LinearLayout>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

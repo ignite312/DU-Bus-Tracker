@@ -130,10 +130,8 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
         private TextView startLocationTextView;
         private TextView destinationLocationTextView;
         private TextView time;
-
         public BusViewHolder(View itemView) {
             super(itemView);
-            busTypeTextView = itemView.findViewById(R.id.text_view_bus_type);
             busIdTextView = itemView.findViewById(R.id.text_view_bus_id);
             startLocationTextView = itemView.findViewById(R.id.text_view_start_location);
             destinationLocationTextView = itemView.findViewById(R.id.text_view_destination_location);
@@ -141,7 +139,6 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
         }
 
         public void bind(InfoBusDetails bus) {
-            busTypeTextView.setText("Bus Type: " + bus.getBusType());
             busIdTextView.setText("Bus Number: " + bus.getBusId());
             startLocationTextView.setText("Start Location: " + bus.getStartLocation());
             destinationLocationTextView.setText("Destination Location: " + bus.getDestinationLocation());

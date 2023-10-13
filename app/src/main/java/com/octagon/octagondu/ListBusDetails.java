@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,16 +29,18 @@ public class ListBusDetails extends AppCompatActivity {
     private RecyclerView recyclerView, recyclerView3;
     private AdapterBusDetails busAdapter, busAdapter3;
     private ProgressBar progressBar1, progressBar2;
+    MaterialToolbar detailsBusToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_bus_details);
+        detailsBusToolbar = findViewById(R.id.DetailsBus);
         progressBar1 = findViewById(R.id.progress_bar1);
         progressBar2 = findViewById(R.id.progress_bar2);
-        // Retrieve the selected bus name from extras
         String busName = getIntent().getStringExtra("busName");
-        // Initialize Firebase
+        detailsBusToolbar.setTitle("Location for " + busName);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);
 
@@ -51,7 +54,6 @@ public class ListBusDetails extends AppCompatActivity {
         busAdapter3 = new AdapterBusDetails(new ArrayList<>());
         recyclerView3.setAdapter(busAdapter3);
 
-        // Fetch data from Firebase
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -81,21 +83,14 @@ public class ListBusDetails extends AppCompatActivity {
                     busAdapter = new AdapterBusDetails(busList1);
                     recyclerView.setAdapter(busAdapter);
                 } else {
-                    // No data found for the given bus name
                     Toast.makeText(ListBusDetails.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
             }
         });
-        // TODO: Use the busName to display the relevant information in the tables (up and down time).
-        // You can use this information to fetch data from a database or any other data source and populate the tables accordingly.
-        // For demonstration purposes, you can display the busName in a TextView or simply log it:
-        TextView tvBusName = findViewById(R.id.tvBusName);
-        tvBusName.setText(busName);
     }
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
