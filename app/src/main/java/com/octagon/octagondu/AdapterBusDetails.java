@@ -24,7 +24,7 @@ import java.util.List;
 
 public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.BusViewHolder> {
     private List<InfoBusDetails> busList;
-
+    private String flag;
     public AdapterBusDetails(List<InfoBusDetails> busList) {
         this.busList = busList;
     }
@@ -35,7 +35,10 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bus_details, parent, false);
         return new BusViewHolder(itemView);
     }
-
+    public void setFlag(String flag) {
+        this.flag = flag;
+        notifyDataSetChanged(); // Notify the adapter that the data has changed
+    }
     @Override
     public void onBindViewHolder(@NonNull BusViewHolder holder, int position) {
         InfoBusDetails bus = busList.get(position);
@@ -43,78 +46,85 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Options")
-                        .setMessage("Choose an option:")
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(view.getContext(), BusDetailsUpdate.class);
-                                intent.putExtra("busId", bus.getBusId());
-                                intent.putExtra("busName", bus.getBusName());
-                                intent.putExtra("busType", bus.getBusType());
-                                intent.putExtra("destinationLocation", bus.getDestinationLocation());
-                                intent.putExtra("startLocation", bus.getStartLocation());
-                                intent.putExtra("time", bus.getTime());
-                                view.getContext().startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                String busNameToDelete = bus.getBusName();
-                                String timeToDelete = bus.getTime(); // You should obtain this value similarly to how you did in the submit button click handler.
-
-                                // Check if the bus name and time are not empty
-                                if (!busNameToDelete.isEmpty() && !timeToDelete.isEmpty()) {
-                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-                                    // Construct the path to the data based on bus name and time
-                                    String pathToDelete = "Bus Name/" + busNameToDelete + "/" + timeToDelete;
-
-                                    // Check if data exists at the specified path
-                                    databaseReference.child(pathToDelete).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.exists()) {
-                                                // Data exists, proceed with deletion
-                                                databaseReference.child(pathToDelete).removeValue()
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    // Data deleted successfully
-                                                                    Toast.makeText(view.getContext(), "Data Deleted Successfully", Toast.LENGTH_SHORT).show();
-                                                                    int position = busList.indexOf(bus);
-                                                                    if (position != -1) {
-                                                                        deleteItem(position);
-                                                                    }
-                                                                } else {
-                                                                    // Failed to delete data
-                                                                    Toast.makeText(view.getContext(), "Failed to Delete Data", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
-                                                        });
-                                            } else {
-                                                // Data does not exist for the specified bus name and time
-                                                Toast.makeText(view.getContext(), "Data Not Found for Bus Name: " + busNameToDelete, Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            // Handle errors here, if needed
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(view.getContext(), "Please select a bus name and provide a time.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), flag, Toast.LENGTH_SHORT).show();
+                if(flag.equals("1")) {
+                    Toast.makeText(view.getContext(), "Mara Kha", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(view.getContext(), ListBusLocation.class);
+                    view.getContext().startActivity(intent);
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("Options")
+                            .setMessage("Choose an option:")
+                            .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(view.getContext(), BusDetailsUpdate.class);
+                                    intent.putExtra("busId", bus.getBusId());
+                                    intent.putExtra("busName", bus.getBusName());
+                                    intent.putExtra("busType", bus.getBusType());
+                                    intent.putExtra("destinationLocation", bus.getDestinationLocation());
+                                    intent.putExtra("startLocation", bus.getStartLocation());
+                                    intent.putExtra("time", bus.getTime());
+                                    view.getContext().startActivity(intent);
                                 }
-                            }
-                        })
-                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // This is the "Cancel" button, which closes the dialog without any action
-                                dialog.dismiss(); // Close the dialog
-                            }
-                        })
-                        .setCancelable(true) // Make the dialog cancelable
-                        .show();
+                            })
+                            .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String busNameToDelete = bus.getBusName();
+                                    String timeToDelete = bus.getTime(); // You should obtain this value similarly to how you did in the submit button click handler.
+
+                                    // Check if the bus name and time are not empty
+                                    if (!busNameToDelete.isEmpty() && !timeToDelete.isEmpty()) {
+                                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+                                        // Construct the path to the data based on bus name and time
+                                        String pathToDelete = "Bus Name/" + busNameToDelete + "/" + timeToDelete;
+
+                                        // Check if data exists at the specified path
+                                        databaseReference.child(pathToDelete).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()) {
+                                                    // Data exists, proceed with deletion
+                                                    databaseReference.child(pathToDelete).removeValue()
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        // Data deleted successfully
+                                                                        Toast.makeText(view.getContext(), "Data Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                                                        int position = busList.indexOf(bus);
+                                                                        if (position != -1) {
+                                                                            deleteItem(position);
+                                                                        }
+                                                                    } else {
+                                                                        // Failed to delete data
+                                                                        Toast.makeText(view.getContext(), "Failed to Delete Data", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            });
+                                                } else {
+                                                    // Data does not exist for the specified bus name and time
+                                                    Toast.makeText(view.getContext(), "Data Not Found for Bus Name: " + busNameToDelete, Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                // Handle errors here, if needed
+                                            }
+                                        });
+                                    } else {
+                                        Toast.makeText(view.getContext(), "Please select a bus name and provide a time.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            })
+                            .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // This is the "Cancel" button, which closes the dialog without any action
+                                    dialog.dismiss(); // Close the dialog
+                                }
+                            })
+                            .setCancelable(true) // Make the dialog cancelable
+                            .show();
+                }
             }
         });
     }

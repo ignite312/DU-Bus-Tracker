@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,11 +26,9 @@ import java.util.List;
 public class ListBusDetails extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView, recyclerView3;
-    private AdapterBusDetails busAdapter, busAdapter3;
+    private AdapterBusDetails busAdapter, busAdapter2;
     private ProgressBar progressBar1, progressBar2;
     MaterialToolbar detailsBusToolbar;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +37,7 @@ public class ListBusDetails extends AppCompatActivity {
         progressBar1 = findViewById(R.id.progress_bar1);
         progressBar2 = findViewById(R.id.progress_bar2);
         String busName = getIntent().getStringExtra("busName");
+        String flag = getIntent().getStringExtra("flag");
         detailsBusToolbar.setTitle("Location for " + busName);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);
@@ -51,8 +49,8 @@ public class ListBusDetails extends AppCompatActivity {
 
         recyclerView3 = findViewById(R.id.recycler_view3);
         recyclerView3.setLayoutManager(new LinearLayoutManager(this));
-        busAdapter3 = new AdapterBusDetails(new ArrayList<>());
-        recyclerView3.setAdapter(busAdapter3);
+        busAdapter2 = new AdapterBusDetails(new ArrayList<>());
+        recyclerView3.setAdapter(busAdapter2);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,10 +76,14 @@ public class ListBusDetails extends AppCompatActivity {
                     progressBar2.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
                     progressBar1.setVisibility(View.INVISIBLE);
                     progressBar2.setVisibility(View.INVISIBLE);
-                    busAdapter3 = new AdapterBusDetails(busList3);
-                    recyclerView3.setAdapter(busAdapter3);
+                    busAdapter2 = new AdapterBusDetails(busList3);
+                    if(flag.equals("1"))busAdapter2.setFlag("1");
+                    else busAdapter2.setFlag("0");
+                    recyclerView3.setAdapter(busAdapter2);
                     busAdapter = new AdapterBusDetails(busList1);
                     recyclerView.setAdapter(busAdapter);
+                    if(flag.equals("1"))busAdapter.setFlag("1");
+                    else busAdapter.setFlag("0");
                 } else {
                     Toast.makeText(ListBusDetails.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
                 }

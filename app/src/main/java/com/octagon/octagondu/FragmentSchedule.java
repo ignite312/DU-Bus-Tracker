@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FragmentSchedule extends Fragment {
     RecyclerView recyclerView;
@@ -41,6 +42,7 @@ public class FragmentSchedule extends Fragment {
                 "Moitree",
                 "Wari"
         };
+        Arrays.sort(nameList);
         int[] imageList = new int[15];
         for (int i = 0; i < 15; i++) {
             if (i % 5 == 0) {
@@ -72,6 +74,7 @@ public class FragmentSchedule extends Fragment {
                 // Handle item click here
                 Intent intent = new Intent(getActivity(), ListBusDetails.class);
                 intent.putExtra("busName", dataArrayList.get(position).getName());
+                intent.putExtra("flag", "0");
                 startActivity(intent);
             }
         });

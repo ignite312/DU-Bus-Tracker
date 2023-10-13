@@ -64,6 +64,7 @@ public class FragmentFindBusLocation extends Fragment {
                 // Handle item click here
                 Intent intent = new Intent(getActivity(), ListBusDetails.class);
                 intent.putExtra("busName", dataArrayList.get(position).getName());
+                intent.putExtra("flag", "1");
                 startActivity(intent);
             }
         });
