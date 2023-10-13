@@ -52,16 +52,13 @@ public class FragmentFindBusLocation extends Fragment {
             dataArrayList.add(infoBus);
         }
 
-        // Initialize and set the adapter for the RecyclerView
         adapterBus = new AdapterBus(dataArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterBus);
 
-        // Set item click listener for RecyclerView items
         adapterBus.setOnItemClickListener(new AdapterBus.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                // Handle item click here
                 Intent intent = new Intent(getActivity(), ListBusDetails.class);
                 intent.putExtra("busName", dataArrayList.get(position).getName());
                 intent.putExtra("flag", "1");

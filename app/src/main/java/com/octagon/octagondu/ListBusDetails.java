@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,32 +26,43 @@ import java.util.List;
 
 public class ListBusDetails extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    private RecyclerView recyclerView, recyclerView3;
-    private AdapterBusDetails busAdapter, busAdapter2;
-    private ProgressBar progressBar1, progressBar2;
+    private RecyclerView recyclerViewUp, recyclerViewDown;
+    private AdapterBusDetails busAdapterUp, busAdapterDown;
+    private ProgressBar progressBarUp, progressBarDown;
     MaterialToolbar detailsBusToolbar;
+    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_bus_details);
-        detailsBusToolbar = findViewById(R.id.DetailsBus);
-        progressBar1 = findViewById(R.id.progress_bar1);
-        progressBar2 = findViewById(R.id.progress_bar2);
         String busName = getIntent().getStringExtra("busName");
         String flag = getIntent().getStringExtra("flag");
+
+        detailsBusToolbar = findViewById(R.id.DetailsBus);
+        progressBarUp = findViewById(R.id.progress_bar1);
+        progressBarDown = findViewById(R.id.progress_bar2);
+        textView = findViewById(R.id.downSc);
+
+        if(flag.equals("1")) {
+            textView.setVisibility(View.GONE);
+            progressBarDown.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+            progressBarDown.setVisibility(View.INVISIBLE);
+        }
         detailsBusToolbar.setTitle("Location for " + busName);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        busAdapter = new AdapterBusDetails(new ArrayList<>());
-        recyclerView.setAdapter(busAdapter);
+        recyclerViewUp = findViewById(R.id.recycler_view);
+        recyclerViewUp.setLayoutManager(new LinearLayoutManager(this));
+        busAdapterUp = new AdapterBusDetails(new ArrayList<>());
+        recyclerViewUp.setAdapter(busAdapterUp);
 
-        recyclerView3 = findViewById(R.id.recycler_view3);
-        recyclerView3.setLayoutManager(new LinearLayoutManager(this));
-        busAdapter2 = new AdapterBusDetails(new ArrayList<>());
-        recyclerView3.setAdapter(busAdapter2);
+        if(flag.equals("0")) {
+            recyclerViewDown = findViewById(R.id.recycler_view3);
+            recyclerViewDown.setLayoutManager(new LinearLayoutManager(this));
+            busAdapterDown = new AdapterBusDetails(new ArrayList<>());
+            recyclerViewDown.setAdapter(busAdapterDown);
+        }
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,18 +84,23 @@ public class ListBusDetails extends AppCompatActivity {
                             Toast.makeText(ListBusDetails.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    progressBar1.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-                    progressBar2.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-                    progressBar1.setVisibility(View.INVISIBLE);
-                    progressBar2.setVisibility(View.INVISIBLE);
-                    busAdapter2 = new AdapterBusDetails(busList3);
-                    if(flag.equals("1"))busAdapter2.setFlag("1");
-                    else busAdapter2.setFlag("0");
-                    recyclerView3.setAdapter(busAdapter2);
-                    busAdapter = new AdapterBusDetails(busList1);
-                    recyclerView.setAdapter(busAdapter);
-                    if(flag.equals("1"))busAdapter.setFlag("1");
-                    else busAdapter.setFlag("0");
+                    progressBarUp.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                    progressBarDown.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                    progressBarUp.setVisibility(View.INVISIBLE);
+                    progressBarDown.setVisibility(View.INVISIBLE);
+                    /*Recycler View Up*/
+                    busAdapterUp = new AdapterBusDetails(busList1);
+                    recyclerViewUp.setAdapter(busAdapterUp);
+                    if(flag.equals("1")) busAdapterUp.setFlag("1");
+                    else busAdapterUp.setFlag("0");
+
+                    if(flag.equals("0")) {
+                        /*Recycler View Down Up*/
+                        busAdapterDown = new AdapterBusDetails(busList3);
+                        if(flag.equals("1")) busAdapterDown.setFlag("1");
+                        else busAdapterDown.setFlag("0");
+                        recyclerViewDown.setAdapter(busAdapterDown);
+                    }
                 } else {
                     Toast.makeText(ListBusDetails.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
                 }

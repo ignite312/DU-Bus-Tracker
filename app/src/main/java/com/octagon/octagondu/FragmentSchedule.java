@@ -67,7 +67,6 @@ public class FragmentSchedule extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterBus);
 
-        // Set item click listener for RecyclerView items
         adapterBus.setOnItemClickListener(new AdapterBus.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
