@@ -48,7 +48,6 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), flag, Toast.LENGTH_SHORT).show();
                 if(flag.equals("1")) {
-                    Toast.makeText(view.getContext(), "Mara Kha", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(view.getContext(), ListBusLocation.class);
                     view.getContext().startActivity(intent);
                 }else {

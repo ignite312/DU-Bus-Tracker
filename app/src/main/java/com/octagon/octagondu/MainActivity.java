@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentHome fragmentHome;
     FragmentNewsFeed fragmentNewsFeed;
     FragmentFindBusLocation fragmentFindBusLocation;
-    FragmentProfile fragmentProfile;
+    FragmentProfileMy fragmentProfileMy;
 
     private  Toolbar toolbar;
 
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentSchedule = new FragmentSchedule();
         fragmentNewsFeed = new FragmentNewsFeed();
         fragmentFindBusLocation = new FragmentFindBusLocation();
-        fragmentProfile = new FragmentProfile();
+        fragmentProfileMy = new FragmentProfileMy();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setVisibility(View.GONE);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_fragment_container, fragmentProfile)
+                .replace(R.id.main_fragment_container, fragmentProfileMy)
                 .commit();
     }
     private void showToast(String message) {
