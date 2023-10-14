@@ -22,12 +22,6 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
-            android:name=".LoginUserSignUp"
-            android:exported="false" />
-        <activity
-            android:name=".LoginUser"
-            android:exported="false" />
-        <activity
             android:name=".FragmentProfileMy"
             android:exported="false" />
         <activity
@@ -83,7 +77,7 @@
         <activity
             android:name=".LoginDeveloper"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+            android:theme="@style/FullScreen" />
         <activity
             android:name=".DataEntry"
             android:exported="false"
@@ -93,15 +87,28 @@
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SignUpUser"
+            android:theme="@style/FullScreen" />
+        <activity
+            android:name=".SignInUser"
+            android:launchMode="singleTop"
             android:exported="true"
-            android:theme="@style/Theme.Material3.Light.NoActionBar">
-            android:exported="true">
+            android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 
