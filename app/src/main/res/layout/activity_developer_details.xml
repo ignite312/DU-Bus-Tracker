@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Project Information"
                 android:textSize="30sp"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
 

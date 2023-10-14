@@ -32,12 +32,21 @@ public class SignInUser extends AppCompatActivity {
         signUpButton = findViewById(R.id.signUpButton);
         mAuth = FirebaseAuth.getInstance();
 
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the SignInUser activity
+                Intent intent = new Intent(SignInUser.this, SignUpUser.class);
+                startActivity(intent);
+            }
+        });
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editUserName.getText().toString();
                 String password = editPassword.getText().toString();
-
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
                 if (TextUtils.isEmpty(email)) {
                     showToast("Enter Email");
                     return;
