@@ -27,10 +27,12 @@ public class FragmentNewsFeed extends Fragment {
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
     private TextView textView;
+    private List<InfoNewsFeed> PostList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_news_feed, container, false);
+
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();

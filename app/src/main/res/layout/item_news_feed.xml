@@ -133,17 +133,21 @@
 
             <!-- Upvote Button -->
             <ImageView
+                android:id="@+id/upvoteImageView"
                 android:layout_marginLeft="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="20sp"
+                android:clickable="true"
                 android:src="@drawable/arrow_upward"
                 android:contentDescription="Upvote" />
 
             <!-- Downvote Button -->
             <ImageView
+                android:id="@+id/downvoteImageView"
                 android:layout_marginLeft="1dp"
                 android:layout_width="wrap_content"
                 android:layout_height="20sp"
+                android:clickable="true"
                 android:src="@drawable/arrow_downward"
                 android:contentDescription="Downvote" />
         </LinearLayout>

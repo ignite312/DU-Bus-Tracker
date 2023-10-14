@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +43,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
     public class PostViewHolder extends RecyclerView.ViewHolder {
         private ImageView userImage;
         private TextView busNameTextView;
-        private  TextView userTypeTextView;
+        private TextView userTypeTextView;
         private TextView postedByTextView;
         private TextView departmentNameTextView;
         private TextView postDateTextView;
@@ -58,15 +60,21 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             postDateTextView = itemView.findViewById(R.id.postDate);
             postContentTextView = itemView.findViewById(R.id.mainPost);
             upvoteCountTextView = itemView.findViewById(R.id.voteCount);
+
+            upvoteImageView = itemView.findViewById(R.id.upvoteImageView);
+            upvoteImageView.setOnClickListener(view -> {
+                Toast.makeText(context, "Upvoted position: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                upvoteImageView.setImageResource(R.drawable.arrow_upward_green);
+            });
         }
 
         public void bind(InfoNewsFeed infoNewsFeed) {
-//            userTypeTextView.setText("Admin ");
-//            postedByTextView.setText(infoNewsFeed.getPosted_by());
-//            departmentNameTextView.setText(infoNewsFeed.getDept());
-//            postDateTextView.setText(infoNewsFeed.getDate());
-//            postContentTextView.setText(infoNewsFeed.getDesc());
-//            upvoteCountTextView.setText(String.valueOf(infoNewsFeed.getCnt()));
+            // userTypeTextView.setText(infoNewsFeed.getUserType());
+            // postedByTextView.setText(infoNewsFeed.getPostedBy());
+            // departmentNameTextView.setText(infoNewsFeed.getDept());
+            // postDateTextView.setText(infoNewsFeed.getDate());
+            // postContentTextView.setText(infoNewsFeed.getDesc());
+            // upvoteCountTextView.setText(String.valueOf(infoNewsFeed.getCnt()));
         }
     }
 }
