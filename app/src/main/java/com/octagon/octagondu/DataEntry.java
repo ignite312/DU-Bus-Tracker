@@ -59,7 +59,6 @@ public class DataEntry extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the selected values from the spinners and the input fields
                 String busName = spinnerBusName.getSelectedItem().toString();
                 String busType = spinnerBusType.getSelectedItem().toString();
                 String busId = textViewBusId.getText().toString();
@@ -79,22 +78,18 @@ public class DataEntry extends AppCompatActivity {
         });
     }
     private void clearForm () {
-        // Clear TextViews
         textViewBusId.setText("");
         textViewRouteSt.setText("");
         textViewRoute.setText("");
         viewtime.setText("Departure Time : 00:00");
-        // Reset Spinners to default selection (usually the first item)
         spinnerBusName.setSelection(0);
         spinnerBusType.setSelection(0);
     }
     public void showTimePickerDialog(View view) {
-        // Get the current time
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        // Create a TimePickerDialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 this,
                 new TimePickerDialog.OnTimeSetListener() {
@@ -107,10 +102,8 @@ public class DataEntry extends AppCompatActivity {
                 },
                 hour,
                 minute,
-                true // Use true if you want 24-hour format, false for 12-hour format
+                true
         );
-
-        // Show the dialog
         timePickerDialog.show();
     }
     private void showToast(String message) {

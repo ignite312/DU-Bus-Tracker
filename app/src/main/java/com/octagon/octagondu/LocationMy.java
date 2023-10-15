@@ -87,7 +87,6 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
-
     private void updateLocationMarker(Location location) {
         if (location != null) {
             Double latitude = location.getLatitude();
@@ -98,7 +97,6 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
             databaseReference.child("Location").child("khonika").child("6:00").child("12424").child("time").setValue(getCurrentTime24HourFormat());
             databaseReference.child("Location").child("khonika").child("6:00").child("12424").child("date").setValue(getCurrentDateFormatted());
         }
-//        showToast(getCurrentDateFormatted());
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)

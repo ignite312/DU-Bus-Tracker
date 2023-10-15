@@ -29,12 +29,16 @@ public class MainActivity extends AppCompatActivity {
     FragmentProfileMy fragmentProfileMy;
 
     private  Toolbar toolbar;
+    public static String userRegUnique;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userRegUnique = "mara";
+        userRegUnique = getIntent().getStringExtra("userId");
+        showToast(userRegUnique);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         fragmentHome = new FragmentHome();

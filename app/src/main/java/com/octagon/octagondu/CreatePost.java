@@ -32,11 +32,9 @@ public class CreatePost extends AppCompatActivity {
                 spinner = findViewById(R.id.postType);
                 textView = findViewById(R.id.body);
 
-
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference ref = database.getReference("Feed/Count");
                 final AtomicInteger cnt = new AtomicInteger(0);
-
                 ref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -61,7 +59,6 @@ public class CreatePost extends AppCompatActivity {
                                 System.out.println("The read failed: " + databaseError.getCode());
                         }
                 });
-
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 button.setOnClickListener(new View.OnClickListener() {
                         @Override

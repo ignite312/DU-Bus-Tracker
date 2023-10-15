@@ -34,7 +34,6 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         InfoNewsFeed infoNewsFeed = postList.get(position);
         holder.bind(infoNewsFeed);
     }
-
     @Override
     public int getItemCount() {
         return postList.size();
@@ -62,10 +61,10 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             upvoteCountTextView = itemView.findViewById(R.id.voteCount);
 
             upvoteImageView = itemView.findViewById(R.id.upvoteImageView);
-            upvoteImageView.setOnClickListener(view -> {
-                Toast.makeText(context, "Upvoted position: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-                upvoteImageView.setImageResource(R.drawable.arrow_upward_green);
-            });
+//            upvoteImageView.setOnClickListener(view -> {
+//                Toast.makeText(context, "Upvoted position: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+//                upvoteImageView.setImageResource(R.drawable.arrow_upward_green);
+//            });
         }
 
         public void bind(InfoNewsFeed infoNewsFeed) {
@@ -74,7 +73,12 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             // departmentNameTextView.setText(infoNewsFeed.getDept());
             // postDateTextView.setText(infoNewsFeed.getDate());
             // postContentTextView.setText(infoNewsFeed.getDesc());
-            // upvoteCountTextView.setText(String.valueOf(infoNewsFeed.getCnt()));
+//             upvoteCountTextView.setText(String.valueOf(infoNewsFeed.getCnt()));
+            upvoteImageView.setOnClickListener(view -> {
+//              Toast.makeText(context, "Upvoted position: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                upvoteImageView.setImageResource(R.drawable.arrow_upward_green);
+                upvoteCountTextView.setText("-78");
+            });
         }
     }
 }

@@ -49,8 +49,6 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 intent.putExtra("longitude", longitude);
                 view.getContext().startActivity(intent);
 
-                // Show the toast message
-//                Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
             }
         });
     }
