@@ -26,8 +26,6 @@ public class FragmentNewsFeed extends Fragment {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
-    private TextView textView;
-    private List<InfoNewsFeed> PostList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +34,7 @@ public class FragmentNewsFeed extends Fragment {
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Feed").child("Posts");
+        databaseReference = database.getReference("Feed").child("Posts").child("Pending");
 
         recyclerView = view.findViewById(R.id.recycler_view_feed);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  // Use getActivity() to get the activity's context
@@ -57,7 +55,6 @@ public class FragmentNewsFeed extends Fragment {
                     adapter = new AdapterNewsFeed(getContext(), PostList); // Pass the context here
                     recyclerView.setAdapter(adapter);
                 } else {
-                    // No data found for the given bus name
                     showToast("No data found for this bus name");
                 }
             }

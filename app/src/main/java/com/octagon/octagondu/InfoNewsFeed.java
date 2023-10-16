@@ -1,55 +1,110 @@
 package com.octagon.octagondu;
 
 public class InfoNewsFeed {
-    private  int image;
+    private String userId;
     private String busName;
-    private String posted_by;
-    private String userType;
-    private String dept;
-    private String date;
+    private  String helpType;
+    private String title;
     private String desc;
-    private int cnt;
-    public InfoNewsFeed(int image, String busName, String posted_by, String dept, String date, String desc, int cnt, String userType) {
-        this.image = image;
-        this.busName = busName;
-        this.userType = userType;
-        this.posted_by = posted_by;
-        this.dept = dept;
-        this.date = date;
-        this.desc = desc;
-        this.cnt = cnt;
-    }
+    private int vote;
+    private String time;
+    private String  date;
+    private int  status;
+    private  int postId;
+
     public InfoNewsFeed() {
 
     }
-    public int getImage() {
-        return image;
+    public InfoNewsFeed(String userId, String busName, String helpType, String title, String desc, int vote, String time, String date, int status, int postId) {
+        this.userId = userId;
+        this.busName = busName;
+        this.helpType = helpType;
+        this.title = title;
+        this.desc = desc;
+        this.vote = vote;
+        this.time = time;
+        this.date = date;
+        this.status = status;
+        this.postId = postId;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getBusName() {
         return busName;
     }
 
-    public String getPosted_by() {
-        return posted_by;
+    public void setBusName(String busName) {
+        this.busName = busName;
     }
 
-    public String getDept() {
-        return dept;
+    public String getHelpType() {
+        return helpType;
     }
-    public String getDate() {
-        return date;
+
+    public void setHelpType(String helpType) {
+        this.helpType = helpType;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDesc() {
         return desc;
     }
 
-    public int getCnt() {
-        return cnt;
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public int getVote() {
+        return vote;
+    }
+
+    public void setVote(int vote) {
+        this.vote = vote;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 }

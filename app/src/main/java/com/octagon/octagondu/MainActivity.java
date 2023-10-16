@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentNewsFeed fragmentNewsFeed;
     FragmentFindBusLocation fragmentFindBusLocation;
     FragmentProfileMy fragmentProfileMy;
+    FragmentPostCreate fragmentPostCreate;
 
     private  Toolbar toolbar;
     public static String userRegUnique;
@@ -37,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userRegUnique = "mara";
-        userRegUnique = getIntent().getStringExtra("userId");
-        showToast(userRegUnique);
+//        userRegUnique = getIntent().getStringExtra("userId");
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         fragmentHome = new FragmentHome();
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentNewsFeed = new FragmentNewsFeed();
         fragmentFindBusLocation = new FragmentFindBusLocation();
         fragmentProfileMy = new FragmentProfileMy();
+        fragmentPostCreate = new FragmentPostCreate();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -94,9 +95,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
-                    Intent intent = new Intent(getApplicationContext(), ListBusLocation.class);
-                    startActivity(intent);
-                    showToast("Will added later");
+//                    Intent intent = new Intent(getApplicationContext(), CreatePost.class);
+//                    startActivity(intent);
+//                    showToast("Will added later");
+                    openCreatePosFragment();
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);
@@ -151,5 +153,14 @@ public class MainActivity extends AppCompatActivity {
     }
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+    private void openCreatePosFragment() {
+        toolbar.setVisibility(View.GONE);
+        getSupportActionBar().setTitle("Octagon");
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, fragmentPostCreate)
+                .commit();
+
     }
 }

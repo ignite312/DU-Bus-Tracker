@@ -60,9 +60,9 @@
         <item>Sajid Hasan</item>
     </string-array>
     <string-array name="helpType">
-        <item>Blood</item>
+        <item>Need Blood</item>
         <item>Tuition</item>
-        <item>Help</item>
+        <item>Notice</item>
         <item>Others</item>
     </string-array>
     <string name="demo_post">I hope you\'re doing well. I\'m currently working on a Java project, and I\'m facing some challenges that I could use some assistance with. The project involves [briefly describe your project\'s purpose or main goals].

@@ -33,7 +33,7 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Emon Khan"
+                    android:text="Emon"
                     android:layout_gravity="center"
                     android:textStyle="bold"
                     android:textSize="9sp"
@@ -60,7 +60,7 @@
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/userType"
+                    android:id="@+id/busNameUserType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -106,7 +106,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/mainPost"
+            android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
