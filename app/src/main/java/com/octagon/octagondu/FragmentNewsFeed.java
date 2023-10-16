@@ -26,12 +26,21 @@ public class FragmentNewsFeed extends Fragment {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
+    private FragmentPostCreate fragmentPostCreate;
+    TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_news_feed, container, false);
 
-
+        fragmentPostCreate = new FragmentPostCreate();
+        TextView textView = view.findViewById(R.id.createAPost);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreatePosFragment();
+            }
+        });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Feed").child("Posts").child("Pending");
@@ -69,5 +78,14 @@ public class FragmentNewsFeed extends Fragment {
 
     private void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    private void openCreatePosFragment() {
+        if (getActivity() != null) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment_container, fragmentPostCreate)
+                    .addToBackStack(null) // Optional: Add transaction to the back stack
+                    .commit();
+        }
     }
 }

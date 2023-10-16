@@ -43,7 +43,6 @@ public class FragmentPostCreate extends Fragment {
         textViewTitle = view.findViewById(R.id.postTitle);
         textViewDesc  = view.findViewById(R.id.body);
         button = view.findViewById(R.id.go);
-        showToast(userRegUnique);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Feed");

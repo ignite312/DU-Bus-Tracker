@@ -109,13 +109,13 @@
             android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:text="@string/demo_post"
             android:textColor="@color/dark_grey_color"
             android:textIsSelectable="true"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
         <LinearLayout
             android:layout_marginLeft="5dp"
             android:padding="5dp"
