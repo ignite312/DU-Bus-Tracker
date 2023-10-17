@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,6 +55,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         private TextView postDescTextView;
         private TextView voteCountTextView;
         private ImageView upvoteImageView;
+        private ImageView downVoteImageView;
         public PostViewHolder(View itemView) {
             super(itemView);
             userNameTextView = itemView.findViewById(R.id.username);
@@ -63,6 +66,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             postDescTextView = itemView.findViewById(R.id.desc);
             voteCountTextView = itemView.findViewById(R.id.voteCount);
             upvoteImageView = itemView.findViewById(R.id.upvoteImageView);
+            downVoteImageView = itemView.findViewById(R.id.downVoteImageView);
         }
 
         @SuppressLint("SetTextI18n")
@@ -90,11 +94,37 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             postTitleTextView.setText(infoNewsFeed.getTitle());
             postDescTextView.setText(infoNewsFeed.getDesc());
             voteCountTextView.setText(String.valueOf(infoNewsFeed.getVote()));
-                upvoteImageView.setOnClickListener(view -> {
+
+            reference = FirebaseDatabase.getInstance().getReference("Feed/Posts/Pending" + infoNewsFeed.getPostId() + "/reaction");
+            reference.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+
+                    } else {
+                        //showToast("No data Found");
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error fetching data", databaseError.toException());
+                }
+            });
+
+            upvoteImageView.setOnClickListener(view -> {
 //              Toast.makeText(context, "Upvoted position: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
                 upvoteImageView.setImageResource(R.drawable.arrow_upward_green);
                 voteCountTextView.setText("-78");
             });
+            downVoteImageView.setOnClickListener(view -> {
+//              Toast.makeText(context, "Upvoted position: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                downVoteImageView.setImageResource(R.drawable.arrow_downward_red);
+                voteCountTextView.setText("-78");
+            });
         }
+    }
+    public void showToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -31,7 +31,8 @@ public class FragmentPostCreate extends Fragment {
     Button button;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    int Count = 0;
+    FragmentNewsFeed fragmentNewsFeed;
+    String Count = "0";
 
 
     @Override
@@ -43,6 +44,7 @@ public class FragmentPostCreate extends Fragment {
         textViewTitle = view.findViewById(R.id.postTitle);
         textViewDesc  = view.findViewById(R.id.body);
         button = view.findViewById(R.id.go);
+        fragmentNewsFeed = new FragmentNewsFeed();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Feed");
@@ -51,10 +53,9 @@ public class FragmentPostCreate extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String cnt = String.valueOf(dataSnapshot.child("Count").getValue());
-                    Count = Integer.parseInt(String.valueOf(cnt));
+                    Count = (String) dataSnapshot.child("Count").getValue();
                 } else {
-                    showToast("Error");
+//                    showToast("Error");
                 }
             }
             @Override
@@ -73,11 +74,15 @@ public class FragmentPostCreate extends Fragment {
                                 String time = getCurrentTime24HourFormat();
                                 String date = getCurrentDateFormatted();
 
-                                InfoNewsFeed post = new InfoNewsFeed(userRegUnique, busType, helpType, title, desc, 0, time, date, 0, Count);
+                                InfoNewsFeed post = new InfoNewsFeed(userRegUnique, busType, helpType, title, desc, "0", time, date, "0", Count);
                                 if(!title.isEmpty() || !desc.isEmpty()) {
-                                    databaseReference.child("Feed").child("Posts").child("Pending").child(String.valueOf(Count)).setValue(post);
-                                    databaseReference.child("Feed").child("Count").setValue(Count+1);
-                                }
+                                    databaseReference.child("Feed/Posts").child(Count).setValue(post);
+                                    int cnt = Integer.parseInt(Count) + 1;
+                                    Count = String.valueOf(cnt);
+                                    databaseReference.child("Feed/Count").setValue(Count);
+                                    showToast("Posted");
+                                    openFeedFragment();
+                                }else showToast("Something is empty");
                         }
                 });
         return view;
@@ -97,5 +102,14 @@ public class FragmentPostCreate extends Fragment {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
         return timeFormat.format(currentTime);
+    }
+    private void openFeedFragment() {
+        if (getActivity() != null) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment_container, fragmentNewsFeed)
+                    .addToBackStack(null) // Optional: Add transaction to the back stack
+                    .commit();
+        }
     }
 }

@@ -106,6 +106,7 @@
         </LinearLayout>
 
         <TextView
+            android:fontFamily="@font/montserrat_semibold"
             android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -143,7 +144,7 @@
 
             <!-- Downvote Button -->
             <ImageView
-                android:id="@+id/downvoteImageView"
+                android:id="@+id/downVoteImageView"
                 android:layout_marginLeft="1dp"
                 android:layout_width="wrap_content"
                 android:layout_height="20sp"
