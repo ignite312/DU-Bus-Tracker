@@ -1,6 +1,5 @@
 package com.octagon.octagondu;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
@@ -134,7 +133,6 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            showToast("hranreg");
                             String t_cnt = String.valueOf(dataSnapshot.getValue());
                             count[0] = Integer.parseInt(t_cnt);
                             ref.addListenerForSingleValueEvent(new ValueEventListener() {
