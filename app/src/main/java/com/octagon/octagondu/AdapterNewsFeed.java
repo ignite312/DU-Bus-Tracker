@@ -115,6 +115,23 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                             upvoteImageView.setImageResource(R.drawable.arrow_upward);
                             downVoteImageView.setImageResource(R.drawable.arrow_downward);
                         }
+                        DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
+                        cnt_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    String t_cnt = String.valueOf(dataSnapshot.getValue());
+                                    voteCountTextView.setText(t_cnt);
+                                } else {
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.e("Firebase", "Error fetching data", databaseError.toException());
+                            }
+                        });
                     } else {
 
                     }

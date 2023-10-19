@@ -48,7 +48,7 @@ public class FragmentNewsFeed extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_feed);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  // Use getActivity() to get the activity's context
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<InfoNewsFeed> PostList = new ArrayList<>();
@@ -61,6 +61,7 @@ public class FragmentNewsFeed extends Fragment {
                             showToast("Something went wrong");
                         }
                     }
+                    showToast("mara");
                     adapter = new AdapterNewsFeed(getContext(), PostList); // Pass the context here
                     recyclerView.setAdapter(adapter);
                 } else {
