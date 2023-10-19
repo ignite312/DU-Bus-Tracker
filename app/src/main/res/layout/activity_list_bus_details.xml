@@ -41,8 +41,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Up Schedule"
-                android:textColor="#000000"
-                android:textSize="20sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="#1D5121"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <ProgressBar
@@ -65,9 +66,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_gravity="center"
+                android:fontFamily="@font/montserrat_bold"
                 android:text="Down Schedule"
-                android:textColor="@color/dark_grey_color"
-                android:textSize="20sp"
+                android:textColor="#650F2D"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <ProgressBar

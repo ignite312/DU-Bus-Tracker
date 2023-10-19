@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -138,12 +139,15 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
         private TextView startLocationTextView;
         private TextView destinationLocationTextView;
         private TextView time;
+        ImageView imageView;
         public BusViewHolder(View itemView) {
             super(itemView);
             busIdTextView = itemView.findViewById(R.id.text_view_bus_id);
             startLocationTextView = itemView.findViewById(R.id.text_view_start_location);
             destinationLocationTextView = itemView.findViewById(R.id.text_view_destination_location);
             time = itemView.findViewById(R.id.text_view_bus_time);
+            imageView = itemView.findViewById(R.id.upOrDown);
+
         }
 
         public void bind(InfoBusDetails bus) {
@@ -151,6 +155,8 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
             startLocationTextView.setText("Start Location: " + bus.getStartLocation());
             destinationLocationTextView.setText("Destination Location: " + bus.getDestinationLocation());
             time.setText("Departure Time: " + bus.getTime());
+            if(bus.getBusType().equals("Up"))imageView.setImageResource(R.drawable.uptime);
+            else imageView.setImageResource(R.drawable.downtime);
         }
     }
 

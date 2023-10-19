@@ -45,10 +45,21 @@ public class FragmentFindBusLocation extends Fragment {
         };
         int[] imageList = new int[15];
         for (int i = 0; i < 15; i++) {
-            imageList[i] = R.drawable.baseline_share_location_24;
+            if (i % 5 == 0) {
+                imageList[i] = R.drawable.bus;
+            } else if(i % 5 == 1) {
+                imageList[i] = R.drawable.bus2;
+            }else if(i % 5 == 2) {
+                imageList[i] = R.drawable.bus3;
+            }else if(i % 5 == 3) {
+                imageList[i] = R.drawable.bus4;
+            }else {
+                imageList[i] = R.drawable.bus5;
+            }
         }
+
         for (int i = 0; i < imageList.length; i++) {
-            infoBus = new InfoBus(nameList[i], imageList[i]);
+            infoBus = new InfoBus(nameList[i], imageList[i], R.drawable.location);
             dataArrayList.add(infoBus);
         }
 

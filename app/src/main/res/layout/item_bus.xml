@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/busName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:text="Khonika"
             android:ellipsize="end"
@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/busRoute"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Route: Du to Gajipur"
             android:textStyle="bold"
@@ -44,6 +44,13 @@
             android:layout_below="@id/busName"
             android:layout_marginLeft="10dp"
             android:textColor="@color/dark_grey_color"/>
+        <ImageView
+            android:id="@+id/LocationOrClock"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/bus"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 

@@ -39,6 +39,7 @@ public class AdapterBus extends RecyclerView.Adapter<AdapterBus.ViewHolder> {
 
         holder.busImage.setImageResource(infoBus.image);
         holder.busName.setText(infoBus.name);
+        holder.locationOrClock.setImageResource(infoBus.locationOrClock);
     }
 
     @Override
@@ -49,12 +50,12 @@ public class AdapterBus extends RecyclerView.Adapter<AdapterBus.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView busImage;
         TextView busName;
-
+        ImageView locationOrClock;
         public ViewHolder(View itemView) {
             super(itemView);
             busImage = itemView.findViewById(R.id.busImage);
             busName = itemView.findViewById(R.id.busName);
-
+            locationOrClock = itemView.findViewById(R.id.LocationOrClock);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

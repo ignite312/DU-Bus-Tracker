@@ -1,5 +1,7 @@
 package com.octagon.octagondu;
 
+import static com.octagon.octagondu.MainActivity.userRegUnique;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
@@ -98,7 +100,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             postDescTextView.setText(infoNewsFeed.getDesc());
             voteCountTextView.setText(String.valueOf(infoNewsFeed.getVote()));
 
-            reference = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + infoNewsFeed.getUserId());
+            reference = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
             reference.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -142,7 +144,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                 }
             });
             upvoteImageView.setOnClickListener(view -> {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + infoNewsFeed.getUserId());
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
                 DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
                 final int[] count = {0};
                 cnt_ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -156,7 +158,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                 @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    DatabaseReference reff = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + infoNewsFeed.getUserId());
+                                    DatabaseReference reff = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
                                     DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
                                     DatabaseReference cnt_ref_main = FirebaseDatabase.getInstance().getReference("Feed/" + "/Posts/" + infoNewsFeed.getPostId() + "/vote");
                                     if (dataSnapshot.exists()) {
@@ -188,7 +190,6 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                         } else {
                         }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e("Firebase", "Error fetching data", databaseError.toException());
@@ -197,8 +198,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             });
 
             downVoteImageView.setOnClickListener(view -> {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + infoNewsFeed.getUserId());
-                DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
                 final int[] count = {0};
                 DatabaseReference ref_cnt = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
                 ref_cnt.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -212,7 +212,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                 @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    DatabaseReference reff = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + infoNewsFeed.getUserId());
+                                    DatabaseReference reff = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
                                     DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
                                     DatabaseReference cnt_ref_main = FirebaseDatabase.getInstance().getReference("Feed/" + "/Posts/" + infoNewsFeed.getPostId() + "/vote");
                                     if (dataSnapshot.exists()) {

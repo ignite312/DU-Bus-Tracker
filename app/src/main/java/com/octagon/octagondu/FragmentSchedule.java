@@ -58,7 +58,7 @@ public class FragmentSchedule extends Fragment {
             }
         }
         for (int i = 0; i < imageList.length; i++) {
-            infoBus = new InfoBus(nameList[i], imageList[i]);
+            infoBus = new InfoBus(nameList[i], imageList[i], R.drawable.schedule);
             dataArrayList.add(infoBus);
         }
 
