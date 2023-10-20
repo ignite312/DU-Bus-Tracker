@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userRegUnique = "2020015640";
-//        userRegUnique = getIntent().getStringExtra("userId");
+        userRegUnique = getIntent().getStringExtra("userId");
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         fragmentHome = new FragmentHome();
@@ -95,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
-//                    Intent intent = new Intent(getApplicationContext(), CreatePost.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), SignUpUser.class);
+                    startActivity(intent);
 //                    showToast("Will added later");
-                    openCreatePosFragment();
+//                    openCreatePosFragment();
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);

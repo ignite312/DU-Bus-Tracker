@@ -36,9 +36,20 @@
                 android:textStyle="bold"
                 android:textSize="10sp"
                 android:textColor="@color/black" />
-
+            <TextView
+                android:id="@+id/UserTypeLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="● Admin"
+                android:textStyle="bold"
+                android:textSize="8sp"
+                android:textColor="#FF0000"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="0dp" />
             <TextView
                 android:id="@+id/deptName"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CSE 20-21"
@@ -60,7 +71,7 @@
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_toEndOf="@id/image"
-            android:layout_marginStart="10dp" />
+            android:layout_marginStart="15dp" />
         <TextView
             android:id="@+id/lastTime"
             android:layout_width="match_parent"
@@ -70,7 +81,7 @@
             android:textSize="10sp"
             android:layout_toEndOf="@id/image"
             android:layout_below="@id/lastLocation"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:textColor="@color/dark_grey_color"
             tools:ignore="SmallSp" />
         <TextView
@@ -82,7 +93,7 @@
             android:textSize="10sp"
             android:layout_toEndOf="@id/image"
             android:layout_below="@id/lastTime"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:textColor="@color/dark_grey_color"
             tools:ignore="SmallSp" />
         <TextView
@@ -94,7 +105,7 @@
             android:textSize="10sp"
             android:layout_toEndOf="@id/image"
             android:layout_below="@id/lastDate"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:textColor="@color/blue"
             tools:ignore="SmallSp" />
 

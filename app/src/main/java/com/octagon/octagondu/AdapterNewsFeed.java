@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostViewHolder> {
     private List<InfoNewsFeed> postList;
     private Context context;
@@ -61,6 +63,8 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         private TextView voteCountTextView;
         private ImageView upvoteImageView;
         private ImageView downVoteImageView;
+        CircleImageView circleImageView;
+
 
         public PostViewHolder(View itemView) {
             super(itemView);
@@ -74,6 +78,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             upvoteImageView = itemView.findViewById(R.id.upvoteImageView);
             downVoteImageView = itemView.findViewById(R.id.downVoteImageView);
             userTypeTextView = itemView.findViewById(R.id.userType);
+            circleImageView = itemView.findViewById(R.id.photo);
         }
 
         @SuppressLint("SetTextI18n")
@@ -89,6 +94,11 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                 dataSnapshot.child("session").getValue());
                         userTypeTextView.setText("● " + dataSnapshot.child("userType").getValue());
                         busNameTextView.setText(infoNewsFeed.getBusName());
+                        String t_imageString = dataSnapshot.child("userImage").getValue(String.class);
+                        if (t_imageString != null) {
+                            int t_image = Integer.parseInt(t_imageString);
+                            circleImageView.setImageResource(t_image);
+                        }
                     } else {
                     }
                 }
