@@ -61,7 +61,6 @@ public class FragmentNewsFeed extends Fragment {
                             showToast("Something went wrong");
                         }
                     }
-                    showToast("mara");
                     adapter = new AdapterNewsFeed(getContext(), PostList); // Pass the context here
                     recyclerView.setAdapter(adapter);
                 } else {

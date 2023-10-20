@@ -54,6 +54,17 @@
                     android:textColor="@color/green"
                     android:textSize="6sp"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/userType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Developer"
+                    android:textColor="#FF0000"
+                    android:textSize="6sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout

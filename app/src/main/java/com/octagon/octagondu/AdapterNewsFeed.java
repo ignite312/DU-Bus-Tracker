@@ -53,6 +53,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
     public class PostViewHolder extends RecyclerView.ViewHolder {
         private TextView userNameTextView;
         private TextView departmentNameTextView;
+        private TextView userTypeTextView;
         private TextView busNameTextView;
         private TextView postDateTextView;
         private TextView postTitleTextView;
@@ -72,6 +73,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             voteCountTextView = itemView.findViewById(R.id.voteCount);
             upvoteImageView = itemView.findViewById(R.id.upvoteImageView);
             downVoteImageView = itemView.findViewById(R.id.downVoteImageView);
+            userTypeTextView = itemView.findViewById(R.id.userType);
         }
 
         @SuppressLint("SetTextI18n")
@@ -85,7 +87,8 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                         userNameTextView.setText(String.valueOf(dataSnapshot.child("fullName").getValue()));
                         departmentNameTextView.setText(dataSnapshot.child("department").getValue() + " " +
                                 dataSnapshot.child("session").getValue());
-                        busNameTextView.setText(dataSnapshot.child("userType").getValue() + " " + infoNewsFeed.getBusName());
+                        userTypeTextView.setText("● " + dataSnapshot.child("userType").getValue());
+                        busNameTextView.setText(infoNewsFeed.getBusName());
                     } else {
                     }
                 }
@@ -95,7 +98,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                     Log.e("Firebase", "Error fetching data", databaseError.toException());
                 }
             });
-            postDateTextView.setText(infoNewsFeed.getDate() + " " + infoNewsFeed.getTime());
+            postDateTextView.setText(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate());
             postTitleTextView.setText(infoNewsFeed.getTitle());
             postDescTextView.setText(infoNewsFeed.getDesc());
             voteCountTextView.setText(String.valueOf(infoNewsFeed.getVote()));
