@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userRegUnique = "2029292992";
+        userRegUnique = "2020015640";
 //        userRegUnique = getIntent().getStringExtra("userId");
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
