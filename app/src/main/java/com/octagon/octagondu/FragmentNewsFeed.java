@@ -27,7 +27,6 @@ public class FragmentNewsFeed extends Fragment {
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
     private FragmentPostCreate fragmentPostCreate;
-    TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class FragmentNewsFeed extends Fragment {
                     adapter = new AdapterNewsFeed(getContext(), PostList); // Pass the context here
                     recyclerView.setAdapter(adapter);
                 } else {
-//                    showToast("No data found for this bus name");
+                    showToast("No data found for this bus name");
                 }
             }
             @Override

@@ -1,61 +1,33 @@
 package com.octagon.octagondu;
 
 public class InfoBusLocation {
-    private int RegNum;
-    private String Name;
-    private String Dept;
-    private int picture;
+    private String regNum;
     private String lastLocation;
-    private String time;
+    private  String time;
     private String date;
+    private String voteCount;
     private String lat;
     private String lon;
-
-    public InfoBusLocation(int regNum, String name, String dept, int picture, String lastLocation, String time, String date, String lat, String lon) {
-        RegNum = regNum;
-        Name = name;
-        Dept = dept;
-        this.picture = picture;
-        this.lastLocation = lastLocation;
-        this.time = time;
-        this.date = date;
-        this.lat = lat;
-        this.lon = lon;
-    }
 
     public InfoBusLocation() {
 
     }
-    public int getRegNum() {
-        return RegNum;
+    public InfoBusLocation(String regNum, String lastLocation, String time, String date, String voteCount, String lat, String lon) {
+        this.regNum = regNum;
+        this.lastLocation = lastLocation;
+        this.time = time;
+        this.date = date;
+        this.voteCount = voteCount;
+        this.lat = lat;
+        this.lon = lon;
     }
 
-    public void setRegNum(int regNum) {
-        RegNum = regNum;
+    public String getRegNum() {
+        return regNum;
     }
 
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getDept() {
-        return Dept;
-    }
-
-    public void setDept(String dept) {
-        Dept = dept;
-    }
-
-    public int getPicture() {
-        return picture;
-    }
-
-    public void setPicture(int picture) {
-        this.picture = picture;
+    public void setRegNum(String regNum) {
+        this.regNum = regNum;
     }
 
     public String getLastLocation() {
@@ -78,8 +50,16 @@ public class InfoBusLocation {
         return date;
     }
 
-    public void setData(String data) {
-        this.date = data;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(String voteCount) {
+        this.voteCount = voteCount;
     }
 
     public String getLat() {

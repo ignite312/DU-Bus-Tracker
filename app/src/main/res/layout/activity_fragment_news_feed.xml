@@ -42,6 +42,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/createAPost"
+                android:background="@drawable/border_box"
                 android:layout_width="match_parent"
                 android:clickable="true"
                 android:focusable="false"

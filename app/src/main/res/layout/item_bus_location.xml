@@ -14,64 +14,66 @@
         android:background="@color/white">
 
         <LinearLayout
+            android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/image"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/photo"
+                android:id="@+id/photoLocation"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/spectre"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:src="@drawable/spectre" />
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/usernameLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Emon Khan"
                 android:layout_gravity="center"
-                android:textStyle="bold"
+                android:text="Emon Khan"
+                android:textColor="@color/black"
                 android:textSize="10sp"
-                android:textColor="@color/black" />
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/UserTypeLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="● Admin"
-                android:textStyle="bold"
-                android:textSize="8sp"
-                android:textColor="#FF0000"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="0dp" />
+                android:layout_marginTop="0dp"
+                android:text="● Admin"
+                android:textColor="#FF0000"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+
             <TextView
-                android:id="@+id/deptName"
-                android:layout_gravity="center"
+                android:id="@+id/deptNameSessionLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CSE 20-21"
-                android:textStyle="bold"
-                android:textSize="8sp"
-                android:textColor="@color/green"
+                android:layout_gravity="left"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="0dp" />
+                android:layout_marginTop="0dp"
+                android:text="CSE 20-21"
+                android:textColor="@color/green"
+                android:textSize="8sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
         <TextView
             android:id="@+id/lastLocation"
             android:layout_width="match_parent"
             android:layout_height="24dp"
-            android:text="Last Location: Karwan Bazar"
+            android:text="Last Location: Near Dhaka"
             android:ellipsize="end"
             android:maxLines="1"
             android:textStyle="bold"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_toEndOf="@id/image"
-            android:layout_marginStart="15dp" />
+            android:layout_marginStart="20dp" />
         <TextView
             android:id="@+id/lastTime"
             android:layout_width="match_parent"
@@ -81,7 +83,7 @@
             android:textSize="10sp"
             android:layout_toEndOf="@id/image"
             android:layout_below="@id/lastLocation"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             android:textColor="@color/dark_grey_color"
             tools:ignore="SmallSp" />
         <TextView
@@ -93,11 +95,11 @@
             android:textSize="10sp"
             android:layout_toEndOf="@id/image"
             android:layout_below="@id/lastTime"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             android:textColor="@color/dark_grey_color"
             tools:ignore="SmallSp" />
         <TextView
-            android:id="@+id/countdown"
+            android:id="@+id/timeDiff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Seen 10 min ago"
@@ -105,9 +107,58 @@
             android:textSize="10sp"
             android:layout_toEndOf="@id/image"
             android:layout_below="@id/lastDate"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             android:textColor="@color/blue"
             tools:ignore="SmallSp" />
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/upDownReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/image"
+            android:layout_below="@id/timeDiff"
+            android:layout_marginStart="20dp">
+
+            <!-- Vote Count TextView -->
+            <TextView
+                android:id="@+id/voteCountLocation"
+                android:layout_marginTop="1dp"
+                android:text="-77"
+                android:textColor="#009688"
+                android:layout_width="wrap_content"
+                android:layout_height="20sp"
+                android:textSize="13sp"
+                android:gravity="center_vertical" />
+
+            <!-- Upvote Button -->
+            <ImageView
+                android:id="@+id/upvoteLocation"
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="20sp"
+                android:clickable="true"
+                android:src="@drawable/arrow_upward"
+                android:contentDescription="Upvote"
+                android:layout_toRightOf="@id/voteCountLocation" />
+
+            <ImageView
+                android:id="@+id/downVoteLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="20sp"
+                android:clickable="true"
+                android:src="@drawable/arrow_downward"
+                android:contentDescription="Downvote"
+                android:layout_toRightOf="@id/upvoteLocation" />
+            <ImageView
+                android:id="@+id/reportProfileLocaton"
+                android:layout_width="20dp"
+                android:layout_height="20sp"
+                android:clickable="true"
+                android:src="@drawable/report_user"
+                android:contentDescription="Report"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

@@ -1,5 +1,6 @@
 package com.octagon.octagondu;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bus_details, parent, false);
         return new BusViewHolder(itemView);
     }
+    @SuppressLint("NotifyDataSetChanged")
     public void setFlag(String flag) {
         this.flag = flag;
         notifyDataSetChanged(); // Notify the adapter that the data has changed
@@ -49,6 +51,8 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
             public void onClick(View view) {
                 if(flag.equals("1")) {
                     Intent intent = new Intent(view.getContext(), ListBusLocation.class);
+                    intent.putExtra("BUSNAME", bus.getBusName());
+                    intent.putExtra("BUSTIME", bus.getTime());
                     view.getContext().startActivity(intent);
                 }else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());

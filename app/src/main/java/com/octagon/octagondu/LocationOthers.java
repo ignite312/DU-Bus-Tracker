@@ -26,8 +26,8 @@ public class LocationOthers extends FragmentActivity {
                 // Retrieve latitude and longitude from the intent
                 Bundle extras = getIntent().getExtras();
                 if (extras != null) {
-                    double latitude = extras.getDouble("latitude");
-                    double longitude = extras.getDouble("longitude");
+                    double latitude = extras.getDouble("LAT");
+                    double longitude = extras.getDouble("LON");
 
                     // Create a LatLng object with the coordinates
                     LatLng location = new LatLng(latitude, longitude);

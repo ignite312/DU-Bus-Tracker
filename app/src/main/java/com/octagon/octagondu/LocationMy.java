@@ -1,5 +1,7 @@
 package com.octagon.octagondu;
 
+import static com.octagon.octagondu.MainActivity.userRegUnique;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -37,6 +39,7 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
     private Button updateLocationButton;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
+    private String busName, busTime;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -44,6 +47,8 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_my);
+        busName = getIntent().getStringExtra("BUSNAME");
+        busTime = getIntent().getStringExtra("BUSTIME");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFragment);
@@ -91,11 +96,13 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
         if (location != null) {
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            databaseReference.child("Location").child("khonika").child("6:00").child("12424").child("lat").setValue(Double.toString(latitude));
-            databaseReference.child("Location").child("khonika").child("6:00").child("12424").child("lon").setValue(Double.toString(longitude));
-            databaseReference.child("Location").child("khonika").child("6:00").child("12424").child("time").setValue(getCurrentTime24HourFormat());
-            databaseReference.child("Location").child("khonika").child("6:00").child("12424").child("date").setValue(getCurrentDateFormatted());
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime).child(userRegUnique);
+            databaseReference.child("regNum").setValue(userRegUnique);
+            databaseReference.child("lastLocation").setValue("Dhaka");
+            databaseReference.child("lat").setValue(Double.toString(latitude));
+            databaseReference.child("lon").setValue(Double.toString(longitude));
+            databaseReference.child("time").setValue(getCurrentTime24HourFormat());
+            databaseReference.child("date").setValue(getCurrentDateFormatted());
         }
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions()

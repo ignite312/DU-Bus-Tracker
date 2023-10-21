@@ -31,13 +31,12 @@
             android:layout_gravity="center" />
 
         <Button
-            android:layout_marginLeft="60dp"
             android:id="@+id/click"
             android:textColor="@color/black"
-            android:background="@drawable/button_selector"
-            android:layout_width="300dp"
+            android:background="@drawable/border_box"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Click to Update Location!" />
+            android:text="Click to Share Your Location!" />
 
     </FrameLayout>
 
