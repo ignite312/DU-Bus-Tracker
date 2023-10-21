@@ -34,13 +34,14 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:fontFamily="@font/montserrat_bold"
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Emon"
                     android:textColor="@color/black"
-                    android:textSize="9sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -52,7 +53,7 @@
                     android:layout_marginTop="0dp"
                     android:text="CSE 20-21"
                     android:textColor="@color/green"
-                    android:textSize="6sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/userType"
@@ -63,7 +64,7 @@
                     android:layout_marginTop="0dp"
                     android:text="Developer"
                     android:textColor="#FF0000"
-                    android:textSize="6sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -85,7 +86,7 @@
                     android:layout_marginTop="0dp"
                     android:text="Admin • Khonika"
                     android:textColor="#3F51B5"
-                    android:textSize="6sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -97,7 +98,7 @@
                     android:layout_marginTop="0dp"
                     android:text="22 Sept 22, 01:45"
                     android:textColor="@color/dark_grey_color"
-                    android:textSize="6sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -111,9 +112,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/photo"
                 android:text="Need Help Badly"
+                android:fontFamily="@font/montserrat_semibold"
                 android:textColor="@color/black"
                 android:textIsSelectable="true"
-                android:textSize="15dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
         </RelativeLayout>
 

@@ -1,7 +1,10 @@
 package com.octagon.octagondu;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -9,18 +12,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+
 public class SignUpUser extends AppCompatActivity {
-    private TextInputEditText editFullname;
+    private TextInputEditText editFullName;
     private TextInputEditText editRegNum;
     private TextInputEditText editDept;
     private TextInputEditText editSession;
@@ -29,13 +39,14 @@ public class SignUpUser extends AppCompatActivity {
     private TextInputEditText editPassword;
     private Button signUpButton;
     private TextView alreadyHaveAccount;
-    int selectedImageResourceId;
+    String selectedImageResourceId;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_user);
 
-        editFullname = findViewById(R.id.editFullname);
+        editFullName = findViewById(R.id.editFullname);
         editRegNum = findViewById(R.id.editRegNum);
         editDept = findViewById(R.id.editDept);
         editSession = findViewById(R.id.editSession);
@@ -44,6 +55,7 @@ public class SignUpUser extends AppCompatActivity {
         editPassword = findViewById(R.id.editPassword);
         signUpButton = findViewById(R.id.signUpButton);
         alreadyHaveAccount = findViewById(R.id.alreadyHaveAccount);
+        mAuth = FirebaseAuth.getInstance();
 
         Spinner imageSpinner = findViewById(R.id.spinnerProfilePic);
 
@@ -76,7 +88,11 @@ public class SignUpUser extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // Get the selected image resource ID
-                selectedImageResourceId= (int) imageSpinner.getItemAtPosition(position);
+                if(position < 10) {
+                    selectedImageResourceId = "ProfilePic/Boys" + "b" + String.valueOf(position + 1) + ".png";
+                }else {
+                    selectedImageResourceId = "ProfilePic/Girls" + "g" + String.valueOf(position - 9) + ".png";
+                }
             }
 
             @Override
@@ -88,9 +104,7 @@ public class SignUpUser extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast(String.valueOf(selectedImageResourceId));
-                // Retrieve data from input fields
-                String fullName = editFullname.getText().toString();
+                String fullName = editFullName.getText().toString();
                 String regNum = editRegNum.getText().toString();
                 String department = editDept.getText().toString();
                 String session = editSession.getText().toString();
@@ -100,15 +114,24 @@ public class SignUpUser extends AppCompatActivity {
                 int contributionCount = 0;
                 String userType = "User";
                 if (!(fullName.isEmpty() || regNum.isEmpty() || department.isEmpty() || session.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || password.isEmpty())) {
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    InfoUser user = new InfoUser(fullName, regNum, department, session, email, phoneNumber, contributionCount, userType, String.valueOf(selectedImageResourceId));
-                    databaseReference.child("UserInfo").child(regNum).setValue(user);
-                    Toast.makeText(SignUpUser.this, "Signup Complete", Toast.LENGTH_SHORT).show();
-                    clearEditTextFields();
-                    Intent intent = new Intent(getApplicationContext(), SignInUser.class);
-                    startActivity(intent);
+                                    mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(SignUpUser.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                                InfoUser user = new InfoUser(fullName, regNum, department, session, email, phoneNumber, contributionCount, userType, selectedImageResourceId);
+                                databaseReference.child("UserInfo").child(regNum).setValue(user);
+                                showToast("Signup successful!");
+                                Intent intent = new Intent(SignUpUser.this, SignInUser.class);
+                                startActivity(intent);
+                                finish();
+                                } else {
+                                    showToast("Error!");
+                                }
+                            }
+                        });
                 } else {
-                    showToast("Something went wrong");
+                    showToast("Something is Empty");
                 }
             }
         });
@@ -120,15 +143,6 @@ public class SignUpUser extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-    private void clearEditTextFields() {
-        editFullname.setText("");
-        editRegNum.setText("");
-        editDept.setText("");
-        editSession.setText("");
-        editEmailId.setText("");
-        editPhoneNumber.setText("");
-        editPassword.setText("");
     }
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

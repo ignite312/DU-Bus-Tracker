@@ -25,5 +25,9 @@
             android:id="@+id/details"
             android:icon="@drawable/baseline_details_24"
             android:title="Developer Details" />
+        <item
+            android:id="@+id/logOut"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
     </group>
 </menu>

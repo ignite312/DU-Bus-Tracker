@@ -4,6 +4,7 @@ import static com.octagon.octagondu.MainActivity.userRegUnique;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,29 +12,45 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import android.graphics.Bitmap;
 
+
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostViewHolder> {
     private List<InfoNewsFeed> postList;
     private Context context;
+    Map<Integer, Boolean> booleanMap = new HashMap<>();
+    FirebaseStorage storage;
 
     public AdapterNewsFeed(Context context, List<InfoNewsFeed> postList) {
         this.context = context;
         this.postList = postList;
     }
-
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,7 +61,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         InfoNewsFeed infoNewsFeed = postList.get(position);
-        holder.bind(infoNewsFeed);
+        holder.bind(infoNewsFeed, position);
     }
 
     @Override
@@ -65,7 +82,6 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         private ImageView downVoteImageView;
         CircleImageView circleImageView;
 
-
         public PostViewHolder(View itemView) {
             super(itemView);
             userNameTextView = itemView.findViewById(R.id.username);
@@ -82,7 +98,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         }
 
         @SuppressLint("SetTextI18n")
-        public void bind(InfoNewsFeed infoNewsFeed) {
+        public void bind(InfoNewsFeed infoNewsFeed, int position) {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoNewsFeed.getUserId());
             reference.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
@@ -94,10 +110,29 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                 dataSnapshot.child("session").getValue());
                         userTypeTextView.setText("● " + dataSnapshot.child("userType").getValue());
                         busNameTextView.setText(infoNewsFeed.getBusName());
-                        String t_imageString = dataSnapshot.child("userImage").getValue(String.class);
-                        if (t_imageString != null) {
-                            int t_image = Integer.parseInt(t_imageString);
-                            circleImageView.setImageResource(t_image);
+                        try {
+                            storage = FirebaseStorage.getInstance();
+                            StorageReference storageRef = storage.getReference();
+                            StorageReference imagesRef = storageRef.child((String) Objects.requireNonNull(dataSnapshot.child("userImage").getValue()));
+
+                            File localFile = File.createTempFile("tempFile", ".png");
+                            imagesRef.getFile(localFile)
+                                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                            circleImageView.setImageBitmap(bitmap); // Use setImageBitmap
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            showToast("Error: " + e.getMessage());
+                                        }
+                                    });
+//
+                        }catch (Exception e) {
+                            showToast(e.getMessage());
                         }
                     } else {
                     }
@@ -108,7 +143,23 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                     Log.e("Firebase", "Error fetching data", databaseError.toException());
                 }
             });
-            postDateTextView.setText(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate());
+            String timeDifference = getTimeDifference(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate(), "HH:mm:ss dd MMM yyyy");
+            postDateTextView.setText(timeDifference);
+            postDateTextView.setOnClickListener(View-> {
+                if(booleanMap.get(position) == null) {
+                    postDateTextView.setText(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate());
+                    booleanMap.put(position, false);
+                }
+                else {
+                    if(Boolean.TRUE.equals(booleanMap.get(position))) {
+                        postDateTextView.setText(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate());
+                        booleanMap.put(position, false);
+                    }else {
+                        postDateTextView.setText(timeDifference);
+                        booleanMap.put(position, true);
+                    }
+                }
+            });
             postTitleTextView.setText(infoNewsFeed.getTitle());
             postDescTextView.setText(infoNewsFeed.getDesc());
             voteCountTextView.setText(String.valueOf(infoNewsFeed.getVote()));
@@ -267,6 +318,44 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
 
             });
 
+        }
+    }
+    public String getTimeDifference(String inputDate, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
+
+        try {
+            Date date = sdf.parse(inputDate);
+            long currentTimeMillis = System.currentTimeMillis();
+            long inputTimeMillis = date.getTime();
+
+            long diffMillis = currentTimeMillis - inputTimeMillis;
+
+            long seconds = TimeUnit.MILLISECONDS.toSeconds(diffMillis);
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(diffMillis);
+            long hours = TimeUnit.MILLISECONDS.toHours(diffMillis);
+            long days = TimeUnit.MILLISECONDS.toDays(diffMillis);
+            long weeks = days / 7;
+            long months = days / 30;
+
+            if (months > 0) {
+                return months + " months ago";
+            } else if (weeks > 0) {
+                return weeks + " weeks ago";
+            } else if (days > 0) {
+                return days + " days ago";
+            } else if (hours > 0) {
+                return hours + " hours ago";
+            } else if (minutes > 0) {
+                return minutes + " minutes ago";
+            } else if (seconds > 0) {
+                return seconds + " seconds ago";
+            } else {
+                return "just now";
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid date format";
         }
     }
     public void showToast(String message) {
