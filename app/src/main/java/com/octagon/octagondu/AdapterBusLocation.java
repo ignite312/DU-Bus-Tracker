@@ -113,7 +113,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
         }
         public void bind(InfoBusLocation infoBusLocation, int position) {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoBusLocation.getRegNum());
-            reference.addValueEventListener(new ValueEventListener() {
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
