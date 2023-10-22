@@ -111,10 +111,9 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
             downVoteImageView = itemView.findViewById(R.id.downVoteLocation);
             reportProfile = itemView.findViewById(R.id.reportProfileLocaton);
         }
-        @SuppressLint("SetTextI18n")
         public void bind(InfoBusLocation infoBusLocation, int position) {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoBusLocation.getRegNum());
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            reference.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -155,42 +154,13 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                     Log.e("Firebase", "Error fetching data", databaseError.toException());
                 }
             });
-
-            lastDate.setText("Last Date: " + infoBusLocation.getDate());
-
-            DatabaseReference reference_dynamic_change = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child(infoBusLocation.getRegNum());
-
-            reference_dynamic_change.addValueEventListener(new ValueEventListener() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        lastLocation.setText("Last Place: Near Dhaka");
-                        lastTime.setText("Last Seen: "+ dataSnapshot.child("time").getValue());
-                        String timeDifference = getTimeDifference(dataSnapshot.child("time").getValue() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy");
-                        countdown.setText("About "+timeDifference);
-                        if(dataSnapshot.child("voteCount").getValue() == null) {
-                            voteCount.setText("0");
-                        }else voteCount.setText(String.valueOf(dataSnapshot.child("voteCount").getValue()));
-                    } else {
-
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("Firebase", "Error fetching data", databaseError.toException());
-                }
-            });
-
-
-
-//            String timeDifference = getTimeDifference(infoBusLocation.getTime() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy");
-//            countdown.setText(timeDifference);
-//            lastDate.setText(infoBusLocation.getDate());
-//            lastTime.setText(infoBusLocation.getTime());
-//            if(infoBusLocation.getVoteCount() == null) {
-//                voteCount.setText("0");
-//            }else voteCount.setText(String.valueOf(infoBusLocation.getVoteCount()));
+            String timeDifference = getTimeDifference(infoBusLocation.getTime() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy");
+            countdown.setText(timeDifference);
+            lastDate.setText(infoBusLocation.getDate());
+            lastTime.setText(infoBusLocation.getTime());
+            if(infoBusLocation.getVoteCount() == null) {
+                voteCount.setText("0");
+            }else voteCount.setText(String.valueOf(infoBusLocation.getVoteCount()));
         }
     }
     public String getTimeDifference(String inputDate, String format) {
