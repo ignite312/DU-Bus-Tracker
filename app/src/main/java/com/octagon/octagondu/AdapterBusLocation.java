@@ -113,7 +113,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
         }
         public void bind(InfoBusLocation infoBusLocation, int position) {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoBusLocation.getRegNum());
-            reference.addValueEventListener(new ValueEventListener() {
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -154,6 +154,52 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                     Log.e("Firebase", "Error fetching data", databaseError.toException());
                 }
             });
+
+            DatabaseReference reference_dynamic_change = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoBusLocation.getRegNum());
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        userName.setText(String.valueOf(dataSnapshot.child("fullName").getValue()));
+                        userType.setText("● " + dataSnapshot.child("userType").getValue());
+                        deptNameSession.setText(dataSnapshot.child("department").getValue() + " " +
+                                dataSnapshot.child("session").getValue());
+                        try {
+                            storage = FirebaseStorage.getInstance();
+                            StorageReference storageRef = storage.getReference();
+                            StorageReference imagesRef = storageRef.child((String) Objects.requireNonNull(dataSnapshot.child("userImage").getValue()));
+
+                            File localFile = File.createTempFile("tempFile", ".png");
+                            imagesRef.getFile(localFile)
+                                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                            circleImageView.setImageBitmap(bitmap); // Use setImageBitmap
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            showToast("Error: " + e.getMessage());
+                                        }
+                                    });
+//
+                        }catch (Exception e) {
+                            showToast(e.getMessage());
+                        }
+                    } else {
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error fetching data", databaseError.toException());
+                }
+            });
+
+
+
             String timeDifference = getTimeDifference(infoBusLocation.getTime() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy");
             countdown.setText(timeDifference);
             lastDate.setText(infoBusLocation.getDate());

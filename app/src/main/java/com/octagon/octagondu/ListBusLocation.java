@@ -57,7 +57,7 @@ public class ListBusLocation extends AppCompatActivity {
         recyclerView.setAdapter(adapterBusLocation);
 
         databaseReference = database.getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<InfoBusLocation> list = new ArrayList<>();
