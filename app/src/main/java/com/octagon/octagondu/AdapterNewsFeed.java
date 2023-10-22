@@ -163,6 +163,8 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             postTitleTextView.setText(infoNewsFeed.getTitle());
             postDescTextView.setText(infoNewsFeed.getDesc());
             voteCountTextView.setText(String.valueOf(infoNewsFeed.getVote()));
+            if(Integer.parseInt(String.valueOf(infoNewsFeed.getVote())) <= 0)voteCountTextView.setText(String.valueOf(infoNewsFeed.getVote()));
+            else voteCountTextView.setText("+"+ infoNewsFeed.getVote());
 
             reference = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
             reference.addValueEventListener(new ValueEventListener() {
@@ -188,7 +190,8 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
                                     String t_cnt = String.valueOf(dataSnapshot.getValue());
-                                    voteCountTextView.setText(t_cnt);
+                                    if(Integer.parseInt(t_cnt) <= 0)voteCountTextView.setText(t_cnt);
+                                    else voteCountTextView.setText("+"+t_cnt);
                                 } else {
                                 }
                             }

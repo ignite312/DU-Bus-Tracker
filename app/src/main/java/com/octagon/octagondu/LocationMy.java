@@ -103,6 +103,8 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
             databaseReference.child("lon").setValue(Double.toString(longitude));
             databaseReference.child("time").setValue(getCurrentTime24HourFormat());
             databaseReference.child("date").setValue(getCurrentDateFormatted());
+            databaseReference.child("busName").setValue(busName);
+            databaseReference.child("busTime").setValue(busTime);
         }
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions()

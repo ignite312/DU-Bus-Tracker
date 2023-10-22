@@ -2,6 +2,8 @@ package com.octagon.octagondu;
 
 public class InfoBusLocation {
     private String regNum;
+    private String busName;
+    private String busTime;
     private String lastLocation;
     private  String time;
     private String date;
@@ -12,14 +14,33 @@ public class InfoBusLocation {
     public InfoBusLocation() {
 
     }
-    public InfoBusLocation(String regNum, String lastLocation, String time, String date, String voteCount, String lat, String lon) {
+
+    public InfoBusLocation(String regNum, String busName, String busTime, String lastLocation, String time, String date, String voteCount, String lat, String lon) {
         this.regNum = regNum;
+        this.busName = busName;
+        this.busTime = busTime;
         this.lastLocation = lastLocation;
         this.time = time;
         this.date = date;
         this.voteCount = voteCount;
         this.lat = lat;
         this.lon = lon;
+    }
+
+    public String getBusName() {
+        return busName;
+    }
+
+    public void setBusName(String busName) {
+        this.busName = busName;
+    }
+
+    public String getBusTime() {
+        return busTime;
+    }
+
+    public void setBusTime(String busTime) {
+        this.busTime = busTime;
     }
 
     public String getRegNum() {
