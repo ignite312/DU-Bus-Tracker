@@ -13,13 +13,6 @@ public class FragmentProfileMy extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_profile_my, container, false);
-        ViewPager viewPager = view.findViewById(R.id.viewPager);
-        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
-
-        CustomPagerAdapter adapter = new CustomPagerAdapter(getActivity().getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-
-        tabLayout.setupWithViewPager(viewPager);
 
         return view;
     }
