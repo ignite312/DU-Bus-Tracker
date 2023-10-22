@@ -48,7 +48,7 @@ public class ListBusDetails extends AppCompatActivity {
             progressBarDown.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
             progressBarDown.setVisibility(View.INVISIBLE);
         }
-        detailsBusToolbar.setTitle("Location for " + busName);
+        detailsBusToolbar.setTitle(busName);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Name").child(busName);
 

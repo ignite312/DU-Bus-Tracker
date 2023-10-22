@@ -6,7 +6,7 @@ public class InfoNewsFeed {
     private  String helpType;
     private String title;
     private String desc;
-    private int vote;
+    private int totalVote;
     private String time;
     private String  date;
     private String  status;
@@ -15,13 +15,13 @@ public class InfoNewsFeed {
     public InfoNewsFeed() {
 
     }
-    public InfoNewsFeed(String userId, String busName, String helpType, String title, String desc, int vote, String time, String date, String status, String postId) {
+    public InfoNewsFeed(String userId, String busName, String helpType, String title, String desc, int totalVote, String time, String date, String status, String postId) {
         this.userId = userId;
         this.busName = busName;
         this.helpType = helpType;
         this.title = title;
         this.desc = desc;
-        this.vote = vote;
+        this.totalVote = totalVote;
         this.time = time;
         this.date = date;
         this.status = status;
@@ -68,12 +68,12 @@ public class InfoNewsFeed {
         this.desc = desc;
     }
 
-    public int getVote() {
-        return vote;
+    public int getTotalVote() {
+        return totalVote;
     }
 
-    public void setVote(int vote) {
-        this.vote = vote;
+    public void setTotalVote(int totalVote) {
+        this.totalVote = totalVote;
     }
 
     public String getTime() {

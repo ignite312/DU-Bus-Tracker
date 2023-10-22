@@ -1,7 +1,6 @@
 package com.octagon.octagondu;
 
-import static com.octagon.octagondu.MainActivity.userRegUnique;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,14 +32,17 @@ public class ListBusLocation extends AppCompatActivity {
     private AdapterBusLocation adapterBusLocation;
     private final int delay = 10000; // 5 seconds
     private String busName, busTime;
+    MaterialToolbar detailsBusToolbar;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); // Add this line
         setContentView(R.layout.activity_list_bus_location);
         busName = getIntent().getStringExtra("BUSNAME");
         busTime = getIntent().getStringExtra("BUSTIME");
-
+        detailsBusToolbar = findViewById(R.id.locationForFixedTimeAppBar);
+        detailsBusToolbar.setTitle("Locations for " + busName + " " + busTime);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         TextView textView = findViewById(R.id.shareYourLocation);
         textView.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,6 @@
 package com.octagon.octagondu;
 
-import static com.octagon.octagondu.MainActivity.userRegUnique;
+import static com.octagon.octagondu.MainActivity.DUREGNUM;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import android.graphics.Bitmap;
 
 
@@ -51,6 +53,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         this.context = context;
         this.postList = postList;
     }
+
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -71,7 +74,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
 
     public class PostViewHolder extends RecyclerView.ViewHolder {
         private TextView userNameTextView;
-        private TextView departmentNameTextView;
+        private TextView departmentNameSessionTextView;
         private TextView userTypeTextView;
         private TextView busNameTextView;
         private TextView postDateTextView;
@@ -85,7 +88,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         public PostViewHolder(View itemView) {
             super(itemView);
             userNameTextView = itemView.findViewById(R.id.username);
-            departmentNameTextView = itemView.findViewById(R.id.deptName);
+            departmentNameSessionTextView = itemView.findViewById(R.id.deptName);
             busNameTextView = itemView.findViewById(R.id.busNameUserType);
             postDateTextView = itemView.findViewById(R.id.postDate);
             postTitleTextView = itemView.findViewById(R.id.Title);
@@ -99,14 +102,14 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
 
         @SuppressLint("SetTextI18n")
         public void bind(InfoNewsFeed infoNewsFeed, int position) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoNewsFeed.getUserId());
-            reference.addValueEventListener(new ValueEventListener() {
+            DatabaseReference ViewUserInfoRef = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoNewsFeed.getUserId());
+            ViewUserInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         userNameTextView.setText(String.valueOf(dataSnapshot.child("fullName").getValue()));
-                        departmentNameTextView.setText(dataSnapshot.child("department").getValue() + " " +
+                        departmentNameSessionTextView.setText(dataSnapshot.child("department").getValue() + " " +
                                 dataSnapshot.child("session").getValue());
                         userTypeTextView.setText("● " + dataSnapshot.child("userType").getValue());
                         busNameTextView.setText(infoNewsFeed.getBusName());
@@ -121,7 +124,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                         @Override
                                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                             Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                            circleImageView.setImageBitmap(bitmap); // Use setImageBitmap
+                                            circleImageView.setImageBitmap(bitmap);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -131,7 +134,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                         }
                                     });
 //
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             showToast(e.getMessage());
                         }
                     } else {
@@ -143,31 +146,28 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                     Log.e("Firebase", "Error fetching data", databaseError.toException());
                 }
             });
+            /*Time Difference now and when posted*/
             String timeDifference = getTimeDifference(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate(), "HH:mm:ss dd MMM yyyy");
             postDateTextView.setText(timeDifference);
-            postDateTextView.setOnClickListener(View-> {
-                if(booleanMap.get(position) == null) {
+            postDateTextView.setOnClickListener(View -> {
+                if (booleanMap.get(position) == null) {
                     postDateTextView.setText(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate());
                     booleanMap.put(position, false);
-                }
-                else {
-                    if(Boolean.TRUE.equals(booleanMap.get(position))) {
+                } else {
+                    if (Boolean.TRUE.equals(booleanMap.get(position))) {
                         postDateTextView.setText(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate());
                         booleanMap.put(position, false);
-                    }else {
-                        postDateTextView.setText(timeDifference);
+                    } else {
+                        postDateTextView.setText(getTimeDifference(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate(), "HH:mm:ss dd MMM yyyy"));
                         booleanMap.put(position, true);
                     }
                 }
             });
             postTitleTextView.setText(infoNewsFeed.getTitle());
             postDescTextView.setText(infoNewsFeed.getDesc());
-            voteCountTextView.setText(String.valueOf(infoNewsFeed.getVote()));
-            if(Integer.parseInt(String.valueOf(infoNewsFeed.getVote())) <= 0)voteCountTextView.setText(String.valueOf(infoNewsFeed.getVote()));
-            else voteCountTextView.setText("+"+ infoNewsFeed.getVote());
 
-            reference = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
-            reference.addValueEventListener(new ValueEventListener() {
+            DatabaseReference UpDownSymbolRef = FirebaseDatabase.getInstance().getReference("Feed/PostReactions/" + infoNewsFeed.getPostId() + "/" + DUREGNUM);
+            UpDownSymbolRef.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -183,70 +183,59 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                             upvoteImageView.setImageResource(R.drawable.arrow_upward);
                             downVoteImageView.setImageResource(R.drawable.arrow_downward);
                         }
-                        DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
-                        cnt_ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    String t_cnt = String.valueOf(dataSnapshot.getValue());
-                                    if(Integer.parseInt(t_cnt) <= 0)voteCountTextView.setText(t_cnt);
-                                    else voteCountTextView.setText("+"+t_cnt);
-                                } else {
-                                }
-                            }
+                    }
+                }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                Log.e("Firebase", "Error fetching data", databaseError.toException());
-                            }
-                        });
-                    } else {
-
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    showToast("Firebase Error fetching data");
+                }
+            });
+            DatabaseReference VoteCountRef = FirebaseDatabase.getInstance().getReference("Feed/Posts").child(infoNewsFeed.getPostId()).child("/totalVote");
+            VoteCountRef.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String t_totalVote = String.valueOf(dataSnapshot.getValue());
+                        if (Integer.parseInt(t_totalVote) <= 0) voteCountTextView.setText(t_totalVote);
+                        else voteCountTextView.setText("+" + t_totalVote);
                     }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("Firebase", "Error fetching data", databaseError.toException());
+                    showToast("Firebase Error fetching data");
                 }
             });
             upvoteImageView.setOnClickListener(view -> {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
-                DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
-                final int[] count = {0};
-                cnt_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                final int[] totalVoteCount = {0};
+                VoteCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            String t_cnt = String.valueOf(dataSnapshot.getValue());
-                            count[0] = Integer.parseInt(t_cnt);
-                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            String t_totalVote = String.valueOf(dataSnapshot.getValue());
+                            totalVoteCount[0] = Integer.parseInt(t_totalVote);
+                            UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    DatabaseReference reff = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
-                                    DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
                                     DatabaseReference cnt_ref_main = FirebaseDatabase.getInstance().getReference("Feed/" + "/Posts/" + infoNewsFeed.getPostId() + "/vote");
                                     if (dataSnapshot.exists()) {
                                         String _react = String.valueOf(dataSnapshot.getValue());
                                         if (_react.equals("00")) {
-                                            reff.setValue("10");
-                                            cnt_ref_main.setValue(count[0] + 1);
-                                            cnt_ref.setValue(count[0] + 1);
+                                            UpDownSymbolRef.setValue("10");
+                                            VoteCountRef.setValue(totalVoteCount[0] + 1);
                                         } else if (_react.equals("10")) {
-                                            reff.setValue("00");
-                                            cnt_ref.setValue(count[0] - 1);
-                                            cnt_ref_main.setValue(count[0] - 1);
+                                            UpDownSymbolRef.setValue("00");
+                                            VoteCountRef.setValue(totalVoteCount[0] - 1);
                                         } else if (_react.equals("01")) {
-                                            reff.setValue("10");
-                                            cnt_ref.setValue(count[0] + 2);
-                                            cnt_ref_main.setValue(count[0] + 2);
+                                            UpDownSymbolRef.setValue("10");
+                                            VoteCountRef.setValue(totalVoteCount[0] + 2);
                                         }
                                     } else {
-                                        reff.setValue("10");
-                                        cnt_ref_main.setValue(count[0] + 1);
-                                        cnt_ref.setValue(count[0] + 1);
+                                        UpDownSymbolRef.setValue("10");
+                                        VoteCountRef.setValue(totalVoteCount[0] + 1);
                                     }
                                 }
                                 @Override
@@ -254,7 +243,6 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                     Log.e("Firebase", "Error fetching data", databaseError.toException());
                                 }
                             });
-                        } else {
                         }
                     }
                     @Override
@@ -265,64 +253,53 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             });
 
             downVoteImageView.setOnClickListener(view -> {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
-                final int[] count = {0};
-                DatabaseReference ref_cnt = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
-                ref_cnt.addListenerForSingleValueEvent(new ValueEventListener() {
+                final int[] totalVoteCount = {0};
+                VoteCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            String t_cnt = String.valueOf(dataSnapshot.getValue());
-                            count[0] = Integer.parseInt(t_cnt);
-                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            String t_totalVote = String.valueOf(dataSnapshot.getValue());
+                            totalVoteCount[0] = Integer.parseInt(t_totalVote);
+                            UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    DatabaseReference reff = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/People/" + userRegUnique);
-                                    DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + infoNewsFeed.getPostId() + "/Count");
                                     DatabaseReference cnt_ref_main = FirebaseDatabase.getInstance().getReference("Feed/" + "/Posts/" + infoNewsFeed.getPostId() + "/vote");
                                     if (dataSnapshot.exists()) {
                                         String _react = String.valueOf(dataSnapshot.getValue());
                                         if (_react.equals("00")) {
-                                            reff.setValue("01");
-                                            cnt_ref.setValue(count[0] - 1);
-                                            cnt_ref_main.setValue(count[0] - 1);
+                                            UpDownSymbolRef.setValue("01");
+                                            VoteCountRef.setValue(totalVoteCount[0] - 1);
                                         } else if (_react.equals("10")) {
-                                            reff.setValue("01");
-                                            cnt_ref.setValue(count[0] - 2);
-                                            cnt_ref_main.setValue(count[0] - 2);
+                                            UpDownSymbolRef.setValue("01");
+                                            VoteCountRef.setValue(totalVoteCount[0] - 2);
                                         } else if (_react.equals("01")) {
-                                            reff.setValue("00");
-                                            cnt_ref.setValue(count[0] + 1);
-                                            cnt_ref_main.setValue(count[0] + 1);
+                                            UpDownSymbolRef.setValue("00");
+                                            VoteCountRef.setValue(totalVoteCount[0] + 1);
                                         }
                                     } else {
-                                        reff.setValue("01");
-                                        cnt_ref.setValue(count[0] - 1);
-                                        cnt_ref_main.setValue(count[0] - 1);
+                                        UpDownSymbolRef.setValue("01");
+                                        VoteCountRef.setValue(totalVoteCount[0] - 1);
                                     }
                                 }
-
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
                                     Log.e("Firebase", "Error fetching data", databaseError.toException());
                                 }
                             });
-                        } else {
                         }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e("Firebase", "Error fetching data", databaseError.toException());
                     }
                 });
-
             });
 
         }
     }
+
     public String getTimeDifference(String inputDate, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
 
@@ -361,6 +338,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             return "Invalid date format";
         }
     }
+
     public void showToast(String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }

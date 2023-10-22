@@ -1,6 +1,6 @@
 package com.octagon.octagondu;
 
-import static com.octagon.octagondu.MainActivity.userRegUnique;
+import static com.octagon.octagondu.MainActivity.DUREGNUM;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -29,10 +29,9 @@ public class FragmentPostCreate extends Fragment {
     Spinner spinnerHelp, spinnerBusType;
     TextView textViewTitle, textViewDesc;
     Button button;
-    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     FragmentNewsFeed fragmentNewsFeed;
-    String Count = "0";
+    String PostCount = "0";
 
 
     @Override
@@ -46,16 +45,16 @@ public class FragmentPostCreate extends Fragment {
         button = view.findViewById(R.id.go);
         fragmentNewsFeed = new FragmentNewsFeed();
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Feed");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Feed");
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    Count = (String) dataSnapshot.child("Count").getValue();
+                    showToast(String.valueOf(PostCount));
+                    PostCount = (String) dataSnapshot.child("PostCount").getValue();
                 } else {
-//                    showToast("Error");
+                    PostCount = "0";
                 }
             }
             @Override
@@ -63,7 +62,6 @@ public class FragmentPostCreate extends Fragment {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
             }
         });
-        databaseReference = firebaseDatabase.getReference();
         button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -73,16 +71,12 @@ public class FragmentPostCreate extends Fragment {
                                 String desc = textViewDesc.getText().toString();
                                 String time = getCurrentTime24HourFormat();
                                 String date = getCurrentDateFormatted();
-
-                                InfoNewsFeed post = new InfoNewsFeed(userRegUnique, busType, helpType, title, desc, 0, time, date, "0", Count);
+                                InfoNewsFeed post = new InfoNewsFeed(DUREGNUM, busType, helpType, title, desc, 0, time, date, "0", PostCount);
                                 if(!title.isEmpty() || !desc.isEmpty()) {
-                                    databaseReference.child("Feed/Posts").child(Count).setValue(post);
-                                    DatabaseReference cnt_ref = FirebaseDatabase.getInstance().getReference("Interaction/" + Count + "/Count");
-                                    cnt_ref.setValue(0);
+                                    FirebaseDatabase.getInstance().getReference("Feed/Posts").child(PostCount).setValue(post);
 
-                                    int cnt = Integer.parseInt(Count) + 1;
-                                    Count = String.valueOf(cnt);
-                                    databaseReference.child("Feed/Count").setValue(Count);
+                                    PostCount = String.valueOf(Integer.parseInt(PostCount) + 1);
+                                    FirebaseDatabase.getInstance().getReference("Feed/PostCount").setValue(PostCount);
                                     showToast("Posted");
                                     openFeedFragment();
                                 }else showToast("Something is empty");

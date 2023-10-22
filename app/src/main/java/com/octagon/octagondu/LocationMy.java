@@ -1,6 +1,6 @@
 package com.octagon.octagondu;
 
-import static com.octagon.octagondu.MainActivity.userRegUnique;
+import static com.octagon.octagondu.MainActivity.DUREGNUM;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -96,8 +96,8 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
         if (location != null) {
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime).child(userRegUnique);
-            databaseReference.child("regNum").setValue(userRegUnique);
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime).child(DUREGNUM);
+            databaseReference.child("regNum").setValue(DUREGNUM);
             databaseReference.child("lastLocation").setValue("Dhaka");
             databaseReference.child("lat").setValue(Double.toString(latitude));
             databaseReference.child("lon").setValue(Double.toString(longitude));

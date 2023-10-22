@@ -21,7 +21,6 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     private Toolbar toolbar;
-    public static String userRegUnique = "0";
+    public static String DUREGNUM = "0";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -201,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                             if (info != null) {
                                 String t_email = String.valueOf(snapshot.child("email").getValue());
                                 if (t_email.equals(email)) {
-                                    userRegUnique =  String.valueOf(snapshot.child("regNum").getValue());
+                                    DUREGNUM =  String.valueOf(snapshot.child("regNum").getValue());
                                     ok = true;
                                     break;
                                 }
