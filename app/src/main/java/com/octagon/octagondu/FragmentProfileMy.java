@@ -18,8 +18,8 @@ public class FragmentProfileMy extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_profile_my, container, false);
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        ViewPager viewPager = view.findViewById(R.id.viewPager);
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 
         CustomPagerAdapter adapter = new CustomPagerAdapter(getActivity().getSupportFragmentManager());
         viewPager.setAdapter(adapter);
