@@ -96,7 +96,7 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
         if (location != null) {
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime).child(DUREGNUM);
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime).child("Locations").child(DUREGNUM);
             databaseReference.child("regNum").setValue(DUREGNUM);
             databaseReference.child("lastLocation").setValue("Dhaka");
             databaseReference.child("lat").setValue(Double.toString(latitude));

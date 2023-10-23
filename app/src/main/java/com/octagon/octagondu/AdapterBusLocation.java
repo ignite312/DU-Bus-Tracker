@@ -1,4 +1,5 @@
 package com.octagon.octagondu;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -86,7 +88,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
         CircleImageView circleImageView;
         private TextView userName;
         private TextView userType;
-        private TextView deptNameSession;
+        private TextView departmentNameSessionTextView;
         private TextView lastLocation;
         private TextView lastTime;
         private TextView lastDate;
@@ -101,7 +103,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
             circleImageView = itemView.findViewById(R.id.photoLocation);
             userName = itemView.findViewById(R.id.usernameLocation);
             userType = itemView.findViewById(R.id.UserTypeLocation);
-            deptNameSession = itemView.findViewById(R.id.deptNameSessionLocation);
+            departmentNameSessionTextView = itemView.findViewById(R.id.deptNameSessionLocation);
             lastLocation = itemView.findViewById(R.id.lastLocation);
             lastTime = itemView.findViewById(R.id.lastTime);
             lastDate = itemView.findViewById(R.id.lastDate);
@@ -113,15 +115,15 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
         }
         @SuppressLint("SetTextI18n")
         public void bind(InfoBusLocation infoBusLocation, int position) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoBusLocation.getRegNum());
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            DatabaseReference ViewUserInfoRef = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoBusLocation.getRegNum());
+            ViewUserInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         userName.setText(String.valueOf(dataSnapshot.child("fullName").getValue()));
                         userType.setText("● " + dataSnapshot.child("userType").getValue());
-                        deptNameSession.setText(dataSnapshot.child("department").getValue() + " " +
+                        departmentNameSessionTextView.setText(dataSnapshot.child("department").getValue() + " " +
                                 dataSnapshot.child("session").getValue());
                         try {
                             storage = FirebaseStorage.getInstance();
@@ -156,19 +158,18 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 }
             });
 
-            lastDate.setText("Last Date: " + infoBusLocation.getDate());
+            lastDate.setText("Date: " + infoBusLocation.getDate());
 
-            DatabaseReference reference_dynamic_change = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child(infoBusLocation.getRegNum());
+            DatabaseReference DynamicChangeRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child("/Locations/").child(infoBusLocation.getRegNum());
 
-            reference_dynamic_change.addValueEventListener(new ValueEventListener() {
+            DynamicChangeRef.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        lastLocation.setText("Last Place: Near Dhaka");
+                        lastLocation.setText("Last Place: Near " +  dataSnapshot.child("lastLocation").getValue());
                         lastTime.setText("Last Seen: "+ dataSnapshot.child("time").getValue());
-                        String timeDifference = getTimeDifference(dataSnapshot.child("time").getValue() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy");
-                        countdown.setText(timeDifference);
+                        countdown.setText(getTimeDifference(dataSnapshot.child("time").getValue() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy"));
                         if(dataSnapshot.child("voteCount").getValue() == null) {
                             voteCount.setText("0");
                         }else voteCount.setText(String.valueOf(dataSnapshot.child("voteCount").getValue()));
@@ -182,15 +183,6 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 }
             });
 
-
-
-//            String timeDifference = getTimeDifference(infoBusLocation.getTime() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy");
-//            countdown.setText(timeDifference);
-//            lastDate.setText(infoBusLocation.getDate());
-//            lastTime.setText(infoBusLocation.getTime());
-//            if(infoBusLocation.getVoteCount() == null) {
-//                voteCount.setText("0");
-//            }else voteCount.setText(String.valueOf(infoBusLocation.getVoteCount()));
         }
     }
     public String getTimeDifference(String inputDate, String format) {
