@@ -4,6 +4,7 @@ import static com.octagon.octagondu.MainActivity.DUREGNUM;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import android.graphics.Bitmap;
 
 
 import java.io.File;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,6 +86,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         private ImageView upvoteImageView;
         private ImageView downVoteImageView;
         CircleImageView circleImageView;
+        private ImageView commentImageView;
 
         public PostViewHolder(View itemView) {
             super(itemView);
@@ -98,6 +101,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             downVoteImageView = itemView.findViewById(R.id.downVoteImageView);
             userTypeTextView = itemView.findViewById(R.id.userType);
             circleImageView = itemView.findViewById(R.id.photo);
+            commentImageView = itemView.findViewById(R.id.commentImageViewFeed);
         }
 
         @SuppressLint("SetTextI18n")
@@ -133,7 +137,6 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                             showToast("Error: " + e.getMessage());
                                         }
                                     });
-//
                         } catch (Exception e) {
                             showToast(e.getMessage());
                         }
@@ -151,11 +154,11 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             postDateTextView.setText(timeDifference);
             postDateTextView.setOnClickListener(View -> {
                 if (booleanMap.get(position) == null) {
-                    postDateTextView.setText(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate());
+                    postDateTextView.setText(convertTimeToAMPM(infoNewsFeed.getTime()) + ", " + convertDateToDay( infoNewsFeed.getDate()));
                     booleanMap.put(position, false);
                 } else {
                     if (Boolean.TRUE.equals(booleanMap.get(position))) {
-                        postDateTextView.setText(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate());
+                        postDateTextView.setText(convertTimeToAMPM(infoNewsFeed.getTime()) + ", " +convertDateToDay(infoNewsFeed.getDate()));
                         booleanMap.put(position, false);
                     } else {
                         postDateTextView.setText(getTimeDifference(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate(), "HH:mm:ss dd MMM yyyy"));
@@ -294,7 +297,20 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                     }
                 });
             });
+            commentImageView.setOnClickListener(view -> {
+                showToast("Coming Soon!");
+            });
 
+            View.OnClickListener commonOnClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProfileOthers.class);
+                    intent.putExtra("UID", infoNewsFeed.getUserId());
+                    context.startActivity(intent);
+                }
+            };
+            userNameTextView.setOnClickListener(commonOnClickListener);
+            circleImageView.setOnClickListener(commonOnClickListener);
         }
     }
 
@@ -334,6 +350,36 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         } catch (ParseException e) {
             e.printStackTrace();
             return "Invalid date format";
+        }
+    }
+    public  String convertTimeToAMPM(String timeString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm a");
+
+            Date date = inputFormat.parse(timeString);
+
+            String timeInAMPM = outputFormat.format(date);
+
+            return timeInAMPM;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid Time Format";
+        }
+    }
+    public static String convertDateToDay(String dateString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE, MMM dd");
+
+            Date date = inputFormat.parse(dateString);
+
+            String formattedDate = outputFormat.format(date);
+
+            return formattedDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid Date Format";
         }
     }
 

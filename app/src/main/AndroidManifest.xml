@@ -33,6 +33,10 @@
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
+            android:name=".ProfileOthers"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
             android:name=".FragmentFindBusLocation"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />

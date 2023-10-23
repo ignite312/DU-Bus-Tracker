@@ -138,20 +138,23 @@
             android:textColor="@color/dark_grey_color"
             android:textIsSelectable="true"
             android:textSize="12sp" />
-        <LinearLayout
+        <RelativeLayout
             android:layout_marginLeft="5dp"
-            android:padding="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/upDownReport"
+            android:padding="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <!-- Vote Count TextView -->
-            <TextView android:id="@+id/voteCount"
+
+            <TextView
+                android:id="@+id/voteCount"
                 android:layout_marginTop="1dp"
                 android:text="-77"
                 android:textColor="#009688"
                 android:layout_width="wrap_content"
                 android:layout_height="20sp"
                 android:textSize="13sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical" />
 
             <!-- Upvote Button -->
             <ImageView
@@ -160,6 +163,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20sp"
                 android:clickable="true"
+                android:layout_toRightOf="@id/voteCount"
                 android:src="@drawable/arrow_upward"
                 android:contentDescription="Upvote" />
 
@@ -170,8 +174,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20sp"
                 android:clickable="true"
+                android:layout_toRightOf="@id/upvoteImageView"
                 android:src="@drawable/arrow_downward"
                 android:contentDescription="Downvote" />
-        </LinearLayout>
+
+            <!-- Comment ImageView (Rightmost) -->
+            <ImageView
+                android:id="@+id/commentImageViewFeed"
+                android:layout_width="wrap_content"
+                android:layout_height="20sp"
+                android:clickable="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/baseline_comment_24"
+                android:layout_gravity="end"
+                android:focusable="true" />
+        </RelativeLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

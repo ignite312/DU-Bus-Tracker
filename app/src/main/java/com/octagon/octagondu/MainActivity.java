@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
                     FirebaseAuth.getInstance().signOut();
-//                    Intent intent = new Intent(getApplicationContext(), SignUpUser.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
+                    startActivity(intent);
                     showToast("Will added later");
 //                    openCreatePosFragment();
                 } else if (itemId == R.id.details) {
