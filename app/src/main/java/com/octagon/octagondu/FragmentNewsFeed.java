@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,16 +24,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentNewsFeed extends Fragment {
-    private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
     private FragmentPostCreate fragmentPostCreate;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_news_feed, container, false);
 
         fragmentPostCreate = new FragmentPostCreate();
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
         TextView textView = view.findViewById(R.id.createAPost);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,12 +50,33 @@ public class FragmentNewsFeed extends Fragment {
             }
         });
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Feed/Posts");
-
         recyclerView = view.findViewById(R.id.recycler_view_feed);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  // Use getActivity() to get the activity's context
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        refresh();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        return view;
+    }
 
+    private void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    private void openCreatePosFragment() {
+        if (getActivity() != null) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment_container, fragmentPostCreate)
+                    .addToBackStack(null) // Optional: Add transaction to the back stack
+                    .commit();
+        }
+    }
+    private void refresh() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Feed/Posts");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -71,20 +101,5 @@ public class FragmentNewsFeed extends Fragment {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
             }
         });
-
-        return view;
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-    private void openCreatePosFragment() {
-        if (getActivity() != null) {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_fragment_container, fragmentPostCreate)
-                    .addToBackStack(null) // Optional: Add transaction to the back stack
-                    .commit();
-        }
     }
 }

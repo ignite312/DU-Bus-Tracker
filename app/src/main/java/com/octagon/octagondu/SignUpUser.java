@@ -89,9 +89,9 @@ public class SignUpUser extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // Get the selected image resource ID
                 if(position < 10) {
-                    selectedImageResourceId = "ProfilePic/Boys" + "b" + String.valueOf(position + 1) + ".png";
+                    selectedImageResourceId = "ProfilePic/Boys/" + "b" + String.valueOf(position + 1) + ".png";
                 }else {
-                    selectedImageResourceId = "ProfilePic/Girls" + "g" + String.valueOf(position - 9) + ".png";
+                    selectedImageResourceId = "ProfilePic/Girls/" + "g" + String.valueOf(position - 9) + ".png";
                 }
             }
 

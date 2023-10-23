@@ -1,0 +1,43 @@
+<!-- comment_section.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Post Content -->
+    <TextView
+        android:id="@+id/textViewPostContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post Content Goes Here"
+        android:textSize="16sp"
+        android:textColor="#000000" />
+
+    <!-- Comment Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
+
+        <ListView
+            android:id="@+id/listViewComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/editTextComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add a comment"
+            android:inputType="text" />
+
+        <!-- Button to Add Comment -->
+        <Button
+            android:id="@+id/buttonAddComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Comment" />
+    </LinearLayout>
+</LinearLayout>

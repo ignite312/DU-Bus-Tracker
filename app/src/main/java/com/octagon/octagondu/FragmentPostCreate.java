@@ -51,7 +51,6 @@ public class FragmentPostCreate extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    showToast(String.valueOf(PostCount));
                     PostCount = (String) dataSnapshot.child("PostCount").getValue();
                 } else {
                     PostCount = "0";

@@ -50,7 +50,7 @@ public class ListBusDetails extends AppCompatActivity {
         }
         detailsBusToolbar.setTitle(busName);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Bus Name").child(busName);
+        databaseReference = database.getReference("Bus Schedule").child(busName);
 
         recyclerViewUp = findViewById(R.id.recycler_view);
         recyclerViewUp.setLayoutManager(new LinearLayoutManager(this));
@@ -74,7 +74,6 @@ public class ListBusDetails extends AppCompatActivity {
                         InfoBusDetails bus = snapshot.getValue(InfoBusDetails.class);
                         if (bus != null) {
                             String temp = String.valueOf(snapshot.child("busType").getValue());
-                            //Toast.makeText(BusDetailsActivity.this, temp, Toast.LENGTH_SHORT).show();
                             if ("Up".equals(temp)) {
                                 busList1.add(bus);
                             } else {
