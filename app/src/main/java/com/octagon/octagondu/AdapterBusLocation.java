@@ -1,5 +1,7 @@
 package com.octagon.octagondu;
 
+import static com.octagon.octagondu.MainActivity.DUREGNUM;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -93,7 +95,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
         private TextView lastTime;
         private TextView lastDate;
         private TextView countdown;
-        private TextView voteCount;
+        private TextView voteCountLocation;
         private ImageView upvoteImageView;
         private ImageView downVoteImageView;
         private ImageView reportProfile;
@@ -108,7 +110,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
             lastTime = itemView.findViewById(R.id.lastTime);
             lastDate = itemView.findViewById(R.id.lastDate);
             countdown = itemView.findViewById(R.id.timeDiff);
-            voteCount = itemView.findViewById(R.id.voteCountLocation);
+            voteCountLocation = itemView.findViewById(R.id.voteCountLocation);
             upvoteImageView = itemView.findViewById(R.id.upvoteLocation);
             downVoteImageView = itemView.findViewById(R.id.downVoteLocation);
             reportProfile = itemView.findViewById(R.id.reportProfileLocaton);
@@ -170,11 +172,6 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                         lastLocation.setText("Last Place: Near " +  dataSnapshot.child("lastLocation").getValue());
                         lastTime.setText("Last Seen: "+ dataSnapshot.child("time").getValue());
                         countdown.setText(getTimeDifference(dataSnapshot.child("time").getValue() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy"));
-                        if(dataSnapshot.child("voteCount").getValue() == null) {
-                            voteCount.setText("0");
-                        }else voteCount.setText(String.valueOf(dataSnapshot.child("voteCount").getValue()));
-                    } else {
-
                     }
                 }
                 @Override
@@ -183,6 +180,138 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 }
             });
 
+            DatabaseReference UpDownSymbolRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child("/LocationReactions/").child(infoBusLocation.getRegNum()).child(DUREGNUM);
+            UpDownSymbolRef.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String react = String.valueOf(dataSnapshot.getValue());
+                        if (react.equals("10")) {
+                            upvoteImageView.setImageResource(R.drawable.arrow_upward_green);
+                            downVoteImageView.setImageResource(R.drawable.arrow_downward);
+                        } else if (react.equals("01")) {
+                            upvoteImageView.setImageResource(R.drawable.arrow_upward);
+                            downVoteImageView.setImageResource(R.drawable.arrow_downward_red);
+                        } else {
+                            upvoteImageView.setImageResource(R.drawable.arrow_upward);
+                            downVoteImageView.setImageResource(R.drawable.arrow_downward);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    showToast("Firebase Error fetching data");
+                }
+            });
+
+            DatabaseReference VoteCountRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child("/Locations/").child(infoBusLocation.getRegNum()).child("voteCountLocations");
+            VoteCountRef.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String t_totalVote = String.valueOf(dataSnapshot.getValue());
+                        if (Integer.parseInt(t_totalVote) <= 0) voteCountLocation.setText(t_totalVote);
+                        else voteCountLocation.setText("+" + t_totalVote);
+                    }else {
+                        VoteCountRef.setValue(0);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    showToast("Firebase Error fetching data");
+                }
+            });
+
+            upvoteImageView.setOnClickListener(view -> {
+                final int[] totalVoteCount = {0};
+                VoteCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String t_totalVote = String.valueOf(dataSnapshot.getValue());
+                            totalVoteCount[0] = Integer.parseInt(t_totalVote);
+                            UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @SuppressLint("SetTextI18n")
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        String _react = String.valueOf(dataSnapshot.getValue());
+                                        if (_react.equals("00")) {
+                                            UpDownSymbolRef.setValue("10");
+                                            VoteCountRef.setValue(totalVoteCount[0] + 1);
+                                        } else if (_react.equals("10")) {
+                                            UpDownSymbolRef.setValue("00");
+                                            VoteCountRef.setValue(totalVoteCount[0] - 1);
+                                        } else if (_react.equals("01")) {
+                                            UpDownSymbolRef.setValue("10");
+                                            VoteCountRef.setValue(totalVoteCount[0] + 2);
+                                        }
+                                    } else {
+                                        UpDownSymbolRef.setValue("10");
+                                        VoteCountRef.setValue(totalVoteCount[0] + 1);
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Log.e("Firebase", "Error fetching data", databaseError.toException());
+                                }
+                            });
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("Firebase", "Error fetching data", databaseError.toException());
+                    }
+                });
+            });
+
+            downVoteImageView.setOnClickListener(view -> {
+                final int[] totalVoteCount = {0};
+                VoteCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String t_totalVote = String.valueOf(dataSnapshot.getValue());
+                            totalVoteCount[0] = Integer.parseInt(t_totalVote);
+                            UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @SuppressLint("SetTextI18n")
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        String _react = String.valueOf(dataSnapshot.getValue());
+                                        if (_react.equals("00")) {
+                                            UpDownSymbolRef.setValue("01");
+                                            VoteCountRef.setValue(totalVoteCount[0] - 1);
+                                        } else if (_react.equals("10")) {
+                                            UpDownSymbolRef.setValue("01");
+                                            VoteCountRef.setValue(totalVoteCount[0] - 2);
+                                        } else if (_react.equals("01")) {
+                                            UpDownSymbolRef.setValue("00");
+                                            VoteCountRef.setValue(totalVoteCount[0] + 1);
+                                        }
+                                    } else {
+                                        UpDownSymbolRef.setValue("01");
+                                        VoteCountRef.setValue(totalVoteCount[0] - 1);
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Log.e("Firebase", "Error fetching data", databaseError.toException());
+                                }
+                            });
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("Firebase", "Error fetching data", databaseError.toException());
+                    }
+                });
+            });
         }
     }
     public String getTimeDifference(String inputDate, String format) {

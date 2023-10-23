@@ -220,7 +220,6 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                 @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    DatabaseReference cnt_ref_main = FirebaseDatabase.getInstance().getReference("Feed/" + "/Posts/" + infoNewsFeed.getPostId() + "/vote");
                                     if (dataSnapshot.exists()) {
                                         String _react = String.valueOf(dataSnapshot.getValue());
                                         if (_react.equals("00")) {
@@ -265,7 +264,6 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                 @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    DatabaseReference cnt_ref_main = FirebaseDatabase.getInstance().getReference("Feed/" + "/Posts/" + infoNewsFeed.getPostId() + "/vote");
                                     if (dataSnapshot.exists()) {
                                         String _react = String.valueOf(dataSnapshot.getValue());
                                         if (_react.equals("00")) {
