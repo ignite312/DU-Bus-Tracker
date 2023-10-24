@@ -19,6 +19,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -76,6 +78,7 @@ public class FragmentPostCreate extends Fragment {
 
                                     PostCount = String.valueOf(Integer.parseInt(PostCount) + 1);
                                     FirebaseDatabase.getInstance().getReference("Feed/PostCount").setValue(PostCount);
+                                    update();
                                     showToast("Posted");
                                     openFeedFragment();
                                 }else showToast("Something is empty");
@@ -83,7 +86,50 @@ public class FragmentPostCreate extends Fragment {
                 });
         return view;
     }
+    private void update() {
+        DatabaseReference PostRef = FirebaseDatabase.getInstance().getReference("UserInfo/" + DUREGNUM + "/postCount");
+        PostRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Integer value = mutableData.getValue(Integer.class);
+                if (value == null) {
+                    mutableData.setValue(1);
+                } else {
+                    mutableData.setValue(value + 1);
+                }
+                return Transaction.success(mutableData);
+            }
 
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                if (databaseError != null) {
+                } else {
+                    Integer updatedValue = dataSnapshot.getValue(Integer.class);
+                }
+            }
+        });
+        DatabaseReference ContributionRef = FirebaseDatabase.getInstance().getReference("UserInfo/" + DUREGNUM + "/contributionCount");
+        ContributionRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Integer value = mutableData.getValue(Integer.class);
+                if (value == null) {
+                    mutableData.setValue(5);
+                } else {
+                    mutableData.setValue(value + 5);
+                }
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                if (databaseError != null) {
+                } else {
+                    Integer updatedValue = dataSnapshot.getValue(Integer.class);
+                }
+            }
+        });
+    }
     private void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }

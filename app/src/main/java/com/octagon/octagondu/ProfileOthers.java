@@ -1,9 +1,6 @@
 package com.octagon.octagondu;
 
-import static com.octagon.octagondu.MainActivity.DUREGNUM;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -40,7 +37,7 @@ public class ProfileOthers extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
     private String UID;
-    private CircleImageView image;
+    private ImageView image;
     private TextView name, dept, session, rules, email, about, nickName, posts, contribution;
 
 
@@ -77,10 +74,12 @@ public class ProfileOthers extends AppCompatActivity {
                     session.setText((CharSequence) dataSnapshot.child("session").getValue());
                     rules.setText((CharSequence) dataSnapshot.child("userType").getValue());
                     email.setText((CharSequence) dataSnapshot.child("email").getValue());
-                    about.setText("Hello");
-                    nickName.setText("Emon");
-                    posts.setText("99");
+                    about.setText((CharSequence) dataSnapshot.child("about").getValue());
+                    nickName.setText((CharSequence) dataSnapshot.child("nickName").getValue());
+                    posts.setText((String.valueOf(dataSnapshot.child("postCount").getValue())));
                     contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
+                    if (Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) <= 0)                     contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
+                    else contribution.setText("+" + dataSnapshot.child("contributionCount").getValue());
                     try {
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
@@ -133,6 +132,7 @@ public class ProfileOthers extends AppCompatActivity {
                         }
                     }
                     adapter = new AdapterNewsFeed(ProfileOthers.this, postList);
+                    adapter.setFlag("PO");
                     recyclerView.setAdapter(adapter);
                 } else {
                     showToast("No data found for this bus name");

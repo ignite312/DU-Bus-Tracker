@@ -1,37 +1,36 @@
 package com.octagon.octagondu;
 
 public class InfoUser{
-    private String fullName;
     private String regNum;
+    private String phoneNumber;
+    private String fullName;
     private String department;
     private String session;
-    private String email;
-    private String phoneNumber;
-    private int contributionCount;
     private String userType;
+    private String email;
+    private String about;
     private String userImage;
+    private String nickName;
+    private int postCount;
+    private int contributionCount;
 
     public InfoUser() {
 
     }
-    public InfoUser(String fullName, String regNum, String department, String session, String email, String phoneNumber, int contributionCount, String userType, String userImage) {
-        this.fullName = fullName;
+
+    public InfoUser(String regNum, String phoneNumber, String fullName, String department, String session, String userType, String email, String about, String userImage, String nickName, int postCount, int contributionCount) {
         this.regNum = regNum;
+        this.phoneNumber = phoneNumber;
+        this.fullName = fullName;
         this.department = department;
         this.session = session;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.contributionCount = contributionCount;
         this.userType = userType;
+        this.email = email;
+        this.about = about;
         this.userImage = userImage;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+        this.nickName = nickName;
+        this.postCount = postCount;
+        this.contributionCount = contributionCount;
     }
 
     public String getRegNum() {
@@ -40,6 +39,22 @@ public class InfoUser{
 
     public void setRegNum(String regNum) {
         this.regNum = regNum;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getDepartment() {
@@ -58,30 +73,6 @@ public class InfoUser{
         this.session = session;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getContributionCount() {
-        return contributionCount;
-    }
-
-    public void setContributionCount(int contributionCount) {
-        this.contributionCount = contributionCount;
-    }
-
     public String getUserType() {
         return userType;
     }
@@ -90,12 +81,52 @@ public class InfoUser{
         this.userType = userType;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
     public String getUserImage() {
         return userImage;
     }
 
     public void setUserImage(String userImage) {
         this.userImage = userImage;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
+    }
+
+    public int getContributionCount() {
+        return contributionCount;
+    }
+
+    public void setContributionCount(int contributionCount) {
+        this.contributionCount = contributionCount;
     }
 }
 

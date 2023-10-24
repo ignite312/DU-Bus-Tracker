@@ -91,6 +91,7 @@ public class FragmentNewsFeed extends Fragment {
                         }
                     }
                     adapter = new AdapterNewsFeed(getContext(), PostList); // Pass the context here
+                    adapter.setFlag("FEED");
                     recyclerView.setAdapter(adapter);
                 } else {
                     showToast("No data found for this bus name");

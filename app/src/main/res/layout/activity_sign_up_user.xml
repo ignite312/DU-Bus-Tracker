@@ -78,11 +78,27 @@
                     android:id="@+id/editFullname"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nickName"
+                style="@style/CustomEditTextTheme"
+                android:hint="NickName"
+                android:transitionName="@string/username"
+                app:errorEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/fullName"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/editNickName"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:id="@+id/ProfileContent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/fullName"
+                app:layout_constraintTop_toBottomOf="@+id/nickName"
                 android:orientation="horizontal"
                 android:padding="10dp"
                 tools:ignore="MissingConstraints">

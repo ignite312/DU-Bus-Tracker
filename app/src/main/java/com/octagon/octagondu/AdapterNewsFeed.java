@@ -50,12 +50,17 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
     private Context context;
     Map<Integer, Boolean> booleanMap = new HashMap<>();
     FirebaseStorage storage;
+    String flag;
 
     public AdapterNewsFeed(Context context, List<InfoNewsFeed> postList) {
         this.context = context;
         this.postList = postList;
     }
-
+    @SuppressLint("NotifyDataSetChanged")
+    public void setFlag(String flag) {
+        this.flag = flag;
+        notifyDataSetChanged(); // Notify the adapter that the data has changed
+    }
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -106,6 +111,13 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
 
         @SuppressLint("SetTextI18n")
         public void bind(InfoNewsFeed infoNewsFeed, int position) {
+            if (flag.equals("FEED")) {
+                departmentNameSessionTextView.setVisibility(View.VISIBLE);
+                userTypeTextView.setVisibility(View.VISIBLE);
+            } else {
+                departmentNameSessionTextView.setVisibility(View.GONE);
+                userTypeTextView.setVisibility(View.GONE);
+            }
             DatabaseReference ViewUserInfoRef = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoNewsFeed.getUserId());
             ViewUserInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
@@ -301,16 +313,18 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                 showToast("Coming Soon!");
             });
 
-            View.OnClickListener commonOnClickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ProfileOthers.class);
-                    intent.putExtra("UID", infoNewsFeed.getUserId());
-                    context.startActivity(intent);
-                }
-            };
-            userNameTextView.setOnClickListener(commonOnClickListener);
-            circleImageView.setOnClickListener(commonOnClickListener);
+            if(flag.equals("FEED")) {
+                View.OnClickListener commonOnClickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ProfileOthers.class);
+                        intent.putExtra("UID", infoNewsFeed.getUserId());
+                        context.startActivity(intent);
+                    }
+                };
+                userNameTextView.setOnClickListener(commonOnClickListener);
+                circleImageView.setOnClickListener(commonOnClickListener);
+            }
         }
     }
 

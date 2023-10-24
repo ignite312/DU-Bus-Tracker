@@ -2,6 +2,8 @@ package com.octagon.octagondu;
 
 import static android.content.ContentValues.TAG;
 
+import static com.octagon.octagondu.MainActivity.DUREGNUM;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,10 +31,12 @@ import java.util.List;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 
 
 public class SignUpUser extends AppCompatActivity {
-    private TextInputEditText editFullName;
+    private TextInputEditText editFullName, editNickName;
     private TextInputEditText editRegNum;
     private TextInputEditText editDept;
     private TextInputEditText editSession;
@@ -47,6 +53,7 @@ public class SignUpUser extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up_user);
 
         editFullName = findViewById(R.id.editFullname);
+        editNickName = findViewById(R.id.editNickName);
         editRegNum = findViewById(R.id.editRegNum);
         editDept = findViewById(R.id.editDept);
         editSession = findViewById(R.id.editSession);
@@ -108,18 +115,17 @@ public class SignUpUser extends AppCompatActivity {
                 String regNum = editRegNum.getText().toString();
                 String department = editDept.getText().toString();
                 String session = editSession.getText().toString();
+                String nickName = editNickName.getText().toString();
                 String email = editEmailId.getText().toString();
                 String phoneNumber = editPhoneNumber.getText().toString();
                 String password = editPassword.getText().toString();
-                int contributionCount = 0;
-                String userType = "User";
                 if (!(fullName.isEmpty() || regNum.isEmpty() || department.isEmpty() || session.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || password.isEmpty())) {
                                     mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignUpUser.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                                InfoUser user = new InfoUser(fullName, regNum, department, session, email, phoneNumber, contributionCount, userType, selectedImageResourceId);
+                                InfoUser user = new InfoUser(regNum, phoneNumber, fullName , department, session, "User", email, "", selectedImageResourceId, nickName, 0, 0);
                                 databaseReference.child("UserInfo").child(regNum).setValue(user);
                                 showToast("Signup successful!");
                                 Intent intent = new Intent(SignUpUser.this, SignInUser.class);
@@ -147,4 +153,5 @@ public class SignUpUser extends AppCompatActivity {
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 }

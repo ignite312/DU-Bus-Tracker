@@ -32,23 +32,16 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/locationCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true">
-
                 <RelativeLayout
+                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_box"
                     android:padding="10dp">
 
                     <LinearLayout
@@ -59,13 +52,22 @@
                         android:orientation="vertical"
                         android:padding="5dp">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+<!--                        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                            android:id="@+id/otherImage"-->
+<!--                            android:layout_width="120dp"-->
+<!--                            android:layout_height="120dp"-->
+<!--                            app:civ_border_width="2dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:src="@drawable/spectre" />-->
+                        <ImageView
+                            android:background="@drawable/border_box"
                             android:id="@+id/otherImage"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/spectre" />
+                            android:src="@drawable/spectre"/>
 
                         <TextView
                             android:id="@+id/othersNickName"
@@ -96,7 +98,7 @@
                                 android:id="@+id/totalPost"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_bold"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:text="10"
                                 android:textColor="@color/green"
                                 android:textSize="15sp"
@@ -120,22 +122,21 @@
                                 android:id="@+id/totalContribution"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_bold"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:text="+69"
                                 android:textColor="@color/green"
                                 android:textSize="15sp"
-                                android:textStyle="bold"
                                 tools:ignore="SmallSp" />
                         </LinearLayout>
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toEndOf="@id/image"
-                        android:background="@color/dark_grey_color" />
+<!--                    <View-->
+<!--                        android:layout_width="1dp"-->
+<!--                        android:layout_height="200dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_toEndOf="@id/image"-->
+<!--                        android:background="@color/dark_grey_color" />-->
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -186,11 +187,10 @@
                                 android:id="@+id/othersDept"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_bold"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:text="CSE"
                                 android:textColor="@color/blue"
                                 android:textSize="12sp"
-                                android:textStyle="bold"
                                 tools:ignore="SmallSp" />
                         </LinearLayout>
 
@@ -210,11 +210,10 @@
                                 android:id="@+id/othersSession"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_bold"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:text="20-21"
                                 android:textColor="@color/green"
                                 android:textSize="12sp"
-                                android:textStyle="bold"
                                 tools:ignore="SmallSp" />
                         </LinearLayout>
 
@@ -234,11 +233,10 @@
                                 android:id="@+id/othersRules"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_bold"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:text="Developer"
                                 android:textColor="#FF0000"
                                 android:textSize="12sp"
-                                android:textStyle="bold"
                                 tools:ignore="SmallSp" />
                         </LinearLayout>
 
@@ -273,8 +271,12 @@
                             tools:ignore="SmallSp" />
                     </LinearLayout>
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/image"
+                android:background="@color/dark_grey_color" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
