@@ -31,7 +31,7 @@ public class FragmentNewsFeed extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_fragment_news_feed, container, false);
+        View view = inflater.inflate(R.layout.fragment_news_feed, container, false);
 
         fragmentPostCreate = new FragmentPostCreate();
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
@@ -71,7 +71,7 @@ public class FragmentNewsFeed extends Fragment {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_fragment_container, fragmentPostCreate)
-                    .addToBackStack(null) // Optional: Add transaction to the back stack
+                    .addToBackStack(null)
                     .commit();
         }
     }

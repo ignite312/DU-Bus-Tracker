@@ -3,6 +3,7 @@ package com.octagon.octagondu;
 import static com.octagon.octagondu.MainActivity.DUREGNUM;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -26,14 +27,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
+public class LocationShare extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
     private Button updateLocationButton;
@@ -46,7 +52,7 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_my);
+        setContentView(R.layout.activity_location_share);
         busName = getIntent().getStringExtra("BUSNAME");
         busTime = getIntent().getStringExtra("BUSTIME");
 
@@ -97,14 +103,34 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime).child("Locations").child(DUREGNUM);
-            databaseReference.child("regNum").setValue(DUREGNUM);
-            databaseReference.child("lastLocation").setValue("Dhaka");
-            databaseReference.child("lat").setValue(Double.toString(latitude));
-            databaseReference.child("lon").setValue(Double.toString(longitude));
-            databaseReference.child("time").setValue(getCurrentTime24HourFormat());
-            databaseReference.child("date").setValue(getCurrentDateFormatted());
-            databaseReference.child("busName").setValue(busName);
-            databaseReference.child("busTime").setValue(busTime);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        databaseReference.child("lastLocation").setValue("Dhaka");
+                        databaseReference.child("lat").setValue(Double.toString(latitude));
+                        databaseReference.child("lon").setValue(Double.toString(longitude));
+                        databaseReference.child("time").setValue(getCurrentTime24HourFormat());
+                        databaseReference.child("date").setValue(getCurrentDateFormatted());
+                    } else {
+                        databaseReference.child("regNum").setValue(DUREGNUM);
+                        databaseReference.child("lastLocation").setValue("Dhaka");
+                        databaseReference.child("lat").setValue(Double.toString(latitude));
+                        databaseReference.child("lon").setValue(Double.toString(longitude));
+                        databaseReference.child("time").setValue(getCurrentTime24HourFormat());
+                        databaseReference.child("date").setValue(getCurrentDateFormatted());
+                        databaseReference.child("busName").setValue(busName);
+                        databaseReference.child("busTime").setValue(busTime);
+                        databaseReference.child("voteCountLocations").setValue(0);
+                        update(3, DUREGNUM);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
         }
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions()
@@ -129,23 +155,37 @@ public class LocationMy extends FragmentActivity implements OnMapReadyCallback {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
     public String getCurrentDateFormatted() {
-        // Get the current date
         Date currentDate = new Date();
-
-        // Create a SimpleDateFormat object to format the date
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-
-        // Format the date and return it as a string
         return dateFormat.format(currentDate);
     }
     public String getCurrentTime24HourFormat() {
-        // Get the current time
         Date currentTime = new Date();
-
-        // Create a SimpleDateFormat object to format the time
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-
-        // Format the time and return it as a string
         return timeFormat.format(currentTime);
+    }
+    private void update(int dcc, String UID) {
+
+        DatabaseReference ContributionCountRef = FirebaseDatabase.getInstance().getReference("UserInfo/" + UID + "/contributionCount");
+        ContributionCountRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Integer value = mutableData.getValue(Integer.class);
+                if (value == null) {
+                    mutableData.setValue(dcc);
+                } else {
+                    mutableData.setValue(value + dcc);
+                }
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                if (databaseError != null) {
+                } else {
+                    Integer updatedValue = dataSnapshot.getValue(Integer.class);
+                }
+            }
+        });
     }
 }

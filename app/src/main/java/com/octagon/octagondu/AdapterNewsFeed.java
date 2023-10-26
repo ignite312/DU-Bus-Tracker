@@ -23,6 +23,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -32,7 +34,6 @@ import android.graphics.Bitmap;
 
 
 import java.io.File;
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,11 +57,13 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         this.context = context;
         this.postList = postList;
     }
+
     @SuppressLint("NotifyDataSetChanged")
     public void setFlag(String flag) {
         this.flag = flag;
-        notifyDataSetChanged(); // Notify the adapter that the data has changed
+        notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -134,21 +137,55 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                             StorageReference storageRef = storage.getReference();
                             StorageReference imagesRef = storageRef.child((String) Objects.requireNonNull(dataSnapshot.child("userImage").getValue()));
 
-                            File localFile = File.createTempFile("tempFile", ".png");
-                            imagesRef.getFile(localFile)
-                                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            /*Using Picasso
+                            DatabaseReference imagesRef  = FirebaseDatabase.getInstance().getReference("image");
+                            imagesRef.addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
                                         @Override
-                                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                            circleImageView.setImageBitmap(bitmap);
+                                        public void onDataChange(
+                                                @NonNull DataSnapshot dataSnapshot) {
+                                            // getting a DataSnapshot for the
+                                            // location at the specified relative
+                                            // path and getting in the link variable
+                                            String link = dataSnapshot.getValue(
+                                                    String.class);
+
+                                            // loading that data into rImage
+                                            // variable which is ImageView
+                                            Picasso.get().load(link).into(circleImageView);
                                         }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
+
+                                        // this will called when any problem
+                                        // occurs in getting data
                                         @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            showToast("Error: " + e.getMessage());
+                                        public void onCancelled(
+                                                @NonNull DatabaseError databaseError) {
+                                            showToast("Hehe");
                                         }
                                     });
+                             */
+                            File localFile = new File(context.getCacheDir(), infoNewsFeed.getUserId() + ".png");
+                            if (localFile.exists()) {
+//                                showToast("Image Loaded from File");
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                circleImageView.setImageBitmap(bitmap);
+                            } else {
+                                imagesRef.getFile(localFile)
+                                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                circleImageView.setImageBitmap(bitmap);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                showToast("Error: " + e.getMessage());
+                                            }
+                                        });
+                            }
+
                         } catch (Exception e) {
                             showToast(e.getMessage());
                         }
@@ -166,11 +203,11 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             postDateTextView.setText(timeDifference);
             postDateTextView.setOnClickListener(View -> {
                 if (booleanMap.get(position) == null) {
-                    postDateTextView.setText(convertTimeToAMPM(infoNewsFeed.getTime()) + ", " + convertDateToDay( infoNewsFeed.getDate()));
+                    postDateTextView.setText(convertTimeToAMPM(infoNewsFeed.getTime()) + ", " + convertDateToDay(infoNewsFeed.getDate()));
                     booleanMap.put(position, false);
                 } else {
                     if (Boolean.TRUE.equals(booleanMap.get(position))) {
-                        postDateTextView.setText(convertTimeToAMPM(infoNewsFeed.getTime()) + ", " +convertDateToDay(infoNewsFeed.getDate()));
+                        postDateTextView.setText(convertTimeToAMPM(infoNewsFeed.getTime()) + ", " + convertDateToDay(infoNewsFeed.getDate()));
                         booleanMap.put(position, false);
                     } else {
                         postDateTextView.setText(getTimeDifference(infoNewsFeed.getTime() + " " + infoNewsFeed.getDate(), "HH:mm:ss dd MMM yyyy"));
@@ -213,52 +250,40 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         String t_totalVote = String.valueOf(dataSnapshot.getValue());
-                        if (Integer.parseInt(t_totalVote) <= 0) voteCountTextView.setText(t_totalVote);
+                        if (Integer.parseInt(t_totalVote) <= 0)
+                            voteCountTextView.setText(t_totalVote);
                         else voteCountTextView.setText("+" + t_totalVote);
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     showToast("Firebase Error fetching data");
                 }
             });
             upvoteImageView.setOnClickListener(view -> {
-                final int[] totalVoteCount = {0};
-                VoteCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            String t_totalVote = String.valueOf(dataSnapshot.getValue());
-                            totalVoteCount[0] = Integer.parseInt(t_totalVote);
-                            UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @SuppressLint("SetTextI18n")
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        String _react = String.valueOf(dataSnapshot.getValue());
-                                        if (_react.equals("00")) {
-                                            UpDownSymbolRef.setValue("10");
-                                            VoteCountRef.setValue(totalVoteCount[0] + 1);
-                                        } else if (_react.equals("10")) {
-                                            UpDownSymbolRef.setValue("00");
-                                            VoteCountRef.setValue(totalVoteCount[0] - 1);
-                                        } else if (_react.equals("01")) {
-                                            UpDownSymbolRef.setValue("10");
-                                            VoteCountRef.setValue(totalVoteCount[0] + 2);
-                                        }
-                                    } else {
-                                        UpDownSymbolRef.setValue("10");
-                                        VoteCountRef.setValue(totalVoteCount[0] + 1);
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Log.e("Firebase", "Error fetching data", databaseError.toException());
-                                }
-                            });
+                            String _react = String.valueOf(dataSnapshot.getValue());
+                            if (_react.equals("00")) {
+                                UpDownSymbolRef.setValue("10");
+                                update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                            } else if (_react.equals("10")) {
+                                UpDownSymbolRef.setValue("00");
+                                update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                            } else if (_react.equals("01")) {
+                                UpDownSymbolRef.setValue("10");
+                                update(2, 2, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                            }
+                        } else {
+                            UpDownSymbolRef.setValue("10");
+                            update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e("Firebase", "Error fetching data", databaseError.toException());
@@ -267,53 +292,40 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             });
 
             downVoteImageView.setOnClickListener(view -> {
-                final int[] totalVoteCount = {0};
-                VoteCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            String t_totalVote = String.valueOf(dataSnapshot.getValue());
-                            totalVoteCount[0] = Integer.parseInt(t_totalVote);
-                            UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @SuppressLint("SetTextI18n")
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        String _react = String.valueOf(dataSnapshot.getValue());
-                                        if (_react.equals("00")) {
-                                            UpDownSymbolRef.setValue("01");
-                                            VoteCountRef.setValue(totalVoteCount[0] - 1);
-                                        } else if (_react.equals("10")) {
-                                            UpDownSymbolRef.setValue("01");
-                                            VoteCountRef.setValue(totalVoteCount[0] - 2);
-                                        } else if (_react.equals("01")) {
-                                            UpDownSymbolRef.setValue("00");
-                                            VoteCountRef.setValue(totalVoteCount[0] + 1);
-                                        }
-                                    } else {
-                                        UpDownSymbolRef.setValue("01");
-                                        VoteCountRef.setValue(totalVoteCount[0] - 1);
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Log.e("Firebase", "Error fetching data", databaseError.toException());
-                                }
-                            });
+                            String _react = String.valueOf(dataSnapshot.getValue());
+                            if (_react.equals("00")) {
+                                UpDownSymbolRef.setValue("01");
+                                update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                            } else if (_react.equals("10")) {
+                                UpDownSymbolRef.setValue("01");
+                                update(-2, -2, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                            } else if (_react.equals("01")) {
+                                UpDownSymbolRef.setValue("00");
+                                update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                            }
+                        } else {
+                            UpDownSymbolRef.setValue("01");
+                            update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e("Firebase", "Error fetching data", databaseError.toException());
                     }
                 });
             });
+
             commentImageView.setOnClickListener(view -> {
                 showToast("Coming Soon!");
             });
 
-            if(flag.equals("FEED")) {
+            if (flag.equals("FEED")) {
                 View.OnClickListener commonOnClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -326,6 +338,43 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                 circleImageView.setOnClickListener(commonOnClickListener);
             }
         }
+    }
+
+
+    public String convertTimeToAMPM(String timeString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm a");
+
+            Date date = inputFormat.parse(timeString);
+
+            String timeInAMPM = outputFormat.format(date);
+
+            return timeInAMPM;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid Time Format";
+        }
+    }
+
+    public static String convertDateToDay(String dateString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE, MMM dd");
+
+            Date date = inputFormat.parse(dateString);
+
+            String formattedDate = outputFormat.format(date);
+
+            return formattedDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid Date Format";
+        }
+    }
+
+    public void showToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public String getTimeDifference(String inputDate, String format) {
@@ -366,38 +415,49 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             return "Invalid date format";
         }
     }
-    public  String convertTimeToAMPM(String timeString) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
-            SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm a");
 
-            Date date = inputFormat.parse(timeString);
+    private void update(int drc, int dcc, String UID, String POSTID) {
+        DatabaseReference VoteCountRef = FirebaseDatabase.getInstance().getReference("Feed/Posts").child(POSTID).child("/totalVote");
+        VoteCountRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Integer value = mutableData.getValue(Integer.class);
+                if (value == null) {
+                    mutableData.setValue(drc);
+                } else {
+                    mutableData.setValue(value + drc);
+                }
+                return Transaction.success(mutableData);
+            }
 
-            String timeInAMPM = outputFormat.format(date);
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                if (databaseError != null) {
+                } else {
+                    Integer updatedValue = dataSnapshot.getValue(Integer.class);
+                }
+            }
+        });
+        DatabaseReference ContributionCountRef = FirebaseDatabase.getInstance().getReference("UserInfo/" + UID + "/contributionCount");
+        ContributionCountRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Integer value = mutableData.getValue(Integer.class);
+                if (value == null) {
+                    mutableData.setValue(dcc);
+                } else {
+                    mutableData.setValue(value + dcc);
+                }
+                return Transaction.success(mutableData);
+            }
 
-            return timeInAMPM;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "Invalid Time Format";
-        }
-    }
-    public static String convertDateToDay(String dateString) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
-            SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE, MMM dd");
-
-            Date date = inputFormat.parse(dateString);
-
-            String formattedDate = outputFormat.format(date);
-
-            return formattedDate;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "Invalid Date Format";
-        }
-    }
-
-    public void showToast(String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                if (databaseError != null) {
+                } else {
+                    Integer updatedValue = dataSnapshot.getValue(Integer.class);
+                }
+            }
+        });
     }
 }

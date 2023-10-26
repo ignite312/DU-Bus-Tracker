@@ -56,7 +56,7 @@ public class ListBusLocation extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListBusLocation.this, LocationMy.class);
+                Intent intent = new Intent(ListBusLocation.this, LocationShare.class);
                 intent.putExtra("BUSNAME", busName);
                 intent.putExtra("BUSTIME", busTime);
                 startActivity(intent);

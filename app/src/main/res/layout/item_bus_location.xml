@@ -24,8 +24,7 @@
                 android:id="@+id/photoLocation"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/spectre" />
+                android:layout_gravity="center"/>
 
             <TextView
                 android:id="@+id/usernameLocation"

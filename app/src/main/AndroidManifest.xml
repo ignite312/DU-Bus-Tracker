@@ -37,15 +37,15 @@
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".FragmentFindBusLocation"
+            android:name=".FragmentLocation"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".LocationMy"
+            android:name=".LocationShare"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".LocationOthers"
+            android:name=".LocationView"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
 

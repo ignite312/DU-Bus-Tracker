@@ -9,6 +9,6 @@ public class FragmentComment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment_comment);
+        setContentView(R.layout.fragment_comment);
     }
 }

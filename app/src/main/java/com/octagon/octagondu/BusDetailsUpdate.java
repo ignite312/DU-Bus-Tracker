@@ -35,7 +35,7 @@ public class BusDetailsUpdate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_details_update);
+        setContentView(R.layout.bus_details_update);
 
         // Initialize your form fields with the received data
         String busId = getIntent().getStringExtra("busId");

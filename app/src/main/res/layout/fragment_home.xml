@@ -1,0 +1,15 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:text="Hey,Welcome to Dhaka University Bus Community. Let's Make Our University Life Better Together!"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+</LinearLayout>

@@ -2,18 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/admin"
-            android:icon="@drawable/baseline_admin_panel_settings_24"
-            android:title="Developer Login" />
-        <item
-            android:id="@+id/entry"
-            android:icon="@drawable/baseline_add_24"
-            android:title="Bus Admin Login" />
-        <item
-            android:id="@+id/bug"
-            android:icon="@drawable/baseline_bug_report_24"
-            android:title="Report a Bug" />
-        <item
             android:id="@+id/sms"
             android:icon="@drawable/baseline_sms_24"
             android:title="Send SMS" />
@@ -22,12 +10,20 @@
             android:icon="@drawable/baseline_email_24"
             android:title="Send Email" />
         <item
+            android:id="@+id/bug"
+            android:icon="@drawable/baseline_bug_report_24"
+            android:title="Report a Bug" />
+        <item
+            android:id="@+id/admin"
+            android:icon="@drawable/baseline_admin_panel_settings_24"
+            android:title="Developer Login" />
+        <item
+            android:id="@+id/entry"
+            android:icon="@drawable/baseline_add_24"
+            android:title="Bus Admin Login" />
+        <item
             android:id="@+id/details"
             android:icon="@drawable/baseline_details_24"
             android:title="Developer Details" />
-        <item
-            android:id="@+id/logOut"
-            android:icon="@drawable/logout"
-            android:title="Logout" />
     </group>
 </menu>

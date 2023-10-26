@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class FragmentFindBusLocation extends Fragment {
+public class FragmentLocation extends Fragment {
     RecyclerView recyclerView;
     AdapterBus adapterBus;
     ArrayList<InfoBus> dataArrayList = new ArrayList<>();
@@ -22,7 +22,7 @@ public class FragmentFindBusLocation extends Fragment {
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_fragment_find_bus_location, container, false);
+        View view = inflater.inflate(R.layout.fragment_location, container, false);
 
         recyclerView = view.findViewById(R.id.findBusList);
         dataArrayList.clear();

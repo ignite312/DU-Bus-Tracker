@@ -21,7 +21,7 @@ public class FragmentSchedule extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_fragment_schedule, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
         recyclerView = view.findViewById(R.id.scheduleRecycleView);
         dataArrayList.clear();

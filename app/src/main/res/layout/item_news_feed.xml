@@ -23,8 +23,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/selector_button_circle"
-                android:src="@drawable/spectre" />
+                android:background="@drawable/selector_button_circle" />
 
             <LinearLayout
                 android:id="@+id/top1"

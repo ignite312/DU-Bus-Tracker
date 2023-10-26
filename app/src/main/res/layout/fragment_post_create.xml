@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:padding="15dp">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="Help Type?"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:background="@drawable/border_box"
+            android:id="@+id/postType"
+            style="@style/Widget.AppCompat.Spinner"
+            android:layout_width="0dp"
+            android:layout_height="?attr/dropdownListPreferredItemHeight"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:dropDownWidth="wrap_content"
+            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+            android:entries="@array/helpType"
+            android:popupBackground="@android:color/white"
+            android:popupElevation="3dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bus a Community ? "
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:background="@drawable/border_box"
+            android:id="@+id/busName"
+            style="@style/Widget.AppCompat.Spinner"
+            android:layout_width="0dp"
+            android:layout_height="?attr/dropdownListPreferredItemHeight"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:dropDownWidth="wrap_content"
+            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+            android:entries="@array/bus_name_options"
+            android:paddingRight="14dp"
+            android:popupBackground="@android:color/white"
+            android:popupElevation="3dp" />
+
+    </LinearLayout>
+
+    <!-- Post Body -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post Title"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/postTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Title"
+            android:inputType="textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Post Body -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post Description"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/body"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="top|start"
+            android:hint="Enter Description"
+            android:inputType="textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/go"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        android:text="++Post" />
+</LinearLayout>

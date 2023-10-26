@@ -1,6 +1,7 @@
 package com.octagon.octagondu;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -33,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
     FragmentSchedule fragmentSchedule;
     FragmentHome fragmentHome;
     FragmentNewsFeed fragmentNewsFeed;
-    FragmentFindBusLocation fragmentFindBusLocation;
+    FragmentLocation fragmentLocation;
     FragmentProfileMy fragmentProfileMy;
     FragmentPostCreate fragmentPostCreate;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-
+    Boolean ok = false;
     private Toolbar toolbar;
     public static String DUREGNUM = "0";
 
@@ -47,12 +48,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getReg();
+        DUREGNUM = getIntent().getStringExtra("DUREGNUM");
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         fragmentHome = new FragmentHome();
         fragmentSchedule = new FragmentSchedule();
         fragmentNewsFeed = new FragmentNewsFeed();
-        fragmentFindBusLocation = new FragmentFindBusLocation();
+        fragmentLocation = new FragmentLocation();
         fragmentProfileMy = new FragmentProfileMy();
         fragmentPostCreate = new FragmentPostCreate();
 
@@ -103,11 +104,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
-                    FirebaseAuth.getInstance().signOut();
                     Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
                     startActivity(intent);
                     showToast("Will added later");
-//                    openCreatePosFragment();
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);
@@ -117,12 +116,15 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.email) {
                     Intent intent = new Intent(getApplicationContext(), SendEmail.class);
                     startActivity(intent);
-                } else if (itemId == R.id.logOut) {
+                }
+                /*
+                else if (itemId == R.id.logOut) {
                     FirebaseAuth.getInstance().signOut();
                     Intent intent = new Intent(getApplicationContext(), SignInUser.class);
                     startActivity(intent);
                     finish();
                 }
+                */
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -130,8 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openHomeFragment() {
-        toolbar.setVisibility(View.VISIBLE);
-        getSupportActionBar().setTitle("Octagon");
+        if (!ok) setup();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentHome)
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openScheduleFragment() {
-        toolbar.setVisibility(View.GONE);
+        if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentSchedule)
@@ -148,15 +149,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openFindBusLocation() {
-        toolbar.setVisibility(View.GONE);
+        if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_fragment_container, fragmentFindBusLocation)
+                .replace(R.id.main_fragment_container, fragmentLocation)
                 .commit();
     }
 
     private void openFeedFragment() {
-        toolbar.setVisibility(View.GONE);
+        if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentNewsFeed)
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openProfileFragment() {
-        toolbar.setVisibility(View.GONE);
+        if (!ok) setup();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentProfileMy)
@@ -177,51 +178,110 @@ public class MainActivity extends AppCompatActivity {
 
     private void openCreatePosFragment() {
         toolbar.setVisibility(View.GONE);
-        getSupportActionBar().setTitle("Octagon");
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentPostCreate)
                 .commit();
 
     }
-    private void getReg() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String email = user.getEmail();
-            firebaseDatabase = FirebaseDatabase.getInstance();
-            databaseReference = firebaseDatabase.getReference("UserInfo");
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    boolean ok = false;
-                    if (dataSnapshot.exists()) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            InfoUser info = snapshot.getValue(InfoUser.class);
-                            if (info != null) {
-                                String t_email = String.valueOf(snapshot.child("email").getValue());
-                                if (t_email.equals(email)) {
-                                    DUREGNUM =  String.valueOf(snapshot.child("regNum").getValue());
-                                    ok = true;
-                                    break;
-                                }
-                                if (ok) break;
-                            } else {
-                                showToast("Something went wrong");
-                            }
-                        }
-                        if (!ok) {
-                            showToast("No data found");
-                        }
-                    } else {
-                        showToast("Error");
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("Firebase", "Error fetching data", databaseError.toException());
+//    private void getReg() {
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user != null) {
+//            String email = user.getEmail();
+//            firebaseDatabase = FirebaseDatabase.getInstance();
+//            databaseReference = firebaseDatabase.getReference("UserInfo");
+//            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    boolean ok = false;
+//                    if (dataSnapshot.exists()) {
+//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                            InfoUser info = snapshot.getValue(InfoUser.class);
+//                            if (info != null) {
+//                                String t_email = String.valueOf(snapshot.child("email").getValue());
+//                                if (t_email.equals(email)) {
+//                                    DUREGNUM = String.valueOf(snapshot.child("regNum").getValue());
+//                                    ok = true;
+//                                    break;
+//                                }
+//                                if (ok) break;
+//                            } else {
+//                                showToast("Something went wrong");
+//                            }
+//                        }
+//                        if (!ok) {
+//                            showToast("No data found");
+//                        }
+//                    } else {
+//                        showToast("Error");
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                    Log.e("Firebase", "Error fetching data", databaseError.toException());
+//                }
+//            });
+//        }
+//    }
+
+    private void setup() {
+        ok = true;
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        // Set up the toggle for the navigation drawer
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        openHomeFragment();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.admin) {
+                    Intent intent = new Intent(getApplicationContext(), LoginDeveloper.class);
+                    startActivity(intent);
+                } else if (itemId == R.id.entry) {
+                    Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
+                    startActivity(intent);
+                } else if (itemId == R.id.bug) {
+                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
+                    startActivity(intent);
+                    showToast("Will added later");
+                } else if (itemId == R.id.details) {
+                    Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
+                    startActivity(intent);
+                } else if (itemId == R.id.sms) {
+                    Intent intent = new Intent(getApplicationContext(), SendSMS.class);
+                    startActivity(intent);
+                } else if (itemId == R.id.email) {
+                    Intent intent = new Intent(getApplicationContext(), SendEmail.class);
+                    startActivity(intent);
                 }
-            });
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+    }
+
+    private void undoSetup() {
+        ok = false;
+        // Remove the toggle for the navigation drawer
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.removeDrawerListener(toggle);
+
+        // Clear the navigation view's item selection listener
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(null);
+
+        // Set a custom home button indicator (an empty drawable)
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.transparent_drawable); // Create an empty drawable
         }
+        // Disable the drawer swipe gesture
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 }

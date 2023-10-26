@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ProfileOthers extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
@@ -85,21 +83,26 @@ public class ProfileOthers extends AppCompatActivity {
                         StorageReference storageRef = storage.getReference();
                         StorageReference imagesRef = storageRef.child((String) Objects.requireNonNull(dataSnapshot.child("userImage").getValue()));
 
-                        File localFile = File.createTempFile("tempFile", ".png");
-                        imagesRef.getFile(localFile)
-                                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                        image.setImageBitmap(bitmap);
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        showToast("Error: " + e.getMessage());
-                                    }
-                                });
+                        File localFile = new File(getCacheDir(), UID + ".png");
+                        if (localFile.exists()) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            image.setImageBitmap(bitmap);
+                        } else {
+                            imagesRef.getFile(localFile)
+                                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                            image.setImageBitmap(bitmap);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            showToast("Error: " + e.getMessage());
+                                        }
+                                    });
+                        }
                     } catch (Exception e) {
                         showToast(e.getMessage());
                     }
@@ -107,6 +110,24 @@ public class ProfileOthers extends AppCompatActivity {
                 }
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Error fetching data", databaseError.toException());
+            }
+        });
+        ViewUserInfoRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    posts.setText((String.valueOf(dataSnapshot.child("postCount").getValue())));
+                    contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
+                    if (Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) <= 0)
+                        contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
+                    else contribution.setText("+" + dataSnapshot.child("contributionCount").getValue());
+                } else {
+                }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
