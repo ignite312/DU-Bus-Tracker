@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:title="Profile"
+            app:title="Login Developer"
             app:titleTextColor="@color/black" />
 
     </com.google.android.material.appbar.AppBarLayout>

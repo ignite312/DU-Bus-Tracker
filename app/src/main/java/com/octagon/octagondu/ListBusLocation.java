@@ -25,8 +25,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -116,6 +118,29 @@ public class ListBusLocation extends AppCompatActivity {
                             list.add(location);
                         }
                     }
+                    /*Sort by latest Time*/
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+                    Collections.sort(list, (post1, post2) -> {
+                        try {
+                            Date time1 = timeFormat.parse(post1.getTime());
+                            Date time2 = timeFormat.parse(post2.getTime());
+
+                            Date date1 = dateFormat.parse(post1.getDate());
+                            Date date2 = dateFormat.parse(post2.getDate());
+                            int dateComparison = date2.compareTo(date1);
+
+                            if (dateComparison == 0) {
+                                int timeComparison = time2.compareTo(time1);
+                                return timeComparison;
+                            } else {
+                                return dateComparison;
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            return 0;
+                        }
+                    });
                     adapterBusLocation = new AdapterBusLocation(ListBusLocation.this, list);
                     recyclerView.setAdapter(adapterBusLocation);
                     recyclerView.setVisibility(View.VISIBLE);

@@ -7,9 +7,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +48,7 @@ public class FragmentProfileMy extends Fragment {
     private ImageView image;
     private TextView name, dept, session, rules, email, about, nickName, posts, contribution;
     TextView noPostsTextView;
+    Button editProfile;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,6 +67,11 @@ public class FragmentProfileMy extends Fragment {
         contribution = view.findViewById(R.id.totalContribution);
         noPostsTextView = view.findViewById(R.id.noPostsTextView);
 
+
+        editProfile = view.findViewById(R.id.editProfile);
+        editProfile.setOnClickListener(view1 -> {
+            showCustomToast("Disabled Temporarily");
+        });
         UID = DUREGNUM;
         recyclerView = view.findViewById(R.id.profileOthersRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -211,6 +219,20 @@ public class FragmentProfileMy extends Fragment {
             }
         });
     }
+    private void showCustomToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.custom_toast, (ViewGroup) getView().findViewById(R.id.toast_layout_root));
+
+        TextView text = view.findViewById(R.id.custom_toast_text);
+        text.setText(message);
+
+        Toast toast = new Toast(requireContext());
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 160); // Adjust margins as needed
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
+    }
+
 
     private void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();

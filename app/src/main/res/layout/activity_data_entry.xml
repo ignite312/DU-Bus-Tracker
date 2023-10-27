@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:title="Location for Khonika"
+            app:title="Data Entry"
             app:titleTextColor="@color/black"/>
 
     </com.google.android.material.appbar.AppBarLayout>
