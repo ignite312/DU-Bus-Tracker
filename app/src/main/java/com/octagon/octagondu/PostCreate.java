@@ -1,10 +1,11 @@
 package com.octagon.octagondu;
+
 import static com.octagon.octagondu.MainActivity.DUREGNUM;
+
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -13,7 +14,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,12 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class FragmentPostCreate extends Fragment {
+public class PostCreate extends AppCompatActivity {
     Spinner spinnerHelp, spinnerBusType;
     TextView textViewTitle, textViewDesc;
     Button button;
@@ -34,46 +33,33 @@ public class FragmentPostCreate extends Fragment {
     private ActionBar actionBar;
     private boolean backArrowVisible = true;
 
+    @SuppressLint("MissingInflatedId")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post_create, container, false);
-        spinnerHelp = view.findViewById(R.id.postType);
-        spinnerBusType = view.findViewById(R.id.busName);
-        textViewTitle = view.findViewById(R.id.postTitle);
-        textViewDesc = view.findViewById(R.id.body);
-        button = view.findViewById(R.id.go);
-
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_post_create);
+        spinnerHelp = findViewById(R.id.postType);
+        spinnerBusType = findViewById(R.id.busName);
+        textViewTitle = findViewById(R.id.postTitle);
+        textViewDesc = findViewById(R.id.body);
+        button = findViewById(R.id.go);
         /*Toolbar Setup*/
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        actionBar = activity.getSupportActionBar();
-        if (actionBar != null ) {
-            actionBar.setTitle("Create A Post");
-        }
-        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (activity != null && toolbar != null) {
-            activity.setSupportActionBar(toolbar);
-            ActionBar actionBar = activity.getSupportActionBar();
-
-            if (actionBar != null) {
-                updateActionBarNavigation(actionBar, activity);
-                // Set the navigation click listener for the Toolbar
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Handle the back button behavior here (e.g., navigating back)
-                        activity.onBackPressed();
-                        // Hide the back arrow
-                        if (backArrowVisible) {
-                            actionBar.setDisplayHomeAsUpEnabled(false);
-                            actionBar.setDisplayShowHomeEnabled(false);
-                            backArrowVisible = false;
-                        }
-                    }
-                });
-            }
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            Drawable blackArrow = ContextCompat.getDrawable(this, R.drawable.baseline_arrow_back_24);
+            actionBar.setHomeAsUpIndicator(blackArrow);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +87,7 @@ public class FragmentPostCreate extends Fragment {
                         @Override
                         public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
                             if (databaseError != null) {
-
+                                // Handle the error
                             } else {
                                 Integer updatedValue = dataSnapshot.getValue(Integer.class);
                                 InfoNewsFeed post = new InfoNewsFeed(DUREGNUM, busType, helpType, title, desc, 0, time, date, "0", String.valueOf(updatedValue));
@@ -116,11 +102,10 @@ public class FragmentPostCreate extends Fragment {
                 } else showToast("Something is empty");
             }
         });
-        return view;
     }
 
     private void showToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(PostCreate.this, message, Toast.LENGTH_SHORT).show();
     }
 
     public String getCurrentDateFormatted() {
@@ -131,15 +116,13 @@ public class FragmentPostCreate extends Fragment {
 
     public String getCurrentTime24HourFormat() {
         Date currentTime = new Date();
-
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-
         return timeFormat.format(currentTime);
     }
 
     private void openFeedFragment() {
-        if (getActivity() != null) {
-            getActivity().getSupportFragmentManager()
+        if (PostCreate.this != null) {
+            getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_fragment_container, fragmentNewsFeed)
                     .addToBackStack(null)
@@ -160,9 +143,11 @@ public class FragmentPostCreate extends Fragment {
                 }
                 return Transaction.success(mutableData);
             }
+
             @Override
             public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
                 if (databaseError != null) {
+                    // Handle the error
                 } else {
                     Integer updatedValue = dataSnapshot.getValue(Integer.class);
                 }
@@ -185,16 +170,11 @@ public class FragmentPostCreate extends Fragment {
             @Override
             public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
                 if (databaseError != null) {
+                    // Handle the error
                 } else {
                     Integer updatedValue = dataSnapshot.getValue(Integer.class);
                 }
             }
         });
-    }
-    private void updateActionBarNavigation(ActionBar actionBar, AppCompatActivity activity) {
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        Drawable blackArrow = ContextCompat.getDrawable(activity, R.drawable.baseline_arrow_back_24);
-        actionBar.setHomeAsUpIndicator(blackArrow);
     }
 }

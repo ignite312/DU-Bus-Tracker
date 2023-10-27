@@ -33,7 +33,7 @@ import java.util.List;
 
 public class SignInUser extends AppCompatActivity {
     FirebaseAuth mAuth;
-    private Button goButton, signUpButton;
+    private Button goButton, signUpButton, guestLogin;
     private TextInputEditText editUserName, editPassword;
 
     @Override
@@ -48,11 +48,19 @@ public class SignInUser extends AppCompatActivity {
         editPassword = findViewById(R.id.editPassword);
         goButton = findViewById(R.id.goButton);
         signUpButton = findViewById(R.id.signUpButton);
-
+        guestLogin  = findViewById(R.id.guestLogin);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignInUser.this, SignUpUser.class);
+                startActivity(intent);
+            }
+        });
+        guestLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInUser.this, MainActivity.class);
+                intent.putExtra("DUREGNUM", "0");
                 startActivity(intent);
             }
         });

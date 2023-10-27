@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentNewsFeed fragmentNewsFeed;
     FragmentLocation fragmentLocation;
     FragmentProfileMy fragmentProfileMy;
-    FragmentPostCreate fragmentPostCreate;
+    PostCreate postCreate;
     Boolean ok = false;
     private Toolbar toolbar;
     Button logout_button;
@@ -52,12 +52,18 @@ public class MainActivity extends AppCompatActivity {
         fragmentNewsFeed = new FragmentNewsFeed();
         fragmentLocation = new FragmentLocation();
         fragmentProfileMy = new FragmentProfileMy();
-        fragmentPostCreate = new FragmentPostCreate();
-
+        postCreate = new PostCreate();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
         logout_button = findViewById(R.id.logout);
+        if(mAuth.getCurrentUser() == null) {
+            logout_button.setText("Login");
+        }else {
+            logout_button.setText("Logout");
+        }
         logout_button.setOnClickListener(View -> {
+            if(mAuth.getCurrentUser() != null)showCustomToast("Goodbye!, See you again!");
             FirebaseAuth.getInstance().signOut();
-            showCustomToast("Goodbye!, See you again!");
             Intent intent = new Intent(getApplicationContext(), SignInUser.class);
             startActivity(intent);
             finish();
@@ -166,26 +172,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openProfileFragment() {
-        toolbar.setTitle("Profile");
-        if (!ok) setup();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fragment_container, fragmentProfileMy)
-                .commit();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() == null) {
+            showCustomToast("Create A Account First!");
+            Intent intent = new Intent(getApplicationContext(), SignInUser.class);
+            startActivity(intent);
+        }else {
+            toolbar.setTitle("Profile");
+            if (!ok) setup();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment_container, fragmentProfileMy)
+                    .commit();
+        }
     }
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void openCreatePosFragment() {
-        toolbar.setVisibility(View.GONE);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fragment_container, fragmentPostCreate)
-                .commit();
-
-    }
 
 
     private void setup() {

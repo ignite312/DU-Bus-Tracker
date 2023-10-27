@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -181,13 +183,13 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                showToast("Error: " + e.getMessage());
+                                                showCustomToast("Error: " + e.getMessage());
                                             }
                                         });
                             }
 
                         } catch (Exception e) {
-                            showToast(e.getMessage());
+                            showCustomToast(e.getMessage());
                         }
                     } else {
                     }
@@ -240,7 +242,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    showToast("Firebase Error fetching data");
+                    showCustomToast("Firebase Error fetching data");
                 }
             });
             DatabaseReference VoteCountRef = FirebaseDatabase.getInstance().getReference("Feed/Posts").child(infoNewsFeed.getPostId()).child("/totalVote");
@@ -258,10 +260,18 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    showToast("Firebase Error fetching data");
+                    showCustomToast("Firebase Error fetching data");
                 }
             });
             upvoteImageView.setOnClickListener(view -> {
+                FirebaseAuth mAuth;
+                mAuth = FirebaseAuth.getInstance();
+                if(mAuth.getCurrentUser() == null) {
+                    showCustomToast("Create A Account First!");
+                    Intent intent = new Intent(context, SignInUser.class);
+                    context.startActivity(intent);
+                    return;
+                }
                 UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -292,6 +302,14 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             });
 
             downVoteImageView.setOnClickListener(view -> {
+                FirebaseAuth mAuth;
+                mAuth = FirebaseAuth.getInstance();
+                if(mAuth.getCurrentUser() == null) {
+                    showCustomToast("Create A Account First!");
+                    Intent intent = new Intent(context, SignInUser.class);
+                    context.startActivity(intent);
+                    return;
+                }
                 UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -322,7 +340,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             });
 
             commentImageView.setOnClickListener(view -> {
-                showToast("Coming Soon!");
+                showCustomToast("Coming Soon!");
             });
 
             if (flag.equals("FEED")) {
@@ -460,4 +478,17 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             }
         });
     }
+    private void showCustomToast(String message) {
+        View layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null);
+
+        TextView text = layout.findViewById(R.id.custom_toast_text);
+        text.setText(message);
+
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 160); // Adjust margins as needed
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
+
 }

@@ -105,18 +105,32 @@
             android:text="@string/go"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/signUpButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_user_sign_up"
-            android:transitionName="@string/new_user_sign_up"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            tools:ignore="MissingConstraints">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/guestLogin"
+                android:layout_gravity="left"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login as Guest"
+                android:transitionName="@string/new_user_sign_up"
+                app:layout_constraintHorizontal_bias="0.0" />
+            <com.google.android.material.button.MaterialButton
+                android:layout_marginLeft="5dp"
+                android:id="@+id/signUpButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_user_sign_up"
+                android:transitionName="@string/new_user_sign_up"
+                app:layout_constraintHorizontal_bias="1.0" />
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

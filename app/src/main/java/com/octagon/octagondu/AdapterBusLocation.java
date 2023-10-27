@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -153,13 +155,13 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                showToast("Error: " + e.getMessage());
+                                                showCustomToast("Error: " + e.getMessage());
                                             }
                                         });
                             }
 //
                         } catch (Exception e) {
-                            showToast(e.getMessage());
+                            showCustomToast(e.getMessage());
                         }
                     } else {
                     }
@@ -214,7 +216,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    showToast("Firebase Error fetching data");
+                    showCustomToast("Firebase Error fetching data");
                 }
             });
 
@@ -235,7 +237,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    showToast("Firebase Error fetching data");
+                    showCustomToast("Firebase Error fetching data");
                 }
             });
 
@@ -386,5 +388,17 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 }
             }
         });
+    }
+    private void showCustomToast(String message) {
+        View layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null);
+
+        TextView text = layout.findViewById(R.id.custom_toast_text);
+        text.setText(message);
+
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 160); // Adjust margins as needed
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 }

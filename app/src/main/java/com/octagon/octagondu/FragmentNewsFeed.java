@@ -1,12 +1,13 @@
 package com.octagon.octagondu;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +37,7 @@ import java.util.List;
 public class FragmentNewsFeed extends Fragment {
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
-    private FragmentPostCreate fragmentPostCreate;
+    private PostCreate postCreate;
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView noPostsTextView;
 
@@ -44,7 +46,7 @@ public class FragmentNewsFeed extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_feed, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        fragmentPostCreate = new FragmentPostCreate();
+        postCreate = new PostCreate();
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
@@ -62,7 +64,16 @@ public class FragmentNewsFeed extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openCreatePosFragment();
+                FirebaseAuth mAuth;
+                mAuth = FirebaseAuth.getInstance();
+                if(mAuth.getCurrentUser() == null) {
+                    showCustomToast("Create A Account First!");
+                    Intent intent = new Intent(getActivity(), SignInUser.class);
+                    startActivity(intent);
+                    return;
+                }
+                Intent intent = new Intent(getActivity(), PostCreate.class);
+                startActivity(intent);
             }
         });
 
@@ -84,15 +95,6 @@ public class FragmentNewsFeed extends Fragment {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void openCreatePosFragment() {
-        if (getActivity() != null) {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_fragment_container, fragmentPostCreate)
-                    .addToBackStack(null)
-                    .commit();
-        }
-    }
 
     private void refresh() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Feed/Posts");
@@ -108,7 +110,7 @@ public class FragmentNewsFeed extends Fragment {
                         if (posts != null) {
                             postList.add(posts);
                         } else {
-                            showToast("Something went wrong");
+                            showCustomToast("Something went wrong");
                         }
                     }
                     /*Sort by latest Time*/
@@ -138,7 +140,7 @@ public class FragmentNewsFeed extends Fragment {
                     adapter.setFlag("FEED");
                     recyclerView.setAdapter(adapter);
                 } else {
-                    showToast("No posts found");
+                    showCustomToast("No posts found");
                     recyclerView.setVisibility(View.GONE);
                     noPostsTextView.setVisibility(View.VISIBLE);
                 }
@@ -149,6 +151,18 @@ public class FragmentNewsFeed extends Fragment {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
             }
         });
+    }
+    private void showCustomToast(String message) {
+        View layout = getLayoutInflater().inflate(R.layout.custom_toast, (ViewGroup) getView().findViewById(R.id.toast_layout_root));
+
+        TextView text = layout.findViewById(R.id.custom_toast_text);
+        text.setText(message);
+
+        Toast toast = new Toast(getContext());
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 160); // Adjust margins as needed
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 
 }

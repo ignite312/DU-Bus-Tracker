@@ -8,7 +8,10 @@ import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ public class ListBusDetails extends AppCompatActivity {
     private ProgressBar progressBarUp, progressBarDown;
     MaterialToolbar detailsBusToolbar;
     TextView textView;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +50,8 @@ public class ListBusDetails extends AppCompatActivity {
 
         /*Toolbar*/
         detailsBusToolbar = findViewById(R.id.toolbar);
-        if(flag.equals("1"))detailsBusToolbar.setTitle("Locations for "+busName);
-        else detailsBusToolbar.setTitle("Schedule for "+busName);
+        if (flag.equals("1")) detailsBusToolbar.setTitle("Locations for " + busName);
+        else detailsBusToolbar.setTitle("Schedule for " + busName);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,7 +74,7 @@ public class ListBusDetails extends AppCompatActivity {
         progressBarDown = findViewById(R.id.progress_bar2);
         textView = findViewById(R.id.downSc);
 
-        if(flag.equals("1")) {
+        if (flag.equals("1")) {
             textView.setVisibility(View.GONE);
             progressBarDown.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
             progressBarDown.setVisibility(View.INVISIBLE);
@@ -83,7 +87,7 @@ public class ListBusDetails extends AppCompatActivity {
         busAdapterUp = new AdapterBusDetails(new ArrayList<>());
         recyclerViewUp.setAdapter(busAdapterUp);
 
-        if(flag.equals("0")) {
+        if (flag.equals("0")) {
             recyclerViewDown = findViewById(R.id.recycler_view3);
             recyclerViewDown.setLayoutManager(new LinearLayoutManager(this));
             busAdapterDown = new AdapterBusDetails(new ArrayList<>());
@@ -105,8 +109,6 @@ public class ListBusDetails extends AppCompatActivity {
                             } else {
                                 busList3.add(bus);
                             }
-                        } else {
-                            Toast.makeText(ListBusDetails.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     }
                     progressBarUp.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
@@ -116,28 +118,45 @@ public class ListBusDetails extends AppCompatActivity {
                     /*Recycler View Up*/
                     busAdapterUp = new AdapterBusDetails(busList1);
                     recyclerViewUp.setAdapter(busAdapterUp);
-                    if(flag.equals("1")) busAdapterUp.setFlag("1");
+                    if (flag.equals("1")) busAdapterUp.setFlag("1");
                     else busAdapterUp.setFlag("0");
 
-                    if(flag.equals("0")) {
+                    if (flag.equals("0")) {
                         /*Recycler View Down Up*/
                         busAdapterDown = new AdapterBusDetails(busList3);
-                        if(flag.equals("1")) busAdapterDown.setFlag("1");
+                        if (flag.equals("1")) busAdapterDown.setFlag("1");
                         else busAdapterDown.setFlag("0");
                         recyclerViewDown.setAdapter(busAdapterDown);
                     }
                 } else {
-                    Toast.makeText(ListBusDetails.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
+                    showCustomToast("No data found for this bus name");
                     finish();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
             }
         });
     }
+
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showCustomToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+        TextView text = (TextView) layout.findViewById(R.id.custom_toast_text);
+        text.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 160); // Adjust margins as needed
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 }
