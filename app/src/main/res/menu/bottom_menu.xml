@@ -6,16 +6,16 @@
         android:icon="@drawable/baseline_home_24"
         tools:ignore="MenuTitle" />
     <item
-        android:id="@+id/schedule_button"
-        android:icon="@drawable/baseline_schedule_24"
+        android:id="@+id/location_button"
+        android:icon="@drawable/baseline_share_location_24"
         tools:ignore="MenuTitle" />
     <item
         android:id="@+id/feed_button"
         android:icon="@drawable/baseline_feed_24"
         tools:ignore="MenuTitle" />
     <item
-        android:id="@+id/location_button"
-        android:icon="@drawable/baseline_share_location_24"
+        android:id="@+id/schedule_button"
+        android:icon="@drawable/baseline_schedule_24"
         tools:ignore="MenuTitle" />
     <item
         android:id="@+id/profile_button"

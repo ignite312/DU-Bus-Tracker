@@ -2,9 +2,13 @@ package com.octagon.octagondu;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +40,25 @@ public class LoginDeveloper extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.btn_login);
         progressBar = findViewById(R.id.progressBar);
+        /*Toolbar*/
+        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            Drawable blackArrow = ContextCompat.getDrawable(this, R.drawable.baseline_arrow_back_24);
+            actionBar.setHomeAsUpIndicator(blackArrow);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,32 +66,6 @@ public class LoginDeveloper extends AppCompatActivity {
                 intent.putExtra("BUS_NAME_EXTRA", "FuckYou");
                 intent.putExtra("FLAG", "0");
                 startActivity(intent);
-//                progressBar.setVisibility(view.VISIBLE);
-//                String email, password;
-//                email = String.valueOf(editTextEmail.getText());
-//                password = String.valueOf(editTextPassword.getText());
-//                if (TextUtils.isEmpty(email)) {
-//                    Toast.makeText(LoginDeveloper.this, "Enter Email", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(password)) {
-//                    Toast.makeText(LoginDeveloper.this, "Enter Password", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        progressBar.setVisibility(View.GONE);
-//                        if (task.isSuccessful()) {
-//                            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(getApplicationContext(), DataEntry.class);
-//                            startActivity(intent);
-//                            finish();
-//                        } else {
-//                            Toast.makeText(LoginDeveloper.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
             }
         });
     }

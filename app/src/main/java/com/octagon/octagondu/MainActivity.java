@@ -109,10 +109,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(getApplicationContext(), SignInUser.class);
-                    startActivity(intent);
-                    finish();
+                    showCustomToast("Will Added Later");
+//                    Intent intent = new Intent(getApplicationContext(), SignInUser.class);
+//                    startActivity(intent);
+//                    finish();
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);
@@ -123,14 +123,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), SendEmail.class);
                     startActivity(intent);
                 }
-                /*
-                else if (itemId == R.id.logOut) {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(getApplicationContext(), SignInUser.class);
-                    startActivity(intent);
-                    finish();
-                }
-                */
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }

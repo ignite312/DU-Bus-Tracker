@@ -1,9 +1,7 @@
 package com.octagon.octagondu;
-
 import static com.octagon.octagondu.MainActivity.DUREGNUM;
-
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +9,10 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +31,8 @@ public class FragmentPostCreate extends Fragment {
     TextView textViewTitle, textViewDesc;
     Button button;
     FragmentNewsFeed fragmentNewsFeed;
-
+    private ActionBar actionBar;
+    private boolean backArrowVisible = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,8 +43,38 @@ public class FragmentPostCreate extends Fragment {
         textViewTitle = view.findViewById(R.id.postTitle);
         textViewDesc = view.findViewById(R.id.body);
         button = view.findViewById(R.id.go);
-        fragmentNewsFeed = new FragmentNewsFeed();
 
+
+        /*Toolbar Setup*/
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        actionBar = activity.getSupportActionBar();
+        if (actionBar != null ) {
+            actionBar.setTitle("Create A Post");
+        }
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+
+        if (activity != null && toolbar != null) {
+            activity.setSupportActionBar(toolbar);
+            ActionBar actionBar = activity.getSupportActionBar();
+
+            if (actionBar != null) {
+                updateActionBarNavigation(actionBar, activity);
+                // Set the navigation click listener for the Toolbar
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Handle the back button behavior here (e.g., navigating back)
+                        activity.onBackPressed();
+                        // Hide the back arrow
+                        if (backArrowVisible) {
+                            actionBar.setDisplayHomeAsUpEnabled(false);
+                            actionBar.setDisplayShowHomeEnabled(false);
+                            backArrowVisible = false;
+                        }
+                    }
+                });
+            }
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,5 +190,11 @@ public class FragmentPostCreate extends Fragment {
                 }
             }
         });
+    }
+    private void updateActionBarNavigation(ActionBar actionBar, AppCompatActivity activity) {
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        Drawable blackArrow = ContextCompat.getDrawable(activity, R.drawable.baseline_arrow_back_24);
+        actionBar.setHomeAsUpIndicator(blackArrow);
     }
 }

@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +43,7 @@ public class FragmentNewsFeed extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_feed, container, false);
-
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         fragmentPostCreate = new FragmentPostCreate();
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(
@@ -49,6 +52,11 @@ public class FragmentNewsFeed extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null ) {
+            actionBar.setTitle("News");
+        }
         noPostsTextView = view.findViewById(R.id.noPostsTextView);
         TextView textView = view.findViewById(R.id.createAPost);
         textView.setOnClickListener(new View.OnClickListener() {
