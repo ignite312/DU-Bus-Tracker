@@ -5,6 +5,7 @@ import static com.octagon.octagondu.MainActivity.DUREGNUM;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +13,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -27,6 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class LocationShare extends FragmentActivity implements OnMapReadyCallback {
+public class LocationShare extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
     private Button updateLocationButton;
@@ -60,8 +65,28 @@ public class LocationShare extends FragmentActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
-        updateLocationButton = findViewById(R.id.click);
+         /*Toolbar Setup*/
+//        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
+//        detailsBusToolbar.setTitle("Locations for "+busName);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            Drawable blackArrow = ContextCompat.getDrawable(this, R.drawable.baseline_arrow_back_24);
+            actionBar.setHomeAsUpIndicator(blackArrow);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+
+        updateLocationButton = findViewById(R.id.click);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         updateLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +123,7 @@ public class LocationShare extends FragmentActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
+
     private void updateLocationMarker(Location location) {
         if (location != null) {
             Double latitude = location.getLatitude();
@@ -151,19 +177,23 @@ public class LocationShare extends FragmentActivity implements OnMapReadyCallbac
             }
         }
     }
+
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
     public String getCurrentDateFormatted() {
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         return dateFormat.format(currentDate);
     }
+
     public String getCurrentTime24HourFormat() {
         Date currentTime = new Date();
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         return timeFormat.format(currentTime);
     }
+
     private void update(int dcc, String UID) {
 
         DatabaseReference ContributionCountRef = FirebaseDatabase.getInstance().getReference("UserInfo/" + UID + "/contributionCount");

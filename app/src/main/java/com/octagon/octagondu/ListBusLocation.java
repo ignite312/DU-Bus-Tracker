@@ -2,6 +2,7 @@ package com.octagon.octagondu;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -43,8 +47,30 @@ public class ListBusLocation extends AppCompatActivity {
         setContentView(R.layout.activity_list_bus_location);
         busName = getIntent().getStringExtra("BUSNAME");
         busTime = getIntent().getStringExtra("BUSTIME");
-        detailsBusToolbar = findViewById(R.id.locationForFixedTimeAppBar);
+
+
+        /*Toolbar*/
+        detailsBusToolbar = findViewById(R.id.toolbar);
         detailsBusToolbar.setTitle("Locations for " + busName + " " + busTime);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            Drawable blackArrow = ContextCompat.getDrawable(this, R.drawable.baseline_arrow_back_24);
+            actionBar.setHomeAsUpIndicator(blackArrow);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+
+
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayoutLocation);
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,

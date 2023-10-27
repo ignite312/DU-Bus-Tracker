@@ -7,7 +7,7 @@
     tools:context=".FragmentSchedule">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/scheduleAppBar"
+        android:id="@+id/profileOthersAppbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/Schedule"
+            android:id="@+id/toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"

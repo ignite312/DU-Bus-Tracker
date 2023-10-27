@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:gravity="center">
 
     <TextView
@@ -12,4 +13,18 @@
         android:text="Hey,Welcome to Dhaka University Bus Community. Let's Make Our University Life Better Together!"
         android:textColor="@color/black"
         android:textSize="25sp" />
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="100dp"
+            android:src="@drawable/app_logo"
+            android:layout_height="100dp"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:src="@drawable/logo_du"
+            android:layout_height="100dp"/>
+    </LinearLayout>
 </LinearLayout>

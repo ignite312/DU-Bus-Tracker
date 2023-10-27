@@ -1,8 +1,11 @@
 package com.octagon.octagondu;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +36,7 @@ public class ListBusDetails extends AppCompatActivity {
     private ProgressBar progressBarUp, progressBarDown;
     MaterialToolbar detailsBusToolbar;
     TextView textView;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +44,28 @@ public class ListBusDetails extends AppCompatActivity {
         String busName = getIntent().getStringExtra("busName");
         String flag = getIntent().getStringExtra("flag");
 
-        detailsBusToolbar = findViewById(R.id.DetailsBus);
+        /*Toolbar*/
+        detailsBusToolbar = findViewById(R.id.toolbar);
+        if(flag.equals("1"))detailsBusToolbar.setTitle("Locations for "+busName);
+        else detailsBusToolbar.setTitle("Schedule for "+busName);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            Drawable blackArrow = ContextCompat.getDrawable(this, R.drawable.baseline_arrow_back_24);
+            actionBar.setHomeAsUpIndicator(blackArrow);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+
         progressBarUp = findViewById(R.id.progress_bar1);
         progressBarDown = findViewById(R.id.progress_bar2);
         textView = findViewById(R.id.downSc);
@@ -48,7 +75,6 @@ public class ListBusDetails extends AppCompatActivity {
             progressBarDown.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
             progressBarDown.setVisibility(View.INVISIBLE);
         }
-        detailsBusToolbar.setTitle(busName);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Schedule").child(busName);
 
@@ -102,6 +128,7 @@ public class ListBusDetails extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(ListBusDetails.this, "No data found for this bus name", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
             @Override

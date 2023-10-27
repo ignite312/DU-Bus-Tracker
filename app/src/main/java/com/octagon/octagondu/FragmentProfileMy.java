@@ -31,7 +31,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -150,7 +154,7 @@ public class FragmentProfileMy extends Fragment {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<InfoNewsFeed> PostList = new ArrayList<>();
+                List<InfoNewsFeed> postList = new ArrayList<>();
                 if (dataSnapshot.exists()) {
                     Boolean ok = false;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -158,11 +162,34 @@ public class FragmentProfileMy extends Fragment {
                         if (posts != null) {
                             if (String.valueOf(snapshot.child("userId").getValue()).equals(DUREGNUM)) {
                                 ok = true;
-                                PostList.add(posts);
+                                postList.add(posts);
                             }
                         }
                     }
-                    adapter = new AdapterNewsFeed(getContext(), PostList);
+                    /*Sort by latest Time*/
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+                    Collections.sort(postList, (post1, post2) -> {
+                        try {
+                            Date time1 = timeFormat.parse(post1.getTime());
+                            Date time2 = timeFormat.parse(post2.getTime());
+
+                            Date date1 = dateFormat.parse(post1.getDate());
+                            Date date2 = dateFormat.parse(post2.getDate());
+                            int dateComparison = date2.compareTo(date1);
+
+                            if (dateComparison == 0) {
+                                int timeComparison = time2.compareTo(time1);
+                                return timeComparison;
+                            } else {
+                                return dateComparison;
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            return 0;
+                        }
+                    });
+                    adapter = new AdapterNewsFeed(getContext(), postList);
                     adapter.setFlag("PM");
                     recyclerView.setAdapter(adapter);
                     if(ok) {

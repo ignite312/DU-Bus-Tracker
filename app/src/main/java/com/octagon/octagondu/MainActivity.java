@@ -7,8 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.MenuItem;
 
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         logout_button = findViewById(R.id.logout);
         logout_button.setOnClickListener(View -> {
             FirebaseAuth.getInstance().signOut();
+            showCustomToast("Goodbye!, See you again!");
             Intent intent = new Intent(getApplicationContext(), SignInUser.class);
             startActivity(intent);
             finish();
@@ -142,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openScheduleFragment() {
+        toolbar.setTitle("Bus Schedule");
         if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -150,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openFindBusLocation() {
+        toolbar.setTitle("Bus Locations");
         if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -158,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openFeedFragment() {
+        toolbar.setTitle("News");
         if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -166,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openProfileFragment() {
+        toolbar.setTitle("Profile");
         if (!ok) setup();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -244,5 +253,19 @@ public class MainActivity extends AppCompatActivity {
         }
         // Disable the drawer swipe gesture
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+    private void showCustomToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+        TextView text = (TextView) layout.findViewById(R.id.custom_toast_text);
+        text.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 160); // Adjust margins as needed
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 }
