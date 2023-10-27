@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class ProfileOthers extends AppCompatActivity {
     private String UID;
     private ImageView image;
     private TextView name, dept, session, rules, email, about, nickName, posts, contribution;
+    TextView noPostsTextView;
 
 
     @SuppressLint("MissingInflatedId")
@@ -46,7 +48,7 @@ public class ProfileOthers extends AppCompatActivity {
         setContentView(R.layout.activity_profile_others);
         name = findViewById(R.id.othersFullName);
         dept = findViewById(R.id.othersDept);
-        session  = findViewById(R.id.othersSession);
+        session = findViewById(R.id.othersSession);
         rules = findViewById(R.id.othersRules);
         email = findViewById(R.id.othersEmail);
         about = findViewById(R.id.othersAboutMe);
@@ -54,7 +56,7 @@ public class ProfileOthers extends AppCompatActivity {
         nickName = findViewById(R.id.othersNickName);
         posts = findViewById(R.id.totalPost);
         contribution = findViewById(R.id.totalContribution);
-
+        noPostsTextView = findViewById(R.id.noPostsTextView);
 
         UID = getIntent().getStringExtra("UID");
         recyclerView = findViewById(R.id.profileOthersRecycleView);
@@ -76,8 +78,10 @@ public class ProfileOthers extends AppCompatActivity {
                     nickName.setText((CharSequence) dataSnapshot.child("nickName").getValue());
                     posts.setText((String.valueOf(dataSnapshot.child("postCount").getValue())));
                     contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
-                    if (Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) <= 0)                     contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
-                    else contribution.setText("+" + dataSnapshot.child("contributionCount").getValue());
+                    if (Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) <= 0)
+                        contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
+                    else
+                        contribution.setText("+" + dataSnapshot.child("contributionCount").getValue());
                     try {
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
@@ -124,10 +128,12 @@ public class ProfileOthers extends AppCompatActivity {
                     contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
                     if (Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) <= 0)
                         contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
-                    else contribution.setText("+" + dataSnapshot.child("contributionCount").getValue());
+                    else
+                        contribution.setText("+" + dataSnapshot.child("contributionCount").getValue());
                 } else {
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("Firebase", "Error fetching data", databaseError.toException());
@@ -142,10 +148,12 @@ public class ProfileOthers extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<InfoNewsFeed> postList = new ArrayList<>();
                 if (dataSnapshot.exists()) {
+                    Boolean ok = false;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         InfoNewsFeed post = snapshot.getValue(InfoNewsFeed.class);
                         if (post != null) {
                             if (String.valueOf(snapshot.child("userId").getValue()).equals(UID)) {
+                                ok = true;
                                 postList.add(post);
                             }
                         } else {
@@ -155,8 +163,16 @@ public class ProfileOthers extends AppCompatActivity {
                     adapter = new AdapterNewsFeed(ProfileOthers.this, postList);
                     adapter.setFlag("PO");
                     recyclerView.setAdapter(adapter);
+                    if (ok) {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        noPostsTextView.setVisibility(View.GONE);
+                    }else {
+                        recyclerView.setVisibility(View.GONE);
+                        noPostsTextView.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    showToast("No data found for this bus name");
+                    recyclerView.setVisibility(View.GONE);
+                    noPostsTextView.setVisibility(View.VISIBLE);
                 }
             }
 

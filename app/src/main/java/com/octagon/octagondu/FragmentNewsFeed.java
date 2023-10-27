@@ -1,10 +1,12 @@
 package com.octagon.octagondu;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,20 +30,22 @@ public class FragmentNewsFeed extends Fragment {
     private AdapterNewsFeed adapter;
     private FragmentPostCreate fragmentPostCreate;
     private SwipeRefreshLayout swipeRefreshLayout;
+    TextView noPostsTextView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_feed, container, false);
 
         fragmentPostCreate = new FragmentPostCreate();
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout  = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );
-
+        noPostsTextView = view.findViewById(R.id.noPostsTextView);
         TextView textView = view.findViewById(R.id.createAPost);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +64,7 @@ public class FragmentNewsFeed extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
         return view;
     }
 
@@ -82,6 +87,8 @@ public class FragmentNewsFeed extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<InfoNewsFeed> PostList = new ArrayList<>();
                 if (dataSnapshot.exists()) {
+                    noPostsTextView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         InfoNewsFeed posts = snapshot.getValue(InfoNewsFeed.class);
                         if (posts != null) {
@@ -90,11 +97,14 @@ public class FragmentNewsFeed extends Fragment {
                             showToast("Something went wrong");
                         }
                     }
-                    adapter = new AdapterNewsFeed(getContext(), PostList); // Pass the context here
+                    adapter = new AdapterNewsFeed(getContext(), PostList);
                     adapter.setFlag("FEED");
                     recyclerView.setAdapter(adapter);
                 } else {
-                    showToast("No data found for this bus name");
+                    showToast("No posts found");
+//                    recyclerView.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                    recyclerView.setVisibility(View.GONE);
+                    noPostsTextView.setVisibility(View.VISIBLE);
                 }
             }
             @Override
@@ -103,4 +113,5 @@ public class FragmentNewsFeed extends Fragment {
             }
         });
     }
+
 }

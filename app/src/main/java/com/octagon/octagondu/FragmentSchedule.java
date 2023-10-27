@@ -30,7 +30,6 @@ public class FragmentSchedule extends Fragment {
                 "Falguni",
                 "Choitaly",
                 "Ullash",
-                "Bosonto",
                 "Isha Kha",
                 "Anando",
                 "Torongo",
@@ -43,8 +42,8 @@ public class FragmentSchedule extends Fragment {
                 "Wari"
         };
         Arrays.sort(nameList);
-        int[] imageList = new int[15];
-        for (int i = 0; i < 15; i++) {
+        int[] imageList = new int[14];
+        for (int i = 0; i < 14; i++) {
             if (i % 5 == 0) {
                 imageList[i] = R.drawable.bus;
             } else if(i % 5 == 1) {

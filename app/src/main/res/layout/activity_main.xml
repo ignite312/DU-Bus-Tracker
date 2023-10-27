@@ -48,6 +48,16 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/main_menu">
-
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/blue"
+            android:padding="16dp"
+            android:layout_gravity="bottom"/>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -41,7 +41,9 @@ public class FragmentProfileMy extends Fragment {
     private String UID;
     private ImageView image;
     private TextView name, dept, session, rules, email, about, nickName, posts, contribution;
+    TextView noPostsTextView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class FragmentProfileMy extends Fragment {
         nickName = view.findViewById(R.id.othersNickName);
         posts = view.findViewById(R.id.totalPost);
         contribution = view.findViewById(R.id.totalContribution);
+        noPostsTextView = view.findViewById(R.id.noPostsTextView);
 
         UID = DUREGNUM;
         recyclerView = view.findViewById(R.id.profileOthersRecycleView);
@@ -149,21 +152,29 @@ public class FragmentProfileMy extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<InfoNewsFeed> PostList = new ArrayList<>();
                 if (dataSnapshot.exists()) {
+                    Boolean ok = false;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         InfoNewsFeed posts = snapshot.getValue(InfoNewsFeed.class);
                         if (posts != null) {
                             if (String.valueOf(snapshot.child("userId").getValue()).equals(DUREGNUM)) {
+                                ok = true;
                                 PostList.add(posts);
                             }
-                        } else {
-                            showToast("Something went wrong");
                         }
                     }
                     adapter = new AdapterNewsFeed(getContext(), PostList);
                     adapter.setFlag("PM");
                     recyclerView.setAdapter(adapter);
+                    if(ok) {
+                        noPostsTextView.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }else {
+                        recyclerView.setVisibility(View.GONE);
+                        noPostsTextView.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    showToast("No data found for this bus name");
+                    recyclerView.setVisibility(View.GONE);
+                    noPostsTextView.setVisibility(View.VISIBLE);
                 }
             }
 

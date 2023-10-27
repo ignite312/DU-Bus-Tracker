@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import android.view.MenuItem;
 
@@ -21,12 +21,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -37,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
     FragmentLocation fragmentLocation;
     FragmentProfileMy fragmentProfileMy;
     FragmentPostCreate fragmentPostCreate;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
     Boolean ok = false;
     private Toolbar toolbar;
+    Button logout_button;
     public static String DUREGNUM = "0";
 
     @SuppressLint("MissingInflatedId")
@@ -56,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
         fragmentLocation = new FragmentLocation();
         fragmentProfileMy = new FragmentProfileMy();
         fragmentPostCreate = new FragmentPostCreate();
+
+        logout_button = findViewById(R.id.logout);
+        logout_button.setOnClickListener(View -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), SignInUser.class);
+            startActivity(intent);
+            finish();
+        });
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -88,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
-        // Set up the toggle for the navigation drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -104,9 +104,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
-                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(getApplicationContext(), SignInUser.class);
                     startActivity(intent);
-                    showToast("Will added later");
+                    finish();
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);
@@ -185,46 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private void getReg() {
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if (user != null) {
-//            String email = user.getEmail();
-//            firebaseDatabase = FirebaseDatabase.getInstance();
-//            databaseReference = firebaseDatabase.getReference("UserInfo");
-//            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    boolean ok = false;
-//                    if (dataSnapshot.exists()) {
-//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                            InfoUser info = snapshot.getValue(InfoUser.class);
-//                            if (info != null) {
-//                                String t_email = String.valueOf(snapshot.child("email").getValue());
-//                                if (t_email.equals(email)) {
-//                                    DUREGNUM = String.valueOf(snapshot.child("regNum").getValue());
-//                                    ok = true;
-//                                    break;
-//                                }
-//                                if (ok) break;
-//                            } else {
-//                                showToast("Something went wrong");
-//                            }
-//                        }
-//                        if (!ok) {
-//                            showToast("No data found");
-//                        }
-//                    } else {
-//                        showToast("Error");
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    Log.e("Firebase", "Error fetching data", databaseError.toException());
-//                }
-//            });
-//        }
-//    }
 
     private void setup() {
         ok = true;
@@ -247,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
                     startActivity(intent);
                 } else if (itemId == R.id.bug) {
-                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
+//                    startActivity(intent);
                     showToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);

@@ -63,7 +63,7 @@
             android:id="@+id/username"
             style="@style/CustomEditTextTheme"
             android:layout_marginTop="16dp"
-            android:hint="@string/username"
+            android:hint="Institution Email"
             app:errorEnabled="false"
             android:transitionName="@string/username"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,6 +73,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
                 android:id="@+id/editUsername"/>
 
         </com.google.android.material.textfield.TextInputLayout>

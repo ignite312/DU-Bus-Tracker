@@ -76,7 +76,6 @@ public class SignInUser extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     getReg();
-                    showToast("Login Successful");
                 } else {
                     showToast("Authentication failed.");
                 }

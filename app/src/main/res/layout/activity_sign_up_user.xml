@@ -159,7 +159,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
                     android:id="@+id/editDept"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -175,7 +175,6 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
                     android:id="@+id/editSession"/>
 
             </com.google.android.material.textfield.TextInputLayout>

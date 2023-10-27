@@ -34,6 +34,7 @@ public class ListBusLocation extends AppCompatActivity {
     private String busName, busTime;
     MaterialToolbar detailsBusToolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    TextView noLocationsTextView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,6 +54,7 @@ public class ListBusLocation extends AppCompatActivity {
         );
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         TextView textView = findViewById(R.id.shareYourLocation);
+        noLocationsTextView = findViewById(R.id.noLocationTextView);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,14 +92,17 @@ public class ListBusLocation extends AppCompatActivity {
                     }
                     adapterBusLocation = new AdapterBusLocation(ListBusLocation.this, list);
                     recyclerView.setAdapter(adapterBusLocation);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    noLocationsTextView.setVisibility(View.GONE);
                 } else {
-                    showToast("No data found for this bus name");
+                    recyclerView.setVisibility(View.GONE);
+                    noLocationsTextView.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Firebase", "Error fetching data", databaseError.toException());
+
             }
         });
     }

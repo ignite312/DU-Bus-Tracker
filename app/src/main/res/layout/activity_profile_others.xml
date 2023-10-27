@@ -28,10 +28,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,20 +51,13 @@
                     android:orientation="vertical"
                     android:padding="5dp">
 
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/otherImage"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/border_box"
-                        android:padding="8dp">
-
-                        <ImageView
-                            android:id="@+id/otherImage"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"/>
-
-                    </FrameLayout>
+                        android:background="@drawable/border_box" />
 
                     <TextView
                         android:id="@+id/othersNickName"
@@ -168,9 +159,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/department" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
                             android:fontFamily="@font/montserrat_light"
                             android:text="Department: "
                             android:textSize="12sp" />
@@ -191,9 +189,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/session" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
                             android:fontFamily="@font/montserrat_light"
                             android:text="Session: "
                             android:textSize="12sp" />
@@ -214,9 +219,17 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
+                        <ImageView
+
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/rule" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
                             android:fontFamily="@font/montserrat_light"
                             android:text="Rules: "
                             android:textSize="12sp" />
@@ -232,15 +245,36 @@
                             tools:ignore="SmallSp" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/othersEmail"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_light"
-                        android:text="Email: contact.emonkhan@gmail.com"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        tools:ignore="SmallSp" />
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/mail" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/montserrat_light"
+                            android:text="Email: "
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/othersEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_light"
+                            android:text="contact.emonkhan@gmail.com"
+                            android:textColor="@color/dark_grey_color"
+                            android:textSize="12sp"
+                            tools:ignore="SmallSp" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -281,6 +315,14 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:ignore="SmallSp" />
+
+            <TextView
+                android:id="@+id/noPostsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="No Posts"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/profileOthersRecycleView"
