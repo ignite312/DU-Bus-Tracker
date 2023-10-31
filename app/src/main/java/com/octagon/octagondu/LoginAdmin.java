@@ -37,10 +37,10 @@ public class LoginAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_admin);
-        spinnerBusName = findViewById(R.id.spinnerBusName);
-        username = findViewById(R.id.username1);
-        password = findViewById(R.id.password1);
-        button = findViewById(R.id.btn_login1);
+//        spinnerBusName = findViewById(R.id.spinnerBusName);
+//        username = findViewById(R.id.username1);
+//        password = findViewById(R.id.password1);
+//        button = findViewById(R.id.btn_login1);
         /*Toolbar*/
         MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -60,22 +60,22 @@ public class LoginAdmin extends AppCompatActivity {
                 }
             });
         }
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth mAuth;
-                mAuth = FirebaseAuth.getInstance();
-                if(mAuth.getCurrentUser() == null) {
-                    showCustomToast("Create A Account First!");
-                    Intent intent = new Intent(getApplicationContext(), SignInUser.class);
-                    startActivity(intent);
-                    return;
-                }
-                String busName = spinnerBusName.getSelectedItem().toString();
-                Intent intent = new Intent(getApplicationContext(), DataEntry.class);
-                intent.putExtra("BUS_NAME_EXTRA", busName);
-                intent.putExtra("FLAG", "1");
-                startActivity(intent);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseAuth mAuth;
+//                mAuth = FirebaseAuth.getInstance();
+//                if(mAuth.getCurrentUser() == null) {
+//                    showCustomToast("Create A Account First!");
+//                    Intent intent = new Intent(getApplicationContext(), SignInUser.class);
+//                    startActivity(intent);
+//                    return;
+//                }
+//                String busName = spinnerBusName.getSelectedItem().toString();
+//                Intent intent = new Intent(getApplicationContext(), DataEntry.class);
+//                intent.putExtra("BUS_NAME_EXTRA", busName);
+//                intent.putExtra("FLAG", "1");
+//                startActivity(intent);
 //                String busName = spinnerBusName.getSelectedItem().toString();
 //                String id = username.getText().toString();
 //                String pass = password.getText().toString();
@@ -114,8 +114,8 @@ public class LoginAdmin extends AppCompatActivity {
 //                        Log.e("Firebase", "Error fetching data", databaseError.toException());
 //                    }
 //                });
-            }
-        });
+//            }
+//        });
     }
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

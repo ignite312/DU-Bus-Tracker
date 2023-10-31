@@ -55,7 +55,7 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (flag.equals("1")) {
+                if (flag.equals("LC")) {
                     FirebaseAuth mAuth;
                     mAuth = FirebaseAuth.getInstance();
                     if (mAuth.getCurrentUser() == null) {
@@ -68,15 +68,7 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
                     intent.putExtra("BUSNAME", bus.getBusName());
                     intent.putExtra("BUSTIME", bus.getTime());
                     view.getContext().startActivity(intent);
-                } else {
-                    FirebaseAuth mAuth;
-                    mAuth = FirebaseAuth.getInstance();
-                    if (mAuth.getCurrentUser() == null) {
-                        showCustomToast("Create An Accoujnt First!", view.getContext());
-                        Intent intent = new Intent(view.getContext(), SignInUser.class);
-                        view.getContext().startActivity(intent);
-                        return;
-                    }
+                }else if (flag.equals("AD")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setTitle("Options")
                             .setMessage("Choose an option:")
@@ -96,11 +88,10 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
                                 public void onClick(DialogInterface dialog, int which) {
                                     String busNameToDelete = bus.getBusName();
                                     String timeToDelete = bus.getTime();
-
                                     if (!busNameToDelete.isEmpty() && !timeToDelete.isEmpty()) {
                                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-                                        String pathToDelete = "Bus Name/" + busNameToDelete + "/" + timeToDelete;
+                                        String pathToDelete = "Bus Schedule/" + busNameToDelete + "/" + timeToDelete;
 
                                         databaseReference.child(pathToDelete).addListenerForSingleValueEvent(new ValueEventListener() {
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -110,7 +101,6 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
                                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     if (task.isSuccessful()) {
-                                                                        // Data deleted successfully
                                                                         showCustomToast("Data Deleted Successfully", view.getContext());
                                                                         int position = busList.indexOf(bus);
                                                                         if (position != -1) {

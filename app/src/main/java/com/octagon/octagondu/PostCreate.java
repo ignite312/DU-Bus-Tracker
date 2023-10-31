@@ -5,7 +5,10 @@ import static com.octagon.octagondu.MainActivity.DUREGNUM;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,9 +32,6 @@ public class PostCreate extends AppCompatActivity {
     Spinner spinnerHelp, spinnerBusType;
     TextView textViewTitle, textViewDesc;
     Button button;
-    FragmentNewsFeed fragmentNewsFeed;
-    private ActionBar actionBar;
-    private boolean backArrowVisible = true;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -87,19 +87,19 @@ public class PostCreate extends AppCompatActivity {
                         @Override
                         public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
                             if (databaseError != null) {
-                                // Handle the error
+                                showCustomToast(databaseError.getMessage());
                             } else {
                                 Integer updatedValue = dataSnapshot.getValue(Integer.class);
                                 InfoNewsFeed post = new InfoNewsFeed(DUREGNUM, busType, helpType, title, desc, 0, time, date, "0", String.valueOf(updatedValue));
                                 FirebaseDatabase.getInstance().getReference("Feed/Posts").child(String.valueOf(updatedValue)).setValue(post);
                                 update(2, DUREGNUM);
-                                showToast("Posted");
-                                openFeedFragment();
+                                showCustomToast("Posted");
+                                finish();
                             }
                         }
                     });
 
-                } else showToast("Something is empty");
+                } else showCustomToast("Something is empty");
             }
         });
     }
@@ -119,17 +119,6 @@ public class PostCreate extends AppCompatActivity {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         return timeFormat.format(currentTime);
     }
-
-    private void openFeedFragment() {
-        if (PostCreate.this != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_fragment_container, fragmentNewsFeed)
-                    .addToBackStack(null)
-                    .commit();
-        }
-    }
-
     private void update(int dcc, String UID) {
         DatabaseReference UserPostCount = FirebaseDatabase.getInstance().getReference("UserInfo/" + DUREGNUM + "/postCount");
         UserPostCount.runTransaction(new Transaction.Handler() {
@@ -143,11 +132,10 @@ public class PostCreate extends AppCompatActivity {
                 }
                 return Transaction.success(mutableData);
             }
-
             @Override
             public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
                 if (databaseError != null) {
-                    // Handle the error
+                    showCustomToast(databaseError.getMessage());
                 } else {
                     Integer updatedValue = dataSnapshot.getValue(Integer.class);
                 }
@@ -170,11 +158,25 @@ public class PostCreate extends AppCompatActivity {
             @Override
             public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
                 if (databaseError != null) {
-                    // Handle the error
+                    showCustomToast(databaseError.getMessage());
                 } else {
                     Integer updatedValue = dataSnapshot.getValue(Integer.class);
                 }
             }
         });
+    }
+    private void showCustomToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+        TextView text = (TextView) layout.findViewById(R.id.custom_toast_text);
+        text.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 160); // Adjust margins as needed
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 }

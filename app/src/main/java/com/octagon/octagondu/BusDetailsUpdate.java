@@ -1,6 +1,7 @@
 package com.octagon.octagondu;
 
 import android.app.TimePickerDialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,10 +13,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,10 +37,31 @@ public class BusDetailsUpdate extends AppCompatActivity {
     private String inputTime;
     private String pastTime;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_details_update);
+        /*Toolbar*/
+        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
+        detailsBusToolbar.setTitle("Update Bus Details");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            Drawable blackArrow = ContextCompat.getDrawable(this, R.drawable.baseline_arrow_back_24);
+            actionBar.setHomeAsUpIndicator(blackArrow);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
 
         // Initialize your form fields with the received data
         String busId = getIntent().getStringExtra("busId");
@@ -87,7 +113,7 @@ public class BusDetailsUpdate extends AppCompatActivity {
 
                 if (!busId.isEmpty() && !time.isEmpty() && !startLocation.isEmpty() && !destinationLocation.isEmpty()) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    InfoBusDetails infoBusDetails = new InfoBusDetails(busName, busType, busId, startLocation, destinationLocation, time);
+//                    InfoBusDetails infoBusDetails = new InfoBusDetails(busName, busType, busId, startLocation, destinationLocation, time);
 
                     // First, delete the existing data
                     deleteBus(busName, pastTime, databaseReference);
@@ -129,7 +155,7 @@ public class BusDetailsUpdate extends AppCompatActivity {
     }
 
     private void deleteBus(String busName, String pastTime, DatabaseReference databaseReference) {
-        String pathToDelete = "Bus Name/" + busName + "/" + pastTime;
+        String pathToDelete = "Bus Schedule/" + busName + "/" + pastTime;
 
         databaseReference.child(pathToDelete).removeValue()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -150,7 +176,7 @@ public class BusDetailsUpdate extends AppCompatActivity {
         InfoBusDetails infoBusDetails = new InfoBusDetails(busName, spinnerBusType.getSelectedItem().toString(),
                 textViewBusId.getText().toString(), textViewRouteSt.getText().toString(), textViewRoute.getText().toString(), time);
 
-        String pathToInsert = "Bus Name/" + busName + "/" + time;
+        String pathToInsert = "Bus Schedule/" + busName + "/" + time;
 
         databaseReference.child(pathToInsert).setValue(infoBusDetails)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

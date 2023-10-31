@@ -38,8 +38,8 @@ public class DataEntry extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_entry);
-        String busName = getIntent().getStringExtra("BUS_NAME_EXTRA");
-        String flag = getIntent().getStringExtra("FLAG");
+        String busName = getIntent().getStringExtra("busName");
+        String flag = getIntent().getStringExtra("flag");
         /*Toolbar*/
         MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -68,7 +68,7 @@ public class DataEntry extends AppCompatActivity {
         viewtime = findViewById(R.id.viewTime);
         inputTime = "12:00";
 
-        if(flag.equals("1")) {
+        if(flag.equals("AD")) {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     this,
                     android.R.layout.simple_spinner_item,

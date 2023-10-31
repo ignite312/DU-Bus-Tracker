@@ -70,7 +70,7 @@ public class FragmentSchedule extends Fragment {
             public void onItemClick(int position) {
                 Intent intent = new Intent(getActivity(), ListBusDetails.class);
                 intent.putExtra("busName", dataArrayList.get(position).getName());
-                intent.putExtra("flag", "0");
+                intent.putExtra("flag", "SC");
                 startActivity(intent);
             }
         });

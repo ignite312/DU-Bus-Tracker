@@ -50,7 +50,7 @@ public class ListBusDetails extends AppCompatActivity {
 
         /*Toolbar*/
         detailsBusToolbar = findViewById(R.id.toolbar);
-        if (flag.equals("1")) detailsBusToolbar.setTitle("Locations for " + busName);
+        if (flag.equals("LC")) detailsBusToolbar.setTitle("Locations for " + busName);
         else detailsBusToolbar.setTitle("Schedule for " + busName);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,7 +74,7 @@ public class ListBusDetails extends AppCompatActivity {
         progressBarDown = findViewById(R.id.progress_bar2);
         textView = findViewById(R.id.downSc);
 
-        if (flag.equals("1")) {
+        if (flag.equals("LC")) {
             textView.setVisibility(View.GONE);
             progressBarDown.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
             progressBarDown.setVisibility(View.INVISIBLE);
@@ -87,7 +87,7 @@ public class ListBusDetails extends AppCompatActivity {
         busAdapterUp = new AdapterBusDetails(new ArrayList<>());
         recyclerViewUp.setAdapter(busAdapterUp);
 
-        if (flag.equals("0")) {
+        if (flag.equals("SC") || flag.equals("AD")) {
             recyclerViewDown = findViewById(R.id.recycler_view3);
             recyclerViewDown.setLayoutManager(new LinearLayoutManager(this));
             busAdapterDown = new AdapterBusDetails(new ArrayList<>());
@@ -97,17 +97,17 @@ public class ListBusDetails extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<InfoBusDetails> busList1 = new ArrayList<>();
-                List<InfoBusDetails> busList3 = new ArrayList<>();
+                List<InfoBusDetails> busListUp = new ArrayList<>();
+                List<InfoBusDetails> busListDown = new ArrayList<>();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         InfoBusDetails bus = snapshot.getValue(InfoBusDetails.class);
                         if (bus != null) {
                             String temp = String.valueOf(snapshot.child("busType").getValue());
                             if ("Up".equals(temp)) {
-                                busList1.add(bus);
+                                busListUp.add(bus);
                             } else {
-                                busList3.add(bus);
+                                busListDown.add(bus);
                             }
                         }
                     }
@@ -116,17 +116,15 @@ public class ListBusDetails extends AppCompatActivity {
                     progressBarUp.setVisibility(View.INVISIBLE);
                     progressBarDown.setVisibility(View.INVISIBLE);
                     /*Recycler View Up*/
-                    busAdapterUp = new AdapterBusDetails(busList1);
+                    busAdapterUp = new AdapterBusDetails(busListUp);
                     recyclerViewUp.setAdapter(busAdapterUp);
-                    if (flag.equals("1")) busAdapterUp.setFlag("1");
-                    else busAdapterUp.setFlag("0");
+                    busAdapterUp.setFlag(flag);
 
-                    if (flag.equals("0")) {
+                    if (flag.equals("SC") || flag.equals("AD")) {
                         /*Recycler View Down Up*/
-                        busAdapterDown = new AdapterBusDetails(busList3);
-                        if (flag.equals("1")) busAdapterDown.setFlag("1");
-                        else busAdapterDown.setFlag("0");
+                        busAdapterDown = new AdapterBusDetails(busListDown);
                         recyclerViewDown.setAdapter(busAdapterDown);
+                        busAdapterDown.setFlag(flag);
                     }
                 } else {
                     showCustomToast("No data found for this bus name");

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -36,73 +35,18 @@
         android:padding="15dp"
         tools:context=".LoginDeveloper" >
         <ImageView
+            android:background="@drawable/bg_with_border"
             android:layout_width="370dp"
             android:layout_height="225dp"
             android:src="@drawable/login"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Select Your Bus For Admin Access"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <Spinner
-            android:id="@+id/spinnerBusName"
-            style="@style/Widget.AppCompat.Spinner"
-            android:layout_width="300dp"
-            android:layout_height="?attr/dropdownListPreferredItemHeight"
-            android:layout_margin="10dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:entries="@array/bus_name_options"
-            android:background="@drawable/border_box"
-            android:dropDownWidth="300dp"
-            android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-            android:paddingRight="14dp"
-            android:popupBackground="@android:color/white"
-            android:popupElevation="3dp"
-            />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/username1"
-                android:hint="Username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password1"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:id="@+id/progressBar"/>
-        <Button
-            android:id="@+id/btn_login1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/black"
-            android:text="Login"/>
         <TextView
             android:textStyle="bold"
             android:textSize="20sp"
             android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
             android:layout_marginTop="20dp"
-            android:text="@string/login_rules"
+            android:text="Contact The Developer For Login Access!"
             android:layout_width="match_parent"
             android:layout_height = "wrap_content"/>
     </LinearLayout>

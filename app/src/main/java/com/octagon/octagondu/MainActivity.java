@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -112,13 +118,11 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginDeveloper.class);
                     startActivity(intent);
                 } else if (itemId == R.id.entry) {
-                    Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
-                    startActivity(intent);
+                    checkAdmin();
                 } else if (itemId == R.id.bug) {
-                    showCustomToast("Will Added Later");
-//                    Intent intent = new Intent(getApplicationContext(), SignInUser.class);
+//                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
 //                    startActivity(intent);
-//                    finish();
+                    showToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);
@@ -212,8 +216,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginDeveloper.class);
                     startActivity(intent);
                 } else if (itemId == R.id.entry) {
-                    Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
-                    startActivity(intent);
+                    checkAdmin();
                 } else if (itemId == R.id.bug) {
 //                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
 //                    startActivity(intent);
@@ -265,5 +268,27 @@ public class MainActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
+    }
+
+    private void checkAdmin() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Admin/" + DUREGNUM);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Intent intent = new Intent(getApplicationContext(), BusDashboard.class);
+                    intent.putExtra("BUSNAME", String.valueOf(dataSnapshot.getValue()));
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), LoginAdmin.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Error fetching data", databaseError.toException());
+            }
+        });
     }
 }

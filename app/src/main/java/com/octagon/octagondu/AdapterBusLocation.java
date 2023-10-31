@@ -362,6 +362,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
             @Override
             public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
                 if (databaseError != null) {
+                    showCustomToast(databaseError.getMessage());
                 } else {
                     Integer updatedValue = dataSnapshot.getValue(Integer.class);
                 }
@@ -383,6 +384,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
             @Override
             public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
                 if (databaseError != null) {
+                    showCustomToast(databaseError.getMessage());
                 } else {
                     Integer updatedValue = dataSnapshot.getValue(Integer.class);
                 }

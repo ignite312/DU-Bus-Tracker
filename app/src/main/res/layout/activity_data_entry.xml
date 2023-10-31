@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".DataEntry">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,36 +24,38 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             app:title="Data Entry"
-            app:titleTextColor="@color/black"/>
+            app:titleTextColor="@color/black" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="8dp">
 
             <TextView
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:text="Data Entry for Bus Schedule App. Please Fill Out This Form Carefully"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textSize="20sp" />
             <!-- Bus Name -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Select Bus Name:"
-                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <Spinner
@@ -61,15 +63,11 @@
                 style="@style/Widget.AppCompat.Spinner"
                 android:layout_width="300dp"
                 android:layout_height="?attr/dropdownListPreferredItemHeight"
-                android:layout_margin="10dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:background="@drawable/border_box"
                 android:dropDownWidth="300dp"
                 android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
                 android:entries="@array/bus_name_options"
-                android:paddingRight="14dp"
                 android:popupBackground="@android:color/white"
                 android:popupElevation="3dp" />
 
@@ -79,7 +77,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Select Trip type:"
-                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <Spinner
@@ -105,36 +104,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Bus Number:"
-                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
                 android:textStyle="bold" />
-
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                style="@style/CustomEditTextTheme"
+                android:hint="Enter Bus Number"
+                app:errorEnabled="false"
+                android:transitionName="@string/username">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textViewBusId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Bus Number" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:inputType="number"
+                    android:id="@+id/textViewBusId"/>
 
+            </com.google.android.material.textfield.TextInputLayout>
             <!-- Time -->
             <TextView
+                android:id="@+id/viewTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Departure Time: 0:00"
-                android:id="@+id/viewTime"
-                android:textSize="20sp"
+                android:text="Departure Time:"
+                android:textColor="@color/black"
+                android:textSize="15sp"
                 android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/setTime"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_selector"
                 android:onClick="showTimePickerDialog"
                 android:src="@drawable/clock" />
@@ -145,52 +147,55 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Start Location:"
-                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
                 android:textStyle="bold" />
-
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                android:id="@+id/username"
+                style="@style/CustomEditTextTheme"
+                android:hint="Enter Start Location"
+                app:errorEnabled="false"
+                android:transitionName="@string/username">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textViewRouteSt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Start Location" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:inputType="text"
+                    android:id="@+id/textViewRouteSt"/>
 
+            </com.google.android.material.textfield.TextInputLayout>
             <!-- Destination Location -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Destination Location:"
-                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
                 android:textStyle="bold" />
-
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                style="@style/CustomEditTextTheme"
+                android:hint="Enter Destination Location"
+                app:errorEnabled="false"
+                android:transitionName="@string/username">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textViewRoute"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Destination Location" />
+                    android:inputType="text"
+                    android:id="@+id/textViewRoute"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Submit Button -->
-            <Button
-                android:id="@+id/buttonSubmit"
-                android:background="@drawable/button_selector"
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
-                android:textColor="@color/black"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:text="Submit" />
+                android:transitionName="Submit"
+                android:id="@+id/buttonSubmit"
+                android:includeFontPadding="false"
+                android:text="Submit"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
