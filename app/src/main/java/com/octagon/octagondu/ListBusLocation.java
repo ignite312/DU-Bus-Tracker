@@ -50,7 +50,6 @@ public class ListBusLocation extends AppCompatActivity {
         busName = getIntent().getStringExtra("BUSNAME");
         busTime = getIntent().getStringExtra("BUSTIME");
 
-
         /*Toolbar*/
         detailsBusToolbar = findViewById(R.id.toolbar);
         detailsBusToolbar.setTitle("Locations for " + busName + " " + busTime);

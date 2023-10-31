@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="#E8EDED"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnApprove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Approve"
+        android:textColor="@color/blue"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/approveLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80000000"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Delete"
+        android:textColor="#FF0000" />
+
+    <View
+        android:id="@+id/deleteLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80000000" />
+
+    <Button
+        android:id="@+id/btnReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Report"
+        android:textColor="#FF0000"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/reportline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80000000"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Edit"
+        android:textColor="@color/blue" />
+
+    <View
+        android:id="@+id/updateLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80000000" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Cancel"
+        android:textColor="@color/black" />
+</LinearLayout>

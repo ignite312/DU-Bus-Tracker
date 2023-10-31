@@ -170,7 +170,7 @@ public class BusDashboard extends AppCompatActivity {
                             }
                         });
                         AdapterNewsFeed adapter = new AdapterNewsFeed(getApplicationContext(), postList);
-                        adapter.setFlag("FEED");
+                        adapter.setFlag("AD");
                         recyclerView.setAdapter(adapter);
                     }
                 } else {

@@ -3,23 +3,30 @@ package com.octagon.octagondu;
 import static com.octagon.octagondu.MainActivity.DUREGNUM;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,6 +61,8 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
     Map<Integer, Boolean> booleanMap = new HashMap<>();
     FirebaseStorage storage;
     String flag;
+    PopupWindow popupWindow;
+
 
     public AdapterNewsFeed(Context context, List<InfoNewsFeed> postList) {
         this.context = context;
@@ -79,6 +88,11 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         holder.bind(infoNewsFeed, position);
     }
 
+    public void removePost(InfoNewsFeed post) {
+        postList.remove(post);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return postList.size();
@@ -97,6 +111,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         private ImageView downVoteImageView;
         CircleImageView circleImageView;
         private ImageView commentImageView;
+        private ImageView threeDotImageView;
 
         public PostViewHolder(View itemView) {
             super(itemView);
@@ -112,6 +127,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             userTypeTextView = itemView.findViewById(R.id.userType);
             circleImageView = itemView.findViewById(R.id.photo);
             commentImageView = itemView.findViewById(R.id.commentImageViewFeed);
+            threeDotImageView = itemView.findViewById(R.id.threeDotImageView);
         }
 
         @SuppressLint("SetTextI18n")
@@ -266,7 +282,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             upvoteImageView.setOnClickListener(view -> {
                 FirebaseAuth mAuth;
                 mAuth = FirebaseAuth.getInstance();
-                if(mAuth.getCurrentUser() == null) {
+                if (mAuth.getCurrentUser() == null) {
                     showCustomToast("Create A Account First!");
                     Intent intent = new Intent(context, SignInUser.class);
                     context.startActivity(intent);
@@ -304,7 +320,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             downVoteImageView.setOnClickListener(view -> {
                 FirebaseAuth mAuth;
                 mAuth = FirebaseAuth.getInstance();
-                if(mAuth.getCurrentUser() == null) {
+                if (mAuth.getCurrentUser() == null) {
                     showCustomToast("Create A Account First!");
                     Intent intent = new Intent(context, SignInUser.class);
                     context.startActivity(intent);
@@ -342,6 +358,114 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             commentImageView.setOnClickListener(view -> {
                 showCustomToast("Coming Soon!");
             });
+
+            threeDotImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Use a LayoutInflater to inflate the custom layout
+                    LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View customDialogView = inflater.inflate(R.layout.custom_dialog_layout, null);
+
+                    // Calculate the screen dimensions
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    ((Activity) view.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+                    // Create a PopupWindow to display the custom layout
+                    popupWindow = new PopupWindow(customDialogView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+
+                    // Center the PopupWindow on the screen
+                    int width = (int) (displayMetrics.widthPixels * 0.8); // Adjust as needed
+                    int height = WindowManager.LayoutParams.WRAP_CONTENT;
+                    popupWindow.setWidth(width);
+                    popupWindow.setHeight(height);
+
+                    popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                    Button btnUpdate = customDialogView.findViewById(R.id.btnUpdate);
+                    Button btnDelete = customDialogView.findViewById(R.id.btnDelete);
+                    Button btnCancel = customDialogView.findViewById(R.id.btnCancel);
+                    Button btnApprove = customDialogView.findViewById(R.id.btnApprove);
+                    Button btnReport = customDialogView.findViewById(R.id.btnReport);
+                    View viewUpdate = customDialogView.findViewById(R.id.updateLine);
+                    View viewDelete = customDialogView.findViewById(R.id.deleteLine);
+                    View viewApprove = customDialogView.findViewById(R.id.approveLine);
+                    View viewReport = customDialogView.findViewById(R.id.reportline);
+                    if(flag.equals("FEED") || flag.equals("PO")) {
+                        btnReport.setVisibility(View.VISIBLE);
+                        viewReport.setVisibility(View.VISIBLE);
+                        btnUpdate.setVisibility(View.GONE);
+                        viewUpdate.setVisibility(View.GONE);
+                        btnDelete.setVisibility(View.GONE);
+                        viewDelete.setVisibility(View.GONE);
+                        btnApprove.setVisibility(View.GONE);
+                        viewApprove.setVisibility(View.GONE);
+                    }
+                    if(flag.equals("AD")) {
+                        btnReport.setVisibility(View.GONE);
+                        viewReport.setVisibility(View.GONE);
+                        btnUpdate.setVisibility(View.GONE);
+                        viewUpdate.setVisibility(View.GONE);
+                        btnDelete.setVisibility(View.VISIBLE);
+                        viewDelete.setVisibility(View.VISIBLE);
+                        btnApprove.setVisibility(View.VISIBLE);
+                        viewApprove.setVisibility(View.VISIBLE);
+                    }
+                    btnUpdate.setOnClickListener(dialog -> {
+                        Intent intent = new Intent(context, PostCreate.class);
+                        intent.putExtra("HT", infoNewsFeed.getHelpType());
+                        intent.putExtra("BN", infoNewsFeed.getBusName());
+                        intent.putExtra("TT", infoNewsFeed.getTitle());
+                        intent.putExtra("DEC", infoNewsFeed.getDesc());
+                        intent.putExtra("flag", "PRM");
+                        intent.putExtra("postID", infoNewsFeed.getPostId());
+                        intent.putExtra("voteCNT", String.valueOf(infoNewsFeed.getTotalVote()));
+                        context.startActivity(intent);
+                        popupWindow.dismiss();
+                    });
+
+                    btnDelete.setOnClickListener(dialog -> {
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Feed/Posts/" + infoNewsFeed.getPostId());
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    databaseReference.removeValue()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        showCustomToast("Post Deleted");
+                                                        removePost(infoNewsFeed);
+
+                                                    } else {
+                                                        showCustomToast("Failed to Delete");
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    showCustomToast("Data Not Found");
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        popupWindow.dismiss();
+                    });
+                    btnCancel.setOnClickListener(dialog -> {
+                        popupWindow.dismiss();
+                    });
+                    btnApprove.setOnClickListener(dialog -> {
+                        showCustomToast("Will Added Soon!");
+                        popupWindow.dismiss();
+                    });
+                    btnReport.setOnClickListener(dialog -> {
+                        showCustomToast("Will Added Soon!");
+                        popupWindow.dismiss();
+                    });
+                }
+            });
+
 
             if (flag.equals("FEED")) {
                 View.OnClickListener commonOnClickListener = new View.OnClickListener() {
@@ -478,6 +602,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             }
         });
     }
+
     private void showCustomToast(String message) {
         View layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null);
 

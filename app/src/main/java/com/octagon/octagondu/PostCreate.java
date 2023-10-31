@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +34,8 @@ public class PostCreate extends AppCompatActivity {
     Spinner spinnerHelp, spinnerBusType;
     TextView textViewTitle, textViewDesc;
     Button button;
+    String helpType, busName, title, desc, flag, postID;
+    int voteCNT;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -43,7 +47,39 @@ public class PostCreate extends AppCompatActivity {
         textViewTitle = findViewById(R.id.postTitle);
         textViewDesc = findViewById(R.id.body);
         button = findViewById(R.id.go);
+        helpType = getIntent().getStringExtra("HT");
+        busName = getIntent().getStringExtra("BN");
+        title = getIntent().getStringExtra("TT");
+        desc = getIntent().getStringExtra("DEC");
+        flag = getIntent().getStringExtra("flag");
+        postID = getIntent().getStringExtra("postID");
+        if(flag != null) {
+            voteCNT = Integer.parseInt(getIntent().getStringExtra("voteCNT"));
+            textViewTitle.setText(title);
+            textViewDesc.setText(desc);
+
+            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    android.R.id.text1
+            );
+            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter1.add(helpType);
+            spinnerHelp.setAdapter(adapter1);
+
+            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    android.R.id.text1
+            );
+            adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter2.add(busName);
+            spinnerBusType.setAdapter(adapter2);
+            button.setText("Update");
+        }
         /*Toolbar Setup*/
+        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
+        if(flag != null)detailsBusToolbar.setTitle("Post Update");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,11 +102,18 @@ public class PostCreate extends AppCompatActivity {
             public void onClick(View view) {
                 String helpType = spinnerHelp.getSelectedItem().toString();
                 String busType = spinnerBusType.getSelectedItem().toString();
-                String title = textViewTitle.getText().toString();
-                String desc = textViewDesc.getText().toString();
+                title = textViewTitle.getText().toString();
+                desc = textViewDesc.getText().toString();
                 String time = getCurrentTime24HourFormat();
                 String date = getCurrentDateFormatted();
                 if (!title.isEmpty() || !desc.isEmpty()) {
+                    if(flag != null) {
+                        InfoNewsFeed post = new InfoNewsFeed(DUREGNUM, busType, helpType, title, desc, voteCNT, time, date, "0", String.valueOf(postID));
+                        FirebaseDatabase.getInstance().getReference("Feed/Posts").child(String.valueOf(postID)).setValue(post);
+                        showCustomToast("Post Updated");
+                        finish();
+                        return;
+                    }
                     DatabaseReference PostCountRef = FirebaseDatabase.getInstance().getReference("Feed/PostCount");
                     PostCountRef.runTransaction(new Transaction.Handler() {
                         @Override
