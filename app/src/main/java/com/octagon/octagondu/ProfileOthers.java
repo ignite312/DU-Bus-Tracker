@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,6 +49,7 @@ public class ProfileOthers extends AppCompatActivity {
     private ImageView image;
     private TextView name, dept, session, rules, email, about, nickName, posts, contribution;
     TextView noPostsTextView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @SuppressLint("MissingInflatedId")
@@ -67,6 +69,8 @@ public class ProfileOthers extends AppCompatActivity {
         contribution = findViewById(R.id.totalContribution);
         noPostsTextView = findViewById(R.id.noPostsTextView);
 
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -84,6 +88,22 @@ public class ProfileOthers extends AppCompatActivity {
                 }
             });
         }
+
+        /*swipper*/
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         UID = getIntent().getStringExtra("UID");
         recyclerView = findViewById(R.id.profileOthersRecycleView);

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class LoginDeveloper extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +76,8 @@ public class LoginDeveloper extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(getApplicationContext(), DataEntry.class);
-                intent.putExtra("BUS_NAME_EXTRA", "FuckYou");
-                intent.putExtra("FLAG", "0");
+                intent.putExtra("busName", "HEHE");
+                intent.putExtra("flag", "DV");
                 startActivity(intent);
             }
         });

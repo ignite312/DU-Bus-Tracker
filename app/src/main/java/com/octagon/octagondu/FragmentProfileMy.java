@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +50,8 @@ public class FragmentProfileMy extends Fragment {
     private TextView name, dept, session, rules, email, about, nickName, posts, contribution;
     TextView noPostsTextView;
     Button editProfile;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -72,6 +75,23 @@ public class FragmentProfileMy extends Fragment {
         editProfile.setOnClickListener(view1 -> {
             showCustomToast("Disabled Temporarily");
         });
+
+        /*swipper*/
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         UID = DUREGNUM;
         recyclerView = view.findViewById(R.id.profileOthersRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

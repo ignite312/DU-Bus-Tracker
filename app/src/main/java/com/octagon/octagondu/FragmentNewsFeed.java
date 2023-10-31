@@ -61,6 +61,7 @@ public class FragmentNewsFeed extends Fragment {
         }
         noPostsTextView = view.findViewById(R.id.noPostsTextView);
         TextView textView = view.findViewById(R.id.createAPost);
+        refresh();
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +80,6 @@ public class FragmentNewsFeed extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view_feed);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        refresh();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
