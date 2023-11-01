@@ -95,20 +95,20 @@ public class BusDashboard extends AppCompatActivity {
                 }
             });
         }
+        notice.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), CreateNotice.class);
+            intent.putExtra("busName", busName);
+            intent.putExtra("flag", "AD");
+            startActivity(intent);
+        });
         cardView1.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
             intent.putExtra("busName", busName);
-            intent.putExtra("flag", "AD");
+            intent.putExtra("flag", "ADN");
             startActivity(intent);
         });
         cardView2.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), DataEntry.class);
-            intent.putExtra("busName", busName);
-            intent.putExtra("flag", "AD");
-            startActivity(intent);
-        });
-        notice.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), CreateNotice.class);
             intent.putExtra("busName", busName);
             intent.putExtra("flag", "AD");
             startActivity(intent);

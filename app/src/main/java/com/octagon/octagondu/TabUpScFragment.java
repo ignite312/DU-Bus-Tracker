@@ -40,6 +40,7 @@ public class TabUpScFragment extends Fragment {
         if (args != null) {
             busName = args.getString("busName");
             flag = args.getString("flag");
+            if(flag.equals("ADN"))flag = "AD";
         }
         progressBarUp = rootView.findViewById(R.id.progress_barUp);
         recyclerViewUp = rootView.findViewById(R.id.recycler_viewUp);

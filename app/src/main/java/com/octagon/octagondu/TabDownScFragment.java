@@ -40,6 +40,7 @@ public class TabDownScFragment extends Fragment {
         if (args != null) {
             busName = args.getString("busName");
             flag = args.getString("flag");
+            if(flag.equals("ADN"))flag = "AD";
         }
         progressBarDown = rootView.findViewById(R.id.progress_barDown);
         recyclerViewDown = rootView.findViewById(R.id.recycler_viewDown);
