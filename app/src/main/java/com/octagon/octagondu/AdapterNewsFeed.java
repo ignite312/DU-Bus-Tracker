@@ -5,6 +5,7 @@ import static com.octagon.octagondu.MainActivity.DUREGNUM;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -137,16 +139,20 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
 
         @SuppressLint("SetTextI18n")
         public void bind(InfoNewsFeed infoNewsFeed, int position) {
-            if (flag.equals("FEED")) {
+            if (flag.equals("FEED") || flag.equals("SC") || flag.equals("AD")) {
                 departmentNameSessionTextView.setVisibility(View.VISIBLE);
                 userTypeTextView.setVisibility(View.VISIBLE);
-            } else {
+            }
+            if (flag.equals("PM") || flag.equals("PO")) {
                 departmentNameSessionTextView.setVisibility(View.GONE);
                 userTypeTextView.setVisibility(View.GONE);
             }
             if(flag.equals("PM")) {
                 approval.setVisibility(View.VISIBLE);
                 approvalFrame.setVisibility(View.VISIBLE);
+            }
+            if(flag.equals("SC")) {
+                threeDotImageView.setVisibility(View.GONE);
             }
             DatabaseReference ViewUserInfoRef = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoNewsFeed.getUserId());
             ViewUserInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -246,6 +252,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             postDescTextView.setText(infoNewsFeed.getDesc());
 
             DatabaseReference UpDownSymbolRef = FirebaseDatabase.getInstance().getReference("Feed/PostReactions/" + infoNewsFeed.getPostId() + "/" + DUREGNUM);
+            if(flag.equals("SC") || flag.equals("AD"))UpDownSymbolRef = FirebaseDatabase.getInstance().getReference("Notice/" + infoNewsFeed.getBusName() + "/PostReactions/" + infoNewsFeed.getPostId() + "/" + DUREGNUM);
             UpDownSymbolRef.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -271,6 +278,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                 }
             });
             DatabaseReference VoteCountRef = FirebaseDatabase.getInstance().getReference("Feed/Posts").child(infoNewsFeed.getPostId()).child("/totalVote");
+            if(flag.equals("SC") || flag.equals("AD"))VoteCountRef = FirebaseDatabase.getInstance().getReference("Notice/" + infoNewsFeed.getBusName() + "/Posts").child(infoNewsFeed.getPostId()).child("/totalVote");
             VoteCountRef.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -288,6 +296,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                     showCustomToast("Firebase Error fetching data");
                 }
             });
+            DatabaseReference finalUpDownSymbolRef = UpDownSymbolRef;
             upvoteImageView.setOnClickListener(view -> {
                 FirebaseAuth mAuth;
                 mAuth = FirebaseAuth.getInstance();
@@ -297,25 +306,25 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                     context.startActivity(intent);
                     return;
                 }
-                UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                finalUpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             String _react = String.valueOf(dataSnapshot.getValue());
                             if (_react.equals("00")) {
-                                UpDownSymbolRef.setValue("10");
-                                update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                                finalUpDownSymbolRef.setValue("10");
+                                update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             } else if (_react.equals("10")) {
-                                UpDownSymbolRef.setValue("00");
-                                update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                                finalUpDownSymbolRef.setValue("00");
+                                update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             } else if (_react.equals("01")) {
-                                UpDownSymbolRef.setValue("10");
-                                update(2, 2, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                                finalUpDownSymbolRef.setValue("10");
+                                update(2, 2, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             }
                         } else {
-                            UpDownSymbolRef.setValue("10");
-                            update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                            finalUpDownSymbolRef.setValue("10");
+                            update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                         }
                     }
 
@@ -326,6 +335,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                 });
             });
 
+            DatabaseReference finalUpDownSymbolRef1 = UpDownSymbolRef;
             downVoteImageView.setOnClickListener(view -> {
                 FirebaseAuth mAuth;
                 mAuth = FirebaseAuth.getInstance();
@@ -335,25 +345,25 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                     context.startActivity(intent);
                     return;
                 }
-                UpDownSymbolRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                finalUpDownSymbolRef1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             String _react = String.valueOf(dataSnapshot.getValue());
                             if (_react.equals("00")) {
-                                UpDownSymbolRef.setValue("01");
-                                update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                                finalUpDownSymbolRef1.setValue("01");
+                                update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             } else if (_react.equals("10")) {
-                                UpDownSymbolRef.setValue("01");
-                                update(-2, -2, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                                finalUpDownSymbolRef1.setValue("01");
+                                update(-2, -2, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             } else if (_react.equals("01")) {
-                                UpDownSymbolRef.setValue("00");
-                                update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                                finalUpDownSymbolRef1.setValue("00");
+                                update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             }
                         } else {
-                            UpDownSymbolRef.setValue("01");
-                            update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId());
+                            finalUpDownSymbolRef1.setValue("01");
+                            update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                         }
                     }
 
@@ -420,7 +430,7 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                         viewApprove.setVisibility(View.VISIBLE);
                     }
                     btnUpdate.setOnClickListener(dialog -> {
-                        Intent intent = new Intent(context, PostCreate.class);
+                        Intent intent = new Intent(context, CreatePost.class);
                         intent.putExtra("HT", infoNewsFeed.getHelpType());
                         intent.putExtra("BN", infoNewsFeed.getBusName());
                         intent.putExtra("TT", infoNewsFeed.getTitle());
@@ -567,8 +577,9 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         }
     }
 
-    private void update(int drc, int dcc, String UID, String POSTID) {
+    private void update(int drc, int dcc, String UID, String POSTID, String busName) {
         DatabaseReference VoteCountRef = FirebaseDatabase.getInstance().getReference("Feed/Posts").child(POSTID).child("/totalVote");
+        if(flag.equals("SC") || flag.equals("AD"))VoteCountRef = FirebaseDatabase.getInstance().getReference("Notice/" + busName + "/Posts").child(POSTID).child("/totalVote");
         VoteCountRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {

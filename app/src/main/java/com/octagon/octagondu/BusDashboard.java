@@ -39,7 +39,7 @@ import java.util.List;
 public class BusDashboard extends AppCompatActivity {
     MaterialToolbar detailsBusToolbar;
     String busName;
-    CardView cardView1, cardView2;
+    CardView cardView1, cardView2, notice;
     TextView noPostsTextView;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -52,6 +52,7 @@ public class BusDashboard extends AppCompatActivity {
         busName = getIntent().getStringExtra("BUSNAME");
         cardView1 = findViewById(R.id.card1);
         cardView2 = findViewById(R.id.card2);
+        notice = findViewById(R.id.notice);
 
         noPostsTextView = findViewById(R.id.noPostsTextView);
         recyclerView = findViewById(R.id.recycler_view_ad);
@@ -102,6 +103,12 @@ public class BusDashboard extends AppCompatActivity {
         });
         cardView2.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), DataEntry.class);
+            intent.putExtra("busName", busName);
+            intent.putExtra("flag", "AD");
+            startActivity(intent);
+        });
+        notice.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), CreateNotice.class);
             intent.putExtra("busName", busName);
             intent.putExtra("flag", "AD");
             startActivity(intent);

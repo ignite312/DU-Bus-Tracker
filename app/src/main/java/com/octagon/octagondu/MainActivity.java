@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentNewsFeed fragmentNewsFeed;
     FragmentLocation fragmentLocation;
     FragmentProfileMy fragmentProfileMy;
-    PostCreate postCreate;
+    CreatePost createPost;
     Boolean ok = false;
     private Toolbar toolbar;
     Button logout_button;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentNewsFeed = new FragmentNewsFeed();
         fragmentLocation = new FragmentLocation();
         fragmentProfileMy = new FragmentProfileMy();
-        postCreate = new PostCreate();
+        createPost = new CreatePost();
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         logout_button = findViewById(R.id.logout);
@@ -120,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.entry) {
                     checkAdmin();
                 } else if (itemId == R.id.bug) {
-                    Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
-                    startActivity(intent);
-                    showToast("Will added later");
+//                    Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
+//                    startActivity(intent);
+                    showCustomToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);
@@ -145,34 +145,35 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentHome)
                 .commit();
-
+        toolbar.setTitle("Octagon");
     }
 
     private void openScheduleFragment() {
-        toolbar.setTitle("Bus Schedule");
         if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentSchedule)
                 .commit();
+        toolbar.setTitle("Bus Schedule");
     }
 
     private void openFindBusLocation() {
-        toolbar.setTitle("Bus Locations");
         if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentLocation)
                 .commit();
+        toolbar.setTitle("Bus Locations");
     }
 
+
     private void openFeedFragment() {
-        toolbar.setTitle("News");
         if (ok) undoSetup();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentNewsFeed)
                 .commit();
+        toolbar.setTitle("News");
     }
 
     private void openProfileFragment() {
@@ -183,13 +184,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), SignInUser.class);
             startActivity(intent);
         } else {
-            toolbar.setTitle("Profile");
             if (!ok) setup();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_fragment_container, fragmentProfileMy)
                     .commit();
         }
+        toolbar.setTitle("Profile");
     }
 
     private void showToast(String message) {
@@ -217,9 +218,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.entry) {
                     checkAdmin();
                 } else if (itemId == R.id.bug) {
-                    Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
-                    startActivity(intent);
-                    showToast("Will added later");
+//                    Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
+//                    startActivity(intent);
+                    showCustomToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);

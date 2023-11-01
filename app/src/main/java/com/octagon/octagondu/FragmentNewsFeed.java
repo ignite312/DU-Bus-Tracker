@@ -37,7 +37,7 @@ import java.util.List;
 public class FragmentNewsFeed extends Fragment {
     private RecyclerView recyclerView;
     private AdapterNewsFeed adapter;
-    private PostCreate postCreate;
+    private CreatePost createPost;
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView noPostsTextView;
 
@@ -46,7 +46,7 @@ public class FragmentNewsFeed extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_feed, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        postCreate = new PostCreate();
+        createPost = new CreatePost();
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
@@ -73,7 +73,7 @@ public class FragmentNewsFeed extends Fragment {
                     startActivity(intent);
                     return;
                 }
-                Intent intent = new Intent(getActivity(), PostCreate.class);
+                Intent intent = new Intent(getActivity(), CreatePost.class);
                 startActivity(intent);
             }
         });

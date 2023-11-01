@@ -22,18 +22,13 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
-            android:name=".TabSchedule"
+            android:name=".CreateNotice"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".FragmentNotice"
-            android:exported="false" />
-        <activity
-            android:name=".FragmentDown"
-            android:exported="false" />
-        <activity
-            android:name=".FragmentUp"
-            android:exported="false" />
+            android:name=".TabSchedule"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".BusDashboard"
             android:exported="false"
@@ -51,7 +46,7 @@
             android:name=".FragmentComment"
             android:exported="false" />
         <activity
-            android:name=".PostCreate"
+            android:name=".CreatePost"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity

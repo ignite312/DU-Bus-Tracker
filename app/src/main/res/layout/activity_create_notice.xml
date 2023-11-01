@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:title="Create A Post"
+            app:title="Leave a Notice"
             app:titleTextColor="@color/black" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Help Type?"
+                android:text="Notice Type?"
                 android:textStyle="bold" />
 
             <Spinner
@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bus a Community ? "
+                android:text="Bus Community ? "
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Post Title"
+            android:text="Notice Title"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -116,7 +116,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Post Description"
+            android:text="Notice Description"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -130,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:gravity="top|start"
-                android:hint="Enter Description"
+                android:hint="Enter Notice"
                 android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class PostCreate extends AppCompatActivity {
+public class CreatePost extends AppCompatActivity {
     Spinner spinnerHelp, spinnerBusType;
     TextView textViewTitle, textViewDesc;
     Button button;
@@ -41,7 +41,7 @@ public class PostCreate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_create);
+        setContentView(R.layout.activity_create_post);
         spinnerHelp = findViewById(R.id.postType);
         spinnerBusType = findViewById(R.id.busName);
         textViewTitle = findViewById(R.id.postTitle);
@@ -148,7 +148,7 @@ public class PostCreate extends AppCompatActivity {
     }
 
     private void showToast(String message) {
-        Toast.makeText(PostCreate.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(CreatePost.this, message, Toast.LENGTH_SHORT).show();
     }
 
     public String getCurrentDateFormatted() {
