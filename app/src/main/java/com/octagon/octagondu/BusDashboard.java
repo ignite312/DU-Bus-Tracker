@@ -95,7 +95,7 @@ public class BusDashboard extends AppCompatActivity {
             });
         }
         cardView1.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), ListBusDetails.class);
+            Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
             intent.putExtra("busName", busName);
             intent.putExtra("flag", "AD");
             startActivity(intent);

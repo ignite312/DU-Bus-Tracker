@@ -70,7 +70,7 @@ public class FragmentLocation extends Fragment {
         adapterBus.setOnItemClickListener(new AdapterBus.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(getActivity(), ListBusDetails.class);
+                Intent intent = new Intent(getActivity(), ListBusTime.class);
                 intent.putExtra("busName", dataArrayList.get(position).getName());
                 intent.putExtra("flag", "LC");
                 startActivity(intent);

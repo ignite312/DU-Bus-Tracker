@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ListBusDetails">
+    tools:context=".ListBusTime">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/locationListAppBar"

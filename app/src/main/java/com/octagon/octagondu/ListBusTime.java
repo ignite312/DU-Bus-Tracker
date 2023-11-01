@@ -32,24 +32,23 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListBusDetails extends AppCompatActivity {
+public class ListBusTime extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerViewUp, recyclerViewDown;
     private AdapterBusDetails busAdapterUp, busAdapterDown;
     private ProgressBar progressBarUp, progressBarDown;
-    MaterialToolbar detailsBusToolbar;
     TextView textView;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_bus_details);
+        setContentView(R.layout.activity_list_bus_time);
         String busName = getIntent().getStringExtra("busName");
         String flag = getIntent().getStringExtra("flag");
 
         /*Toolbar*/
-        detailsBusToolbar = findViewById(R.id.toolbar);
+        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
         if (flag.equals("LC")) detailsBusToolbar.setTitle("Locations for " + busName);
         else detailsBusToolbar.setTitle("Schedule for " + busName);
         Toolbar toolbar = findViewById(R.id.toolbar);

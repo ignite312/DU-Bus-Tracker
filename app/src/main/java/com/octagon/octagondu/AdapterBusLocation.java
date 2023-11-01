@@ -129,7 +129,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        userName.setText(String.valueOf(dataSnapshot.child("fullName").getValue()));
+                        userName.setText(String.valueOf(dataSnapshot.child("nickName").getValue()));
                         userType.setText("● " + dataSnapshot.child("userType").getValue());
                         departmentNameSessionTextView.setText(dataSnapshot.child("department").getValue() + " " +
                                 dataSnapshot.child("session").getValue());

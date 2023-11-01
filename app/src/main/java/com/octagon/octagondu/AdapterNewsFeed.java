@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -112,6 +113,8 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
         CircleImageView circleImageView;
         private ImageView commentImageView;
         private ImageView threeDotImageView;
+        private  TextView approval;
+        private FrameLayout approvalFrame;
 
         public PostViewHolder(View itemView) {
             super(itemView);
@@ -128,6 +131,8 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             circleImageView = itemView.findViewById(R.id.photo);
             commentImageView = itemView.findViewById(R.id.commentImageViewFeed);
             threeDotImageView = itemView.findViewById(R.id.threeDotImageView);
+            approval = itemView.findViewById(R.id.approval);
+            approvalFrame  = itemView.findViewById(R.id.approvalFrame);
         }
 
         @SuppressLint("SetTextI18n")
@@ -138,6 +143,10 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             } else {
                 departmentNameSessionTextView.setVisibility(View.GONE);
                 userTypeTextView.setVisibility(View.GONE);
+            }
+            if(flag.equals("PM")) {
+                approval.setVisibility(View.VISIBLE);
+                approvalFrame.setVisibility(View.VISIBLE);
             }
             DatabaseReference ViewUserInfoRef = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoNewsFeed.getUserId());
             ViewUserInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {

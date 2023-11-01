@@ -22,6 +22,19 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
+            android:name=".TabSchedule"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".FragmentNotice"
+            android:exported="false" />
+        <activity
+            android:name=".FragmentDown"
+            android:exported="false" />
+        <activity
+            android:name=".FragmentUp"
+            android:exported="false" />
+        <activity
             android:name=".BusDashboard"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
@@ -99,7 +112,7 @@
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".ListBusDetails"
+            android:name=".ListBusTime"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
@@ -119,11 +132,12 @@
             android:theme="@style/FullScreen" />
         <activity
             android:name=".SignInUser"
-            android:theme="@style/FullScreen"/>
+            android:theme="@style/FullScreen" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 

@@ -62,13 +62,13 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         logout_button = findViewById(R.id.logout);
-        if(mAuth.getCurrentUser() == null) {
+        if (mAuth.getCurrentUser() == null) {
             logout_button.setText("Login");
-        }else {
+        } else {
             logout_button.setText("Logout");
         }
         logout_button.setOnClickListener(View -> {
-            if(mAuth.getCurrentUser() != null)showCustomToast("Goodbye!, See you again!");
+            if (mAuth.getCurrentUser() != null) showCustomToast("Goodbye!, See you again!");
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getApplicationContext(), SignInUser.class);
             startActivity(intent);
@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.entry) {
                     checkAdmin();
                 } else if (itemId == R.id.bug) {
-//                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
+                    startActivity(intent);
                     showToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
@@ -178,11 +178,11 @@ public class MainActivity extends AppCompatActivity {
     private void openProfileFragment() {
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() == null) {
+        if (mAuth.getCurrentUser() == null) {
             showCustomToast("Create A Account First!");
             Intent intent = new Intent(getApplicationContext(), SignInUser.class);
             startActivity(intent);
-        }else {
+        } else {
             toolbar.setTitle("Profile");
             if (!ok) setup();
             getSupportFragmentManager()
@@ -195,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
 
 
     private void setup() {
@@ -218,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.entry) {
                     checkAdmin();
                 } else if (itemId == R.id.bug) {
-//                    Intent intent = new Intent(getApplicationContext(), ProfileOthers.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
+                    startActivity(intent);
                     showToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
@@ -255,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
         // Disable the drawer swipe gesture
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
+
     private void showCustomToast(String message) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast,

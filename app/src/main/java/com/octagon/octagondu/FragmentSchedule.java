@@ -68,7 +68,7 @@ public class FragmentSchedule extends Fragment {
         adapterBus.setOnItemClickListener(new AdapterBus.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(getActivity(), ListBusDetails.class);
+                Intent intent = new Intent(getActivity(), TabSchedule.class);
                 intent.putExtra("busName", dataArrayList.get(position).getName());
                 intent.putExtra("flag", "SC");
                 startActivity(intent);
