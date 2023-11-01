@@ -142,7 +142,7 @@ public class BusDashboard extends AppCompatActivity {
                         InfoNewsFeed posts = snapshot.getValue(InfoNewsFeed.class);
                         if (posts != null) {
                             String temp = String.valueOf(snapshot.child("busName").getValue());
-                            if(temp.equals(busName)) {
+                            if(temp.equals(busName)&& String.valueOf(snapshot.child("status").getValue()).equals("0")) {
                                 postList.add(posts);
                             }
                         } else {

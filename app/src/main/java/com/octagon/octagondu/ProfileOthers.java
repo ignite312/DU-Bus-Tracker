@@ -199,7 +199,8 @@ public class ProfileOthers extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         InfoNewsFeed post = snapshot.getValue(InfoNewsFeed.class);
                         if (post != null) {
-                            if (String.valueOf(snapshot.child("userId").getValue()).equals(UID)) {
+                            if (String.valueOf(snapshot.child("userId").getValue()).equals(UID)
+                            && String.valueOf(snapshot.child("status").getValue()).equals("1")) {
                                 ok = true;
                                 postList.add(post);
                             }

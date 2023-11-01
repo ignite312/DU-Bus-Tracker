@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -150,6 +151,10 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
             if(flag.equals("PM")) {
                 approval.setVisibility(View.VISIBLE);
                 approvalFrame.setVisibility(View.VISIBLE);
+                if (infoNewsFeed.getStatus().equals("0")) {
+                    approval.setTextColor(Color.parseColor("#0000FF"));
+                    approval.setText("Pending");
+                }
             }
             if(flag.equals("SC")) {
                 threeDotImageView.setVisibility(View.GONE);
@@ -487,7 +492,23 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                         popupWindow.dismiss();
                     });
                     btnApprove.setOnClickListener(dialog -> {
-                        showCustomToast("Will Added Soon!");
+                        showCustomToast("Approved!");
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Feed/Posts/" + infoNewsFeed.getPostId() + "/status");
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    ref.setValue("1");
+                                    removePost(infoNewsFeed);
+                                } else {
+                                    showCustomToast("Data Not Found");
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                         popupWindow.dismiss();
                     });
                     btnReport.setOnClickListener(dialog -> {

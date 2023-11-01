@@ -108,10 +108,18 @@ public class FragmentNewsFeed extends Fragment {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         InfoNewsFeed posts = snapshot.getValue(InfoNewsFeed.class);
                         if (posts != null) {
-                            postList.add(posts);
+                            if (String.valueOf(snapshot.child("status").getValue()).equals("1")) {
+                                postList.add(posts);
+                            }
                         } else {
                             showCustomToast("Something went wrong");
                         }
+                    }
+                    if(postList.isEmpty()) {
+                        showCustomToast("No posts found");
+                        recyclerView.setVisibility(View.GONE);
+                        noPostsTextView.setVisibility(View.VISIBLE);
+                        return;
                     }
                     /*Sort by latest Time*/
                     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
