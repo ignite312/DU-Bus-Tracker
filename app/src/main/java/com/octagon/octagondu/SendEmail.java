@@ -1,10 +1,12 @@
 package com.octagon.octagondu;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -26,8 +28,6 @@ public class SendEmail extends AppCompatActivity {
     private EditText body;
     private Button send;
     String selectedBusNumber, receiver;
-
-    private final int CONA = 1;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -75,25 +75,24 @@ public class SendEmail extends AppCompatActivity {
         send = findViewById(R.id.send);
         send.setOnClickListener(view -> {
             receiver = "contact.emonkhan@gmail.com";
-            if(Objects.equals(selectedBusNumber, "Sajid Hasan"))receiver = "mahmudulhasanshajid@gmail.com";
-            else if(Objects.equals(selectedBusNumber, "Emon Khan"))receiver = "contact.emonkhan@gmail.com";
-            else if(Objects.equals(selectedBusNumber, "Atikur Hridoy"))receiver = "arhridoy2002@gmail.com";
+            if (Objects.equals(selectedBusNumber, "Sajid Hasan"))
+                receiver = "mahmudulhasanshajid@gmail.com";
+            else if (Objects.equals(selectedBusNumber, "Emon Khan"))
+                receiver = "contact.emonkhan@gmail.com";
+            else if (Objects.equals(selectedBusNumber, "Atikur Hridoy"))
+                receiver = "arhridoy2002@gmail.com";
             String subjectText = subject.getText().toString();
             String bodyText = body.getText().toString();
 
-            // define Intent object with action attribute as ACTION_SEND
-            Intent intent = new Intent(Intent.ACTION_SEND);
-
-            // add three fields to intent using putExtra function
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{receiver});
-            intent.putExtra(Intent.EXTRA_SUBJECT, subjectText);
-            intent.putExtra(Intent.EXTRA_TEXT, bodyText);
-
-            // set type of intent
-            intent.setType("message/rfc822");
-
-            // startActivity with intent with chooser as Email client using createChooser function
-            startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("message/rfc822");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{receiver});
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, subjectText);
+            emailIntent.putExtra(Intent.EXTRA_TEXT, bodyText);
+            try {
+                startActivity(emailIntent);
+            } catch (ActivityNotFoundException e) {
+            }
         });
     }
 

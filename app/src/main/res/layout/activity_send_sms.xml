@@ -40,16 +40,20 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:gravity="center"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textColor="@color/black"
             android:text="Send a Feedback!"
-            android:textSize="35sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
         <!-- Bus Name -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textColor="@color/black"
             android:text="Select Developer:"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Spinner
@@ -70,11 +74,13 @@
             android:popupElevation="3dp" />
         <!-- Bus ID -->
         <TextView
+            android:fontFamily="@font/montserrat_semibold"
+            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Enter SMS:"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -83,7 +89,10 @@
             android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:gravity="top|start"
                 android:id="@+id/sms"
+                android:fontFamily="@font/montserrat_light"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:hint="Enter SMS"
@@ -94,11 +103,10 @@
         <!-- Submit Button -->
         <Button
             android:id="@+id/send"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:background="@drawable/button_selector"
             android:textColor="@color/black"
             android:text="Send" />
     </LinearLayout>

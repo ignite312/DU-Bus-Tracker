@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,9 +121,16 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.entry) {
                     checkAdmin();
                 } else if (itemId == R.id.bug) {
-//                    Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
-//                    startActivity(intent);
-                    showCustomToast("Will added later");
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setType("message/rfc822");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"contact.emonkhan@gmail.com"});
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+                    try {
+                        startActivity(emailIntent);
+                    } catch (ActivityNotFoundException e) {
+                    }
+//                    showCustomToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);
@@ -218,9 +226,16 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.entry) {
                     checkAdmin();
                 } else if (itemId == R.id.bug) {
-//                    Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
-//                    startActivity(intent);
-                    showCustomToast("Will added later");
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setType("message/rfc822");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"contact.emonkhan@gmail.com"});
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+                    try {
+                        startActivity(emailIntent);
+                    } catch (ActivityNotFoundException e) {
+                    }
+//                    showCustomToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);

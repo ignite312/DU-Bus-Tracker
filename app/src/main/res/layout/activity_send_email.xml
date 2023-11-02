@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".SendEmail">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -39,17 +39,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat_semibold"
             android:gravity="center"
             android:text="Send a Feedback!"
-            android:textSize="35sp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold" />
         <!-- Bus Name -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat_semibold"
             android:text="Select Developer:"
-            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Spinner
@@ -72,9 +76,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat_semibold"
             android:text="Enter Subject:"
-            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -86,6 +91,7 @@
                 android:id="@+id/subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_light"
                 android:hint="Enter Subject" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,8 +100,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat_semibold"
             android:text="Enter Body:"
-            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -107,6 +115,8 @@
                 android:id="@+id/body"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:fontFamily="@font/montserrat_light"
+                android:gravity="top|start"
                 android:hint="Enter Body"
                 android:inputType="textMultiLine" /> <!-- Add this line to allow multiple lines -->
         </com.google.android.material.textfield.TextInputLayout>
@@ -115,13 +125,12 @@
         <!-- Submit Button -->
         <Button
             android:id="@+id/send"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:background="@drawable/button_selector"
-            android:textColor="@color/black"
-            android:text="Send" />
+            android:text="Send"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
