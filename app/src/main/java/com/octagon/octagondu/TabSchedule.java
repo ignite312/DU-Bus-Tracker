@@ -27,13 +27,13 @@ public class TabSchedule extends AppCompatActivity {
         setContentView(R.layout.activity_schedule_tab);
 
         /*Got the Bus Name and Flag*/
-        String busName = getIntent().getStringExtra("busName");
-        String flag = getIntent().getStringExtra("flag");
+        String busName = getIntent().getStringExtra("BUSNAME");
+        String flag = getIntent().getStringExtra("FLAG");
 
         /* Create a Bundle with the busName and flag */
         Bundle args = new Bundle();
-        args.putString("busName", busName);
-        args.putString("flag", flag);
+        args.putString("BUSNAME", busName);
+        args.putString("FLAG", flag);
 
         /*Toolbar*/
         MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);

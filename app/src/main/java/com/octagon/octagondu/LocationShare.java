@@ -50,7 +50,7 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
     private Button updateLocationButton;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
-    private String busName, busTime;
+    private String busName, busID;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -59,15 +59,15 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_share);
         busName = getIntent().getStringExtra("BUSNAME");
-        busTime = getIntent().getStringExtra("BUSTIME");
+        busID = getIntent().getStringExtra("ID");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
          /*Toolbar Setup*/
-//        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
-//        detailsBusToolbar.setTitle("Locations for "+busName);
+        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
+        detailsBusToolbar.setTitle("Sharing Locations for "+ busName);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -128,7 +128,7 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
         if (location != null) {
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime).child("Locations").child(DUREGNUM);
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busID).child("Locations").child(DUREGNUM);
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -147,7 +147,7 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
                         databaseReference.child("time").setValue(getCurrentTime24HourFormat());
                         databaseReference.child("date").setValue(getCurrentDateFormatted());
                         databaseReference.child("busName").setValue(busName);
-                        databaseReference.child("busTime").setValue(busTime);
+                        databaseReference.child("busTime").setValue(busID);
                         databaseReference.child("voteCountLocations").setValue(0);
                         update(3, DUREGNUM);
                     }

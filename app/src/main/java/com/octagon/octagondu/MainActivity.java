@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragmentHome)
                 .commit();
-        toolbar.setTitle("Octagon");
+        toolbar.setTitle("Du Bus Tracker");
     }
 
     private void openScheduleFragment() {

@@ -48,13 +48,13 @@ public class CreatePost extends AppCompatActivity {
         textViewDesc = findViewById(R.id.body);
         button = findViewById(R.id.go);
         helpType = getIntent().getStringExtra("HT");
-        busName = getIntent().getStringExtra("BN");
+        busName = getIntent().getStringExtra("BUSNAME");
         title = getIntent().getStringExtra("TT");
         desc = getIntent().getStringExtra("DEC");
-        flag = getIntent().getStringExtra("flag");
-        postID = getIntent().getStringExtra("postID");
+        flag = getIntent().getStringExtra("FLAG");
+        postID = getIntent().getStringExtra("POSTID");
         if(flag != null) {
-            voteCNT = Integer.parseInt(getIntent().getStringExtra("voteCNT"));
+            voteCNT = Integer.parseInt(getIntent().getStringExtra("VOTECNT"));
             textViewTitle.setText(title);
             textViewDesc.setText(desc);
 
@@ -79,7 +79,7 @@ public class CreatePost extends AppCompatActivity {
         }
         /*Toolbar Setup*/
         MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
-        if(flag != null)detailsBusToolbar.setTitle("Post Update");
+        if(flag != null)detailsBusToolbar.setTitle("Update Post");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

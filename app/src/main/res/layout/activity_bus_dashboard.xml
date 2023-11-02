@@ -1,7 +1,7 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -66,7 +66,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
-                            android:text="Leave a Notice"
+                            android:text="Create a Notice"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -96,7 +96,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
-                            android:text="Update Bus Schedule"
+                            android:text="Update Bus Schedule and Notice"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -136,15 +136,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Pending Posts" />
-
+                <View
+                    android:layout_marginTop="1dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/dark_grey_color"
+                    android:layout_height="1dp"/>
                 <TextView
+                    android:layout_marginTop="200dp"
                     android:id="@+id/noPostsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:text="No Posts Pending"
                     android:visibility="gone" />
 

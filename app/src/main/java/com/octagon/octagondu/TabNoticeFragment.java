@@ -44,8 +44,8 @@ public class TabNoticeFragment extends Fragment {
         /*Got the Bus Name and Flag*/
         Bundle args = getArguments();
         if (args != null) {
-            busName = args.getString("busName");
-            flag = args.getString("flag");
+            busName = args.getString("BUSNAME");
+            flag = args.getString("FLAG");
         }
 
         noNoticeTextView = view.findViewById(R.id.noNoticeTextView);
@@ -97,7 +97,7 @@ public class TabNoticeFragment extends Fragment {
                         if (posts != null) {
                             postList.add(posts);
                         } else {
-                            showCustomToast("Something went wrong");
+//                            showCustomToast("Something went wrong");
                         }
                     }
                     /*Sort by latest Time*/
@@ -127,7 +127,7 @@ public class TabNoticeFragment extends Fragment {
                     adapter.setFlag(flag);
                     recyclerView.setAdapter(adapter);
                 } else {
-                    showCustomToast("No Notice Currently");
+//                    showCustomToast("No Notice Currently");
                     recyclerView.setVisibility(View.GONE);
                     noNoticeTextView.setVisibility(View.VISIBLE);
                 }

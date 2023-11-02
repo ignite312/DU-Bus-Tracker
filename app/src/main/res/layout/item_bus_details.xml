@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="10sp"
-            android:text="Bus ID: 1000"
+            android:text="Bus Number: 1000"
             android:layout_toRightOf="@id/upOrDown"
             android:layout_below="@id/text_view_bus_time"
            android:textColor="@color/black" />
@@ -49,25 +49,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_bus_id"
             android:layout_toRightOf="@id/upOrDown"
-            android:text="Start Location: Carzon"
+            android:text="Route: Shibbari to Curzon"
             android:textStyle="bold"
             android:textSize="10sp"
             android:textColor="@color/dark_grey_color"
             tools:ignore="SmallSp" />
-
-        <TextView
-            android:layout_marginLeft="15dp"
-            android:id="@+id/text_view_destination_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_start_location"
-            android:text="Destination Location: TSC"
-            android:layout_toRightOf="@id/upOrDown"
-            android:textStyle="bold"
-            android:textSize="10sp"
-            android:textColor="@color/dark_grey_color"
-            tools:ignore="SmallSp" />
-
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

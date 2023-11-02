@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,25 +31,22 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListBusTime extends AppCompatActivity {
+public class ListTimeForLocation extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    private RecyclerView recyclerViewUp, recyclerViewDown;
-    private AdapterBusDetails busAdapterUp, busAdapterDown;
-    private ProgressBar progressBarUp, progressBarDown;
-    TextView textView;
+    private RecyclerView recyclerViewUp;
+    private AdapterBusDetails busAdapterUp;
+    private ProgressBar progressBarUp;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_bus_time);
-        String busName = getIntent().getStringExtra("busName");
-        String flag = getIntent().getStringExtra("flag");
+        setContentView(R.layout.activity_list_time_for_location);
+        String busName = getIntent().getStringExtra("BUSNAME");
 
         /*Toolbar*/
         MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
-        if (flag.equals("LC")) detailsBusToolbar.setTitle("Locations for " + busName);
-        else detailsBusToolbar.setTitle("Schedule for " + busName);
+        detailsBusToolbar.setTitle("Locations for " + busName);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,14 +66,7 @@ public class ListBusTime extends AppCompatActivity {
         }
 
         progressBarUp = findViewById(R.id.progress_bar1);
-        progressBarDown = findViewById(R.id.progress_bar2);
-        textView = findViewById(R.id.downSc);
 
-        if (flag.equals("LC")) {
-            textView.setVisibility(View.GONE);
-            progressBarDown.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-            progressBarDown.setVisibility(View.INVISIBLE);
-        }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Schedule").child(busName);
 
@@ -86,18 +75,10 @@ public class ListBusTime extends AppCompatActivity {
         busAdapterUp = new AdapterBusDetails(new ArrayList<>());
         recyclerViewUp.setAdapter(busAdapterUp);
 
-        if (flag.equals("SC") || flag.equals("AD")) {
-            recyclerViewDown = findViewById(R.id.recycler_view3);
-            recyclerViewDown.setLayoutManager(new LinearLayoutManager(this));
-            busAdapterDown = new AdapterBusDetails(new ArrayList<>());
-            recyclerViewDown.setAdapter(busAdapterDown);
-        }
-
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<InfoBusDetails> busListUp = new ArrayList<>();
-                List<InfoBusDetails> busListDown = new ArrayList<>();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         InfoBusDetails bus = snapshot.getValue(InfoBusDetails.class);
@@ -105,25 +86,19 @@ public class ListBusTime extends AppCompatActivity {
                             String temp = String.valueOf(snapshot.child("busType").getValue());
                             if ("Up".equals(temp)) {
                                 busListUp.add(bus);
-                            } else {
-                                busListDown.add(bus);
                             }
                         }
                     }
                     progressBarUp.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-                    progressBarDown.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
                     progressBarUp.setVisibility(View.INVISIBLE);
-                    progressBarDown.setVisibility(View.INVISIBLE);
-                    /*Recycler View Up*/
-                    busAdapterUp = new AdapterBusDetails(busListUp);
-                    recyclerViewUp.setAdapter(busAdapterUp);
-                    busAdapterUp.setFlag(flag);
-
-                    if (flag.equals("SC") || flag.equals("AD")) {
-                        /*Recycler View Down Up*/
-                        busAdapterDown = new AdapterBusDetails(busListDown);
-                        recyclerViewDown.setAdapter(busAdapterDown);
-                        busAdapterDown.setFlag(flag);
+                    if (busListUp.isEmpty()) {
+                        showCustomToast("No data found for this bus name");
+                        finish();
+                    } else {
+                        /*Recycler View Up*/
+                        busAdapterUp = new AdapterBusDetails(busListUp);
+                        recyclerViewUp.setAdapter(busAdapterUp);
+                        busAdapterUp.setFlag("LC");
                     }
                 } else {
                     showCustomToast("No data found for this bus name");
@@ -137,17 +112,12 @@ public class ListBusTime extends AppCompatActivity {
             }
         });
     }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
     private void showCustomToast(String message) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast,
-                (ViewGroup) findViewById(R.id.toast_layout_root));
+                findViewById(R.id.toast_layout_root));
 
-        TextView text = (TextView) layout.findViewById(R.id.custom_toast_text);
+        TextView text = layout.findViewById(R.id.custom_toast_text);
         text.setText(message);
 
         Toast toast = new Toast(getApplicationContext());

@@ -439,20 +439,26 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                         viewApprove.setVisibility(View.VISIBLE);
                     }
                     if(flag.equals("ADN")) {
+                        btnUpdate.setVisibility(View.VISIBLE);
+                        viewUpdate.setVisibility(View.VISIBLE);
                         btnApprove.setVisibility(View.GONE);
                         viewApprove.setVisibility(View.GONE);
-                        btnUpdate.setVisibility(View.GONE);
-                        viewUpdate.setVisibility(View.GONE);
                     }
                     btnUpdate.setOnClickListener(dialog -> {
+
                         Intent intent = new Intent(context, CreatePost.class);
+                        if(flag.equals("ADN")) {
+                            intent = new Intent(context, CreateNotice.class);
+                        }
                         intent.putExtra("HT", infoNewsFeed.getHelpType());
-                        intent.putExtra("BN", infoNewsFeed.getBusName());
+                        intent.putExtra("BUSNAME", infoNewsFeed.getBusName());
                         intent.putExtra("TT", infoNewsFeed.getTitle());
                         intent.putExtra("DEC", infoNewsFeed.getDesc());
-                        intent.putExtra("flag", "PRM");
-                        intent.putExtra("postID", infoNewsFeed.getPostId());
-                        intent.putExtra("voteCNT", String.valueOf(infoNewsFeed.getTotalVote()));
+                        if(flag.equals("ADN")) {
+                            intent.putExtra("FLAG", "PM");
+                        }else intent.putExtra("FLAG", "ADN");
+                        intent.putExtra("POSTID", infoNewsFeed.getPostId());
+                        intent.putExtra("VOTECNT", String.valueOf(infoNewsFeed.getTotalVote()));
                         context.startActivity(intent);
                         popupWindow.dismiss();
                     });
@@ -518,18 +524,22 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                 }
             });
 
-
-            if (flag.equals("FEED")) {
-                View.OnClickListener commonOnClickListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, ProfileOthers.class);
-                        intent.putExtra("UID", infoNewsFeed.getUserId());
-                        context.startActivity(intent);
-                    }
-                };
-                userNameTextView.setOnClickListener(commonOnClickListener);
-                circleImageView.setOnClickListener(commonOnClickListener);
+            try{
+                if (!(flag.equals("PM") || flag.equals("PO"))) {
+                    View.OnClickListener commonOnClickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, ProfileOthers.class);
+                            intent.putExtra("UID", infoNewsFeed.getUserId());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // Add this line
+                            context.startActivity(intent);
+                        }
+                    };
+                    userNameTextView.setOnClickListener(commonOnClickListener);
+                    circleImageView.setOnClickListener(commonOnClickListener);
+                }
+            }catch (Exception e) {
+                showToast(e.getMessage());
             }
         }
     }

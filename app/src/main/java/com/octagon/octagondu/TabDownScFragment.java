@@ -38,8 +38,8 @@ public class TabDownScFragment extends Fragment {
         /*Got the Bus Name and Flag*/
         Bundle args = getArguments();
         if (args != null) {
-            busName = args.getString("busName");
-            flag = args.getString("flag");
+            busName = args.getString("BUSNAME");
+            flag = args.getString("FLAG");
             if(flag.equals("ADN"))flag = "AD";
         }
         progressBarDown = rootView.findViewById(R.id.progress_barDown);

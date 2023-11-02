@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +32,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class ListBusLocation extends AppCompatActivity {
+public class ListOfLocations extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterBusLocation adapterBusLocation;
     private final int delay = 10000; // 5 seconds
-    private String busName, busTime;
+    private String busName, ID, busTime;
     MaterialToolbar detailsBusToolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView noLocationsTextView;
@@ -48,8 +47,8 @@ public class ListBusLocation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_bus_location);
         busName = getIntent().getStringExtra("BUSNAME");
+        ID = getIntent().getStringExtra("ID");
         busTime = getIntent().getStringExtra("BUSTIME");
-
         /*Toolbar*/
         detailsBusToolbar = findViewById(R.id.toolbar);
         detailsBusToolbar.setTitle("Locations for " + busName + " " + busTime);
@@ -85,15 +84,15 @@ public class ListBusLocation extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListBusLocation.this, LocationShare.class);
+                Intent intent = new Intent(ListOfLocations.this, LocationShare.class);
                 intent.putExtra("BUSNAME", busName);
-                intent.putExtra("BUSTIME", busTime);
+                intent.putExtra("ID", ID);
                 startActivity(intent);
             }
         });
         recyclerView = findViewById(R.id.locationRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapterBusLocation = new AdapterBusLocation(ListBusLocation.this, new ArrayList<>());
+        adapterBusLocation = new AdapterBusLocation(ListOfLocations.this, new ArrayList<>());
         recyclerView.setAdapter(adapterBusLocation);
         refresh();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -105,7 +104,7 @@ public class ListBusLocation extends AppCompatActivity {
         });
     }
     private void refresh() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busTime).child("Locations");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(ID).child("Locations");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -140,7 +139,7 @@ public class ListBusLocation extends AppCompatActivity {
                             return 0;
                         }
                     });
-                    adapterBusLocation = new AdapterBusLocation(ListBusLocation.this, list);
+                    adapterBusLocation = new AdapterBusLocation(ListOfLocations.this, list);
                     recyclerView.setAdapter(adapterBusLocation);
                     recyclerView.setVisibility(View.VISIBLE);
                     noLocationsTextView.setVisibility(View.GONE);

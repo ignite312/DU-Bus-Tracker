@@ -34,7 +34,9 @@ public class CreateNotice extends AppCompatActivity {
     Spinner spinnerHelp, spinnerBusType;
     TextView textViewTitle, textViewDesc;
     Button button;
-    String busName, flag, title, desc;
+    String helpType, busName, title, desc, flag, postID;
+    int voteCNT;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,9 +48,37 @@ public class CreateNotice extends AppCompatActivity {
         textViewTitle = findViewById(R.id.postTitle);
         textViewDesc = findViewById(R.id.body);
         button = findViewById(R.id.go);
-        busName = getIntent().getStringExtra("busName");
-        flag = getIntent().getStringExtra("flag");
+        busName = getIntent().getStringExtra("BUSNAME");
+        flag = getIntent().getStringExtra("FLAG");
 
+        helpType = getIntent().getStringExtra("HT");
+        title = getIntent().getStringExtra("TT");
+        desc = getIntent().getStringExtra("DEC");
+        postID = getIntent().getStringExtra("POSTID");
+        if(flag != null) {
+            voteCNT = Integer.parseInt(getIntent().getStringExtra("VOTECNT"));
+            textViewTitle.setText(title);
+            textViewDesc.setText(desc);
+
+            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    android.R.id.text1
+            );
+            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter1.add(helpType);
+            spinnerHelp.setAdapter(adapter1);
+
+            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    android.R.id.text1
+            );
+            adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter2.add(busName);
+            spinnerBusType.setAdapter(adapter2);
+            button.setText("Update");
+        }
         /*Bus Community Spinner*/
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
                 this,
@@ -64,7 +94,7 @@ public class CreateNotice extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if(flag != null)detailsBusToolbar.setTitle("Update Notice");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -88,7 +118,13 @@ public class CreateNotice extends AppCompatActivity {
                 String time = getCurrentTime24HourFormat();
                 String date = getCurrentDateFormatted();
                 if (!title.isEmpty() || !desc.isEmpty()) {
-
+                    if(flag != null) {
+                        InfoNewsFeed post = new InfoNewsFeed(DUREGNUM, busType, helpType, title, desc, voteCNT, time, date, "0", String.valueOf(postID));
+                        FirebaseDatabase.getInstance().getReference("Notice/" + busName + "/Posts").child(String.valueOf(postID)).setValue(post);
+                        showCustomToast("Post Updated");
+                        finish();
+                        return;
+                    }
                     DatabaseReference PostCountRef = FirebaseDatabase.getInstance().getReference("Notice/" + busName + "/PostCount");
                     PostCountRef.runTransaction(new Transaction.Handler() {
                         @Override

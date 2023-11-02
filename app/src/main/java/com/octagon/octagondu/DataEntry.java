@@ -38,8 +38,8 @@ public class DataEntry extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_entry);
-        String busName = getIntent().getStringExtra("busName");
-        String flag = getIntent().getStringExtra("flag");
+        String busName = getIntent().getStringExtra("BUSNAME");
+        String flag = getIntent().getStringExtra("FLAG");
         /*Toolbar*/
         MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -91,7 +91,7 @@ public class DataEntry extends AppCompatActivity {
                 if (!busId.isEmpty() && !time.isEmpty() && !startLocation.isEmpty() && !destinationLocation.isEmpty()) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                     InfoBusDetails infoBusDetails = new InfoBusDetails(busName, busType, busId, startLocation, destinationLocation, time);
-                    databaseReference.child("Bus Schedule").child(busName).child(time).setValue(infoBusDetails);
+                    databaseReference.child("Bus Schedule").child(busName).child((busType+busId)).setValue(infoBusDetails);
                     Toast.makeText(DataEntry.this, "Successfully Submitted Response", Toast.LENGTH_SHORT).show();
                     clearForm();
                 } else {
@@ -104,7 +104,7 @@ public class DataEntry extends AppCompatActivity {
         textViewBusId.setText("");
         textViewRouteSt.setText("");
         textViewRoute.setText("");
-        viewtime.setText("Departure Time : 00:00");
+        viewtime.setText("00:00");
         spinnerBusName.setSelection(0);
         spinnerBusType.setSelection(0);
     }
@@ -120,7 +120,7 @@ public class DataEntry extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         // Update the selected time in the TextView
                         DataEntry.this.inputTime = String.format("%02d:%02d", hourOfDay, minute);
-                        viewtime.setText("Departure Time "+DataEntry.this.inputTime);
+                        viewtime.setText(DataEntry.this.inputTime);
                     }
                 },
                 hour,

@@ -28,23 +28,20 @@ public class FragmentLocation extends Fragment {
         dataArrayList.clear();
         String[] nameList = {
                 "Khonika",
-                "Falguni",
+                "Torongo",
+                "Kinchit",
                 "Choitaly",
+                "Srabon",
+                "Boishakhi",
+                "Boshonto",
+                "Falguni",
                 "Ullash",
-                "Bosonto",
                 "Isha Kha",
                 "Anando",
-                "Torongo",
                 "Hemonto",
-                "Boshonto",
-                "Boishakhi",
-                "Kinchit",
-                "Srabon",
-                "Moitree",
-                "Wari"
         };
-        int[] imageList = new int[15];
-        for (int i = 0; i < 15; i++) {
+        int[] imageList = new int[12];
+        for (int i = 0; i < 12; i++) {
             if (i % 5 == 0) {
                 imageList[i] = R.drawable.bus;
             } else if(i % 5 == 1) {
@@ -57,7 +54,7 @@ public class FragmentLocation extends Fragment {
                 imageList[i] = R.drawable.bus5;
             }
         }
-
+        imageList[0] = R.drawable.khonika;
         for (int i = 0; i < imageList.length; i++) {
             infoBus = new InfoBus(nameList[i], imageList[i], R.drawable.location);
             dataArrayList.add(infoBus);
@@ -70,9 +67,8 @@ public class FragmentLocation extends Fragment {
         adapterBus.setOnItemClickListener(new AdapterBus.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(getActivity(), ListBusTime.class);
-                intent.putExtra("busName", dataArrayList.get(position).getName());
-                intent.putExtra("flag", "LC");
+                Intent intent = new Intent(getActivity(), ListTimeForLocation.class);
+                intent.putExtra("BUSNAME", dataArrayList.get(position).getName());
                 startActivity(intent);
             }
         });

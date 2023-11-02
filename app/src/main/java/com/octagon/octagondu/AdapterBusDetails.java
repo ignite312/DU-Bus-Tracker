@@ -64,11 +64,13 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
                         view.getContext().startActivity(intent);
                         return;
                     }
-                    Intent intent = new Intent(view.getContext(), ListBusLocation.class);
+                    Intent intent = new Intent(view.getContext(), ListOfLocations.class);
                     intent.putExtra("BUSNAME", bus.getBusName());
+                    intent.putExtra("ID", bus.getBusType()+bus.getBusId());
                     intent.putExtra("BUSTIME", bus.getTime());
                     view.getContext().startActivity(intent);
-                }else if (flag.equals("AD")) {
+                }
+                if (flag.equals("AD")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setTitle("Options")
                             .setMessage("Choose an option:")
@@ -87,11 +89,11 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
                             .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     String busNameToDelete = bus.getBusName();
-                                    String timeToDelete = bus.getTime();
-                                    if (!busNameToDelete.isEmpty() && !timeToDelete.isEmpty()) {
+                                    String idToDelete = bus.getBusId();
+                                    if (!busNameToDelete.isEmpty() && !idToDelete.isEmpty()) {
                                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-                                        String pathToDelete = "Bus Schedule/" + busNameToDelete + "/" + timeToDelete;
+                                        String pathToDelete = "Bus Schedule/" + busNameToDelete + "/" + bus.getBusType() + idToDelete;
 
                                         databaseReference.child(pathToDelete).addListenerForSingleValueEvent(new ValueEventListener() {
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -145,7 +147,6 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
         private TextView busTypeTextView;
         private TextView busIdTextView;
         private TextView startLocationTextView;
-        private TextView destinationLocationTextView;
         private TextView time;
         ImageView imageView;
 
@@ -153,15 +154,13 @@ public class AdapterBusDetails extends RecyclerView.Adapter<AdapterBusDetails.Bu
             super(itemView);
             busIdTextView = itemView.findViewById(R.id.text_view_bus_id);
             startLocationTextView = itemView.findViewById(R.id.text_view_start_location);
-            destinationLocationTextView = itemView.findViewById(R.id.text_view_destination_location);
             time = itemView.findViewById(R.id.text_view_bus_time);
             imageView = itemView.findViewById(R.id.upOrDown);
         }
 
         public void bind(InfoBusDetails bus, String flag) {
             busIdTextView.setText("Bus Number: " + bus.getBusId());
-            startLocationTextView.setText("Start Location: " + bus.getStartLocation());
-            destinationLocationTextView.setText("Destination Location: " + bus.getDestinationLocation());
+            startLocationTextView.setText("Route: " + bus.getStartLocation() + " To " + bus.getDestinationLocation());
             time.setText("Departure Time: " + bus.getTime());
             if (bus.getBusType().equals("Up")) imageView.setImageResource(R.drawable.uptime);
             else imageView.setImageResource(R.drawable.downtime);

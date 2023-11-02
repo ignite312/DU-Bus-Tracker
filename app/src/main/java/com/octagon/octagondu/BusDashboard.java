@@ -39,7 +39,7 @@ import java.util.List;
 public class BusDashboard extends AppCompatActivity {
     MaterialToolbar detailsBusToolbar;
     String busName;
-    CardView cardView1, cardView2, notice;
+    CardView update, newInput, notice;
     TextView noPostsTextView;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -50,8 +50,8 @@ public class BusDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_dashboard);
         busName = getIntent().getStringExtra("BUSNAME");
-        cardView1 = findViewById(R.id.card1);
-        cardView2 = findViewById(R.id.card2);
+        update = findViewById(R.id.card1);
+        newInput = findViewById(R.id.card2);
         notice = findViewById(R.id.notice);
 
         noPostsTextView = findViewById(R.id.noPostsTextView);
@@ -97,24 +97,24 @@ public class BusDashboard extends AppCompatActivity {
         }
         notice.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), CreateNotice.class);
-            intent.putExtra("busName", busName);
-            intent.putExtra("flag", "AD");
+            intent.putExtra("BUSNAME", busName);
             startActivity(intent);
         });
-        cardView1.setOnClickListener(view -> {
+        update.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), TabSchedule.class);
-            intent.putExtra("busName", busName);
-            intent.putExtra("flag", "ADN");
+            intent.putExtra("BUSNAME", busName);
+            intent.putExtra("FLAG", "ADN");
             startActivity(intent);
         });
-        cardView2.setOnClickListener(view -> {
+        newInput.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), DataEntry.class);
-            intent.putExtra("busName", busName);
-            intent.putExtra("flag", "AD");
+            intent.putExtra("BUSNAME", busName);
+            intent.putExtra("FLAG", "AD");
             startActivity(intent);
         });
         refresh();
     }
+
     private void showCustomToast(String message) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast,
@@ -129,6 +129,7 @@ public class BusDashboard extends AppCompatActivity {
         toast.setView(layout);
         toast.show();
     }
+
     private void refresh() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Feed/Posts");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -142,17 +143,17 @@ public class BusDashboard extends AppCompatActivity {
                         InfoNewsFeed posts = snapshot.getValue(InfoNewsFeed.class);
                         if (posts != null) {
                             String temp = String.valueOf(snapshot.child("busName").getValue());
-                            if(temp.equals(busName)&& String.valueOf(snapshot.child("status").getValue()).equals("0")) {
+                            if (temp.equals(busName) && String.valueOf(snapshot.child("status").getValue()).equals("0")) {
                                 postList.add(posts);
                             }
                         } else {
                             showCustomToast("Something went wrong");
                         }
                     }
-                    if(postList.isEmpty()) {
+                    if (postList.isEmpty()) {
                         recyclerView.setVisibility(View.GONE);
                         noPostsTextView.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         /*Sort by latest Time*/
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");

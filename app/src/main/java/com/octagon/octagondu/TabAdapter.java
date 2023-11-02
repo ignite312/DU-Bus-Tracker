@@ -64,8 +64,8 @@ public class TabAdapter extends FragmentStateAdapter {
 
         // Set the arguments for each fragment
         Bundle args = new Bundle();
-        args.putString("busName", busName);
-        args.putString("flag", flag);
+        args.putString("BUSNAME", busName);
+        args.putString("FLAG", flag);
         fragment.setArguments(args);
 
         return fragment;

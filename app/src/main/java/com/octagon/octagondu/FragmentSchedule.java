@@ -27,35 +27,34 @@ public class FragmentSchedule extends Fragment {
         dataArrayList.clear();
         String[] nameList = {
                 "Khonika",
-                "Falguni",
+                "Torongo",
+                "Kinchit",
                 "Choitaly",
+                "Srabon",
+                "Boishakhi",
+                "Boshonto",
+                "Falguni",
                 "Ullash",
                 "Isha Kha",
                 "Anando",
-                "Torongo",
                 "Hemonto",
-                "Boshonto",
-                "Boishakhi",
-                "Kinchit",
-                "Srabon",
-                "Moitree",
-                "Wari"
         };
         Arrays.sort(nameList);
-        int[] imageList = new int[14];
-        for (int i = 0; i < 14; i++) {
+        int[] imageList = new int[12];
+        for (int i = 0; i < 12; i++) {
             if (i % 5 == 0) {
                 imageList[i] = R.drawable.bus;
-            } else if(i % 5 == 1) {
+            } else if (i % 5 == 1) {
                 imageList[i] = R.drawable.bus2;
-            }else if(i % 5 == 2) {
+            } else if (i % 5 == 2) {
                 imageList[i] = R.drawable.bus3;
-            }else if(i % 5 == 3) {
+            } else if (i % 5 == 3) {
                 imageList[i] = R.drawable.bus4;
-            }else {
+            } else {
                 imageList[i] = R.drawable.bus5;
             }
         }
+        imageList[7] = R.drawable.khonika;
         for (int i = 0; i < imageList.length; i++) {
             infoBus = new InfoBus(nameList[i], imageList[i], R.drawable.schedule);
             dataArrayList.add(infoBus);
@@ -69,8 +68,8 @@ public class FragmentSchedule extends Fragment {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(getActivity(), TabSchedule.class);
-                intent.putExtra("busName", dataArrayList.get(position).getName());
-                intent.putExtra("flag", "SC");
+                intent.putExtra("BUSNAME", dataArrayList.get(position).getName());
+                intent.putExtra("FLAG", "SC");
                 startActivity(intent);
             }
         });

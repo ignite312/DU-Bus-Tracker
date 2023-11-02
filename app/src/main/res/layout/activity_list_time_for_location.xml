@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ListBusTime">
+    tools:context=".ListTimeForLocation">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/locationListAppBar"
@@ -23,25 +23,26 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             app:title="Location for Khonika"
-            app:titleTextColor="@color/black"/>
+            app:titleTextColor="@color/black" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="100dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Up Schedule"
+                android:layout_marginTop="100dp"
                 android:fontFamily="@font/montserrat_bold"
+                android:text="Up Schedule"
                 android:textColor="#1D5121"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -53,35 +54,10 @@
                 android:layout_gravity="center" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_gravity="center"
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
-
-            <!-- Second RecyclerView -->
-            <TextView
-                android:id="@+id/downSc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_gravity="center"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="Down Schedule"
-                android:textColor="#650F2D"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
         </LinearLayout>
 

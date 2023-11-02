@@ -220,10 +220,10 @@ public class FragmentProfileMy extends Fragment {
                     adapter = new AdapterNewsFeed(getContext(), postList);
                     adapter.setFlag("PM");
                     recyclerView.setAdapter(adapter);
-                    if(ok) {
+                    if (ok) {
                         noPostsTextView.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         recyclerView.setVisibility(View.GONE);
                         noPostsTextView.setVisibility(View.VISIBLE);
                     }
@@ -239,6 +239,7 @@ public class FragmentProfileMy extends Fragment {
             }
         });
     }
+
     private void showCustomToast(String message) {
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.custom_toast, (ViewGroup) getView().findViewById(R.id.toast_layout_root));

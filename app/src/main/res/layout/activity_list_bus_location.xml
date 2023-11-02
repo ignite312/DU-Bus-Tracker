@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        tools:context=".ListBusLocation">
+        tools:context=".ListOfLocations">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/locationListAppBar"
