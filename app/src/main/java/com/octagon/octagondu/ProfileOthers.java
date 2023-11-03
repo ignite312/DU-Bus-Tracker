@@ -3,6 +3,7 @@ package com.octagon.octagondu;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -126,6 +127,9 @@ public class ProfileOthers extends AppCompatActivity {
                     contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
                     if (Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) <= 0)
                         contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
+                    if(Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) < 0) {
+                        contribution.setTextColor(Color.parseColor("#FF0000"));
+                    }
                     else
                         contribution.setText("+" + dataSnapshot.child("contributionCount").getValue());
                     try {

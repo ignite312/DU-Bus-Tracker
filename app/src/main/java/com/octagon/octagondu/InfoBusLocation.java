@@ -8,7 +8,7 @@ public class InfoBusLocation {
     private String lastLocation;
     private  String time;
     private String date;
-    private String voteCount;
+    private int voteCount;
     private String lat;
     private String lon;
 
@@ -24,7 +24,7 @@ public class InfoBusLocation {
         this.busID = busID;
     }
 
-    public InfoBusLocation(String busID, String regNum, String busName, String busTime, String lastLocation, String time, String date, String voteCount, String lat, String lon) {
+    public InfoBusLocation(String busID, String regNum, String busName, String busTime, String lastLocation, String time, String date, int voteCount, String lat, String lon) {
         this.regNum = regNum;
         this.busName = busName;
         this.busTime = busTime;
@@ -85,11 +85,11 @@ public class InfoBusLocation {
         this.date = date;
     }
 
-    public String getVoteCount() {
+    public int getVoteCount() {
         return voteCount;
     }
 
-    public void setVoteCount(String voteCount) {
+    public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
     }
 

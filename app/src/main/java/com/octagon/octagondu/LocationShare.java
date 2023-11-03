@@ -145,14 +145,14 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
                         databaseReference.child("time").setValue(getCurrentTime24HourFormat());
                         databaseReference.child("date").setValue(getCurrentDateFormatted());
                         if (haversine(du_tsc_lat, du_tsc_long, latitude, longitude) <= 1.00) {
-                            databaseReference.child("lastLocation").setValue("Near TSC");
+                            databaseReference.child("lastLocation").setValue("TSC");
                             showToast("Reached DU");
-                            finish();
+                            finishLocationSharing();
                         }
                         if (haversine(du_cur_lat, du_cur_long, latitude, longitude) <= 1.00) {
-                            databaseReference.child("lastLocation").setValue("Near Curzon");
+                            databaseReference.child("lastLocation").setValue("Curzon");
                             showToast("Reached DU");
-                            finish();
+                            finishLocationSharing();
                         }
                     } else {
                         databaseReference.child("busID").setValue(busID);
@@ -173,7 +173,7 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
                         if (haversine(du_cur_lat, du_cur_long, latitude, longitude) <= 1.00) {
                             databaseReference.child("lastLocation").setValue("Near Curzon");
                             showToast("Reached DU");
-                            finish();
+                            finishLocationSharing();
                         }
                         //update(3, DUREGNUM);
                     }
@@ -286,5 +286,10 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
             }
         });
         builder.show();
+    }
+    private void finishLocationSharing() {
+        // Stop location updates and finish the activity
+        fusedLocationClient.removeLocationUpdates(locationCallback);
+        finish();
     }
 }
