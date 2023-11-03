@@ -112,11 +112,11 @@ public class FragmentNewsFeed extends Fragment {
                                 postList.add(posts);
                             }
                         } else {
-                            showCustomToast("Something went wrong");
+//                            showCustomToast("Something went wrong");
                         }
                     }
                     if(postList.isEmpty()) {
-                        showCustomToast("No posts found");
+//                        showCustomToast("No posts found");
                         recyclerView.setVisibility(View.GONE);
                         noPostsTextView.setVisibility(View.VISIBLE);
                         return;
@@ -148,7 +148,7 @@ public class FragmentNewsFeed extends Fragment {
                     adapter.setFlag("FEED");
                     recyclerView.setAdapter(adapter);
                 } else {
-                    showCustomToast("No posts found");
+//                    showCustomToast("No posts found");
                     recyclerView.setVisibility(View.GONE);
                     noPostsTextView.setVisibility(View.VISIBLE);
                 }

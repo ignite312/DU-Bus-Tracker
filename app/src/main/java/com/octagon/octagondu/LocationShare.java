@@ -4,6 +4,7 @@ import static com.octagon.octagondu.MainActivity.DUREGNUM;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -36,8 +38,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -50,7 +50,7 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
     private Button updateLocationButton;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
-    private String busName, busID;
+    private String busName, busID, busTime;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -60,14 +60,15 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
         setContentView(R.layout.activity_location_share);
         busName = getIntent().getStringExtra("BUSNAME");
         busID = getIntent().getStringExtra("ID");
+        busTime = getIntent().getStringExtra("BUSTIME");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
-         /*Toolbar Setup*/
+        /*Toolbar Setup*/
         MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
-        detailsBusToolbar.setTitle("Sharing Locations for "+ busName);
+        detailsBusToolbar.setTitle("Sharing Location For " + busName + " " + busTime);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -92,7 +93,7 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
         updateLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startLocationUpdates();
+                showConfirmationDialog();
             }
         });
 
@@ -128,6 +129,10 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
         if (location != null) {
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
+            double du_tsc_lat = 23.732663;
+            double du_tsc_long = 90.395564;
+            double du_cur_lat = 23.727621;
+            double du_cur_long = 90.400465;
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Location").child(getCurrentDateFormatted()).child(busName).child(busID).child("Locations").child(DUREGNUM);
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
@@ -139,6 +144,16 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
                         databaseReference.child("lon").setValue(Double.toString(longitude));
                         databaseReference.child("time").setValue(getCurrentTime24HourFormat());
                         databaseReference.child("date").setValue(getCurrentDateFormatted());
+                        if (haversine(du_tsc_lat, du_tsc_long, latitude, longitude) <= 1.00) {
+                            databaseReference.child("lastLocation").setValue("Near TSC");
+                            showToast("Reached DU");
+                            finish();
+                        }
+                        if (haversine(du_cur_lat, du_cur_long, latitude, longitude) <= 1.00) {
+                            databaseReference.child("lastLocation").setValue("Near Curzon");
+                            showToast("Reached DU");
+                            finish();
+                        }
                     } else {
                         databaseReference.child("regNum").setValue(DUREGNUM);
                         databaseReference.child("lastLocation").setValue("Dhaka");
@@ -147,9 +162,19 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
                         databaseReference.child("time").setValue(getCurrentTime24HourFormat());
                         databaseReference.child("date").setValue(getCurrentDateFormatted());
                         databaseReference.child("busName").setValue(busName);
-                        databaseReference.child("busTime").setValue(busID);
+                        databaseReference.child("busTime").setValue(busTime);
                         databaseReference.child("voteCountLocations").setValue(0);
-                        update(3, DUREGNUM);
+                        if (haversine(du_tsc_lat, du_tsc_long, latitude, longitude) <= 1.00) {
+                            databaseReference.child("lastLocation").setValue("Near TSC");
+                            showToast("Reached DU");
+                            finish();
+                        }
+                        if (haversine(du_cur_lat, du_cur_long, latitude, longitude) <= 1.00) {
+                            databaseReference.child("lastLocation").setValue("Near Curzon");
+                            showToast("Reached DU");
+                            finish();
+                        }
+                        //update(3, DUREGNUM);
                     }
                 }
 
@@ -194,28 +219,71 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
         return timeFormat.format(currentTime);
     }
 
-    private void update(int dcc, String UID) {
+    public double haversine(double lat1, double lon1, double lat2, double lon2) {
+        // Convert latitude and longitude from degrees to radians
+        double deg2rad = Math.PI / 180.0;
+        lat1 *= deg2rad;
+        lon1 *= deg2rad;
+        lat2 *= deg2rad;
+        lon2 *= deg2rad;
 
-        DatabaseReference ContributionCountRef = FirebaseDatabase.getInstance().getReference("UserInfo/" + UID + "/contributionCount");
-        ContributionCountRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                Integer value = mutableData.getValue(Integer.class);
-                if (value == null) {
-                    mutableData.setValue(dcc);
-                } else {
-                    mutableData.setValue(value + dcc);
-                }
-                return Transaction.success(mutableData);
-            }
+        // Radius of the Earth in kilometers
+        double radius = 6371.0; // Earth's mean radius
 
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
-                if (databaseError != null) {
-                } else {
-                    Integer updatedValue = dataSnapshot.getValue(Integer.class);
+        // Haversine formula
+        double dlat = lat2 - lat1;
+        double dlon = lon2 - lon1;
+        double a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon / 2) * Math.sin(dlon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = radius * c;
+
+        return distance;
+    }
+
+    /*
+        private void update(int dcc, String UID) {
+
+            DatabaseReference ContributionCountRef = FirebaseDatabase.getInstance().getReference("UserInfo/" + UID + "/contributionCount");
+            ContributionCountRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    Integer value = mutableData.getValue(Integer.class);
+                    if (value == null) {
+                        mutableData.setValue(dcc);
+                    } else {
+                        mutableData.setValue(value + dcc);
+                    }
+                    return Transaction.success(mutableData);
                 }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                    if (databaseError != null) {
+                    } else {
+                        Integer updatedValue = dataSnapshot.getValue(Integer.class);
+                    }
+                }
+            });
+        }
+     */
+    private void showConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Are you sure you are in " + busName + " " + busTime + "?");
+        builder.setMessage("Please be cautious when sharing your location. If you are not on the bus, kindly refrain from sharing your location. By sharing your location, you can help other students and contribute to our community.");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startLocationUpdates();
+                dialog.dismiss();
             }
         });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 }

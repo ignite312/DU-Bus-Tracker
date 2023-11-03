@@ -40,11 +40,13 @@
             android:padding="10dp">
 
             <TextView
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Help Type?"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <Spinner
@@ -72,9 +74,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semibold"
                 android:text="Bus Community ? "
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
             <Spinner
                 android:id="@+id/busName"
@@ -96,7 +99,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_semibold"
             android:text="Post Title"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -116,7 +121,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_semibold"
             android:text="Post Description"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 

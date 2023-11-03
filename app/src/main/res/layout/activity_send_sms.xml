@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:hint="Enter SMS"
-                android:inputType="textMultiLine" /> <!-- Add this line to allow multiple lines -->
+                android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="Send" />
     </LinearLayout>
 

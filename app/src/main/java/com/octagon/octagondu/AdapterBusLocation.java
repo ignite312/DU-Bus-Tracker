@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +77,8 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 Intent intent = new Intent(view.getContext(), LocationView.class); // Use view.getContext() to get the context
                 intent.putExtra("LAT", latitude);
                 intent.putExtra("LON", longitude);
+                intent.putExtra("BUSNAME", location.getBusName());
+                intent.putExtra("BUSTIME", location.getBusTime());
                 view.getContext().startActivity(intent);
 
             }
@@ -104,7 +107,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
         private ImageView upvoteImageView;
         private ImageView downVoteImageView;
         private ImageView reportProfile;
-
+        private LinearLayout image;
         public LocationViewHolder(View itemView) {
             super(itemView);
             circleImageView = itemView.findViewById(R.id.photoLocation);
@@ -119,10 +122,20 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
             upvoteImageView = itemView.findViewById(R.id.upvoteLocation);
             downVoteImageView = itemView.findViewById(R.id.downVoteLocation);
             reportProfile = itemView.findViewById(R.id.reportProfileLocaton);
+            image = itemView.findViewById(R.id.image);
         }
 
         @SuppressLint("SetTextI18n")
         public void bind(InfoBusLocation infoBusLocation, int position) {
+            reportProfile.setOnClickListener(view -> {
+                showCustomToast("Will Added Soon!");
+            });
+            image.setOnClickListener(view -> {
+                Intent intent = new Intent(context, ProfileOthers.class);
+                intent.putExtra("UID", infoBusLocation.getRegNum());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // Add this line
+                context.startActivity(intent);
+            });
             DatabaseReference ViewUserInfoRef = FirebaseDatabase.getInstance().getReference("UserInfo").child(infoBusLocation.getRegNum());
             ViewUserInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
@@ -173,7 +186,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 }
             });
 
-            lastDate.setText("Date: " + infoBusLocation.getDate());
+            lastDate.setText("Date: " + convertDateToDay(infoBusLocation.getDate()));
 
             DatabaseReference DynamicChangeRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child("/Locations/").child(infoBusLocation.getRegNum());
 
@@ -183,7 +196,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         lastLocation.setText("Last Place: Near " + dataSnapshot.child("lastLocation").getValue());
-                        lastTime.setText("Last Seen: " + dataSnapshot.child("time").getValue());
+                        lastTime.setText("Last Seen: " + convertTimeToAMPM((String) dataSnapshot.child("time").getValue()));
                         countdown.setText(getTimeDifference(dataSnapshot.child("time").getValue() + " " + infoBusLocation.getDate(), "HH:mm:ss dd MMM yyyy"));
                     }
                 }
@@ -256,7 +269,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                                 update(-1, -1, infoBusLocation.getRegNum(), VoteCountRef);
                             } else if (_react.equals("01")) {
                                 UpDownSymbolRef.setValue("10");
-                                update(2, 2, infoBusLocation.getRegNum(), VoteCountRef);
+                                update(2, 1+3, infoBusLocation.getRegNum(), VoteCountRef);
                             }
                         } else {
                             UpDownSymbolRef.setValue("10");
@@ -280,17 +293,17 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                             String _react = String.valueOf(dataSnapshot.getValue());
                             if (_react.equals("00")) {
                                 UpDownSymbolRef.setValue("01");
-                                update(-1, -1, infoBusLocation.getRegNum(), VoteCountRef);
+                                update(-1, -3, infoBusLocation.getRegNum(), VoteCountRef);
                             } else if (_react.equals("10")) {
                                 UpDownSymbolRef.setValue("01");
-                                update(-2, -2, infoBusLocation.getRegNum(), VoteCountRef);
+                                update(-2, -1-3, infoBusLocation.getRegNum(), VoteCountRef);
                             } else if (_react.equals("01")) {
                                 UpDownSymbolRef.setValue("00");
-                                update(1, 1, infoBusLocation.getRegNum(), VoteCountRef);
+                                update(1, 3, infoBusLocation.getRegNum(), VoteCountRef);
                             }
                         } else {
                             UpDownSymbolRef.setValue("01");
-                            update(-1, -1, infoBusLocation.getRegNum(), VoteCountRef);
+                            update(-1, -3, infoBusLocation.getRegNum(), VoteCountRef);
                         }
                     }
 
@@ -402,5 +415,36 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
+    }
+    public String convertTimeToAMPM(String timeString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm a");
+
+            Date date = inputFormat.parse(timeString);
+
+            String timeInAMPM = outputFormat.format(date);
+
+            return timeInAMPM;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid Time Format";
+        }
+    }
+
+    public static String convertDateToDay(String dateString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE, MMM dd");
+
+            Date date = inputFormat.parse(dateString);
+
+            String formattedDate = outputFormat.format(date);
+
+            return formattedDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid Date Format";
+        }
     }
 }

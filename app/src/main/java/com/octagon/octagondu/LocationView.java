@@ -14,10 +14,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.appbar.MaterialToolbar;
 
 public class LocationView extends AppCompatActivity {
 
     private GoogleMap mMap;
+    String busName, busTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +27,12 @@ public class LocationView extends AppCompatActivity {
         setContentView(R.layout.activity_location_view);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+        busName = getIntent().getStringExtra("BUSNAME");
+        busTime = getIntent().getStringExtra("BUSTIME");
 
         /*Toolbar Setup*/
-//        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
-//        detailsBusToolbar.setTitle("Locations for "+busName);
+        MaterialToolbar detailsBusToolbar = findViewById(R.id.toolbar);
+        detailsBusToolbar.setTitle("Last Location of "+ busName + " " + busTime);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

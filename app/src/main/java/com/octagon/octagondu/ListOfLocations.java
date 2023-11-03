@@ -87,6 +87,7 @@ public class ListOfLocations extends AppCompatActivity {
                 Intent intent = new Intent(ListOfLocations.this, LocationShare.class);
                 intent.putExtra("BUSNAME", busName);
                 intent.putExtra("ID", ID);
+                intent.putExtra("BUSTIME", busTime);
                 startActivity(intent);
             }
         });

@@ -145,7 +145,7 @@ public class CreateNotice extends AppCompatActivity {
                                 Integer updatedValue = dataSnapshot.getValue(Integer.class);
                                 InfoNewsFeed post = new InfoNewsFeed(DUREGNUM, busType, helpType, title, desc, 0, time, date, "0", String.valueOf(updatedValue));
                                 FirebaseDatabase.getInstance().getReference("Notice/" + busName + "/Posts").child(String.valueOf(updatedValue)).setValue(post);
-                                update(2, DUREGNUM);
+                                update();
                                 showCustomToast("Posted");
                                 finish();
                             }
@@ -172,7 +172,7 @@ public class CreateNotice extends AppCompatActivity {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         return timeFormat.format(currentTime);
     }
-    private void update(int dcc, String UID) {
+    private void update() {
         DatabaseReference UserPostCount = FirebaseDatabase.getInstance().getReference("UserInfo/" + DUREGNUM + "/postCount");
         UserPostCount.runTransaction(new Transaction.Handler() {
             @Override
@@ -195,6 +195,7 @@ public class CreateNotice extends AppCompatActivity {
             }
         });
 
+        /*
         DatabaseReference ContributionCountRef = FirebaseDatabase.getInstance().getReference("UserInfo/" + UID + "/contributionCount");
         ContributionCountRef.runTransaction(new Transaction.Handler() {
             @Override
@@ -217,6 +218,7 @@ public class CreateNotice extends AppCompatActivity {
                 }
             }
         });
+        */
     }
     private void showCustomToast(String message) {
         LayoutInflater inflater = getLayoutInflater();

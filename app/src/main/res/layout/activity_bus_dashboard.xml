@@ -145,13 +145,13 @@
                     android:background="@color/dark_grey_color"
                     android:layout_height="1dp"/>
                 <TextView
-                    android:layout_marginTop="200dp"
+                    android:layout_marginTop="150dp"
                     android:id="@+id/noPostsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:text="No Posts Pending"
+                    android:text="No Posts Pending!"
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView

@@ -313,7 +313,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="No Posts" />
+                android:text="No Posts!" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/profileOthersRecycleView"

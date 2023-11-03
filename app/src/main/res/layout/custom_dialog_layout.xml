@@ -2,7 +2,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#5C8787"
+    android:background="#A5CCC8"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -15,7 +15,7 @@
         android:fontFamily="@font/montserrat_semibold"
         android:gravity="center"
         android:text="Approve"
-        android:textColor="@color/blue"
+        android:textColor="#3A3AC5"
         android:visibility="gone" />
 
     <View
@@ -35,7 +35,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="Delete"
-        android:textColor="#E81111" />
+        android:textColor="#CC3939" />
 
     <View
         android:id="@+id/deleteLine"
@@ -53,7 +53,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="Report"
-        android:textColor="#FF0000"
+        android:textColor="#B83737"
         android:visibility="gone" />
 
     <View
@@ -73,7 +73,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="Edit"
-        android:textColor="@color/blue" />
+        android:textColor="#3232D6" />
 
     <View
         android:id="@+id/updateLine"

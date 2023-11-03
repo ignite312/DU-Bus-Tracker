@@ -85,7 +85,7 @@
                     android:layout_marginRight="40dp"
                     android:layout_toLeftOf="@id/threeDotImageView"
                     android:background="@drawable/border_box"
-                    android:padding="5dp"
+                    android:padding="8dp"
                     android:visibility="gone">
 
                     <TextView
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_light"
                         android:text="Approved"
-                        android:textColor="@color/green"
+                        android:textColor="#27882B"
                         android:visibility="gone" />
                 </FrameLayout>
 

@@ -327,14 +327,13 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                 update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             } else if (_react.equals("01")) {
                                 finalUpDownSymbolRef.setValue("10");
-                                update(2, 2, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
+                                update(2, 1+3, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             }
                         } else {
                             finalUpDownSymbolRef.setValue("10");
                             update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                         }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e("Firebase", "Error fetching data", databaseError.toException());
@@ -362,17 +361,17 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                             String _react = String.valueOf(dataSnapshot.getValue());
                             if (_react.equals("00")) {
                                 finalUpDownSymbolRef.setValue("01");
-                                update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
+                                update(-1, -3, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             } else if (_react.equals("10")) {
                                 finalUpDownSymbolRef.setValue("01");
-                                update(-2, -2, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
+                                update(-2, -1-3, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             } else if (_react.equals("01")) {
                                 finalUpDownSymbolRef.setValue("00");
-                                update(1, 1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
+                                update(1, 3, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                             }
                         } else {
                             finalUpDownSymbolRef.setValue("01");
-                            update(-1, -1, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
+                            update(-1, -3, infoNewsFeed.getUserId(), infoNewsFeed.getPostId(), infoNewsFeed.getBusName());
                         }
                     }
 
@@ -474,7 +473,8 @@ public class AdapterNewsFeed extends RecyclerView.Adapter<AdapterNewsFeed.PostVi
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        showCustomToast("Post Deleted");
+                                                        if(flag.equals("ADN"))showCustomToast("Notice Deleted");
+                                                        else showCustomToast("Post Deleted");
                                                         removePost(infoNewsFeed);
 
                                                     } else {

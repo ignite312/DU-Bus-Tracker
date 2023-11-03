@@ -50,7 +50,7 @@
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true"
-            android:text=" ++Share Your Location!"
+            android:text="Share Your Location!"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
