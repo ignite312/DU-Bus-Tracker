@@ -155,6 +155,7 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
                             finish();
                         }
                     } else {
+                        databaseReference.child("busID").setValue(busID);
                         databaseReference.child("regNum").setValue(DUREGNUM);
                         databaseReference.child("lastLocation").setValue("Dhaka");
                         databaseReference.child("lat").setValue(Double.toString(latitude));

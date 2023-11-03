@@ -5,6 +5,7 @@ import static com.octagon.octagondu.MainActivity.DUREGNUM;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -159,8 +160,12 @@ public class FragmentProfileMy extends Fragment {
                 if (dataSnapshot.exists()) {
                     posts.setText((String.valueOf(dataSnapshot.child("postCount").getValue())));
                     contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
-                    if (Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) <= 0)
+                    if (Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) <= 0) {
                         contribution.setText((String.valueOf(dataSnapshot.child("contributionCount").getValue())));
+                        if(Integer.parseInt(String.valueOf(dataSnapshot.child("contributionCount").getValue())) < 0) {
+                            contribution.setTextColor(Color.parseColor("#FF0000"));
+                        }
+                    }
                     else
                         contribution.setText("+" + dataSnapshot.child("contributionCount").getValue());
                 } else {

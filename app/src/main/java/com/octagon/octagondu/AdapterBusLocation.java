@@ -188,7 +188,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
 
             lastDate.setText("Date: " + convertDateToDay(infoBusLocation.getDate()));
 
-            DatabaseReference DynamicChangeRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child("/Locations/").child(infoBusLocation.getRegNum());
+            DatabaseReference DynamicChangeRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusID()).child("/Locations/").child(infoBusLocation.getRegNum());
 
             DynamicChangeRef.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
@@ -207,7 +207,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 }
             });
 
-            DatabaseReference UpDownSymbolRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child("/LocationReactions/").child(infoBusLocation.getRegNum()).child(DUREGNUM);
+            DatabaseReference UpDownSymbolRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusID()).child("/LocationReactions/").child(infoBusLocation.getRegNum()).child(DUREGNUM);
             UpDownSymbolRef.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -233,7 +233,7 @@ public class AdapterBusLocation extends RecyclerView.Adapter<AdapterBusLocation.
                 }
             });
 
-            DatabaseReference VoteCountRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusTime()).child("/Locations/").child(infoBusLocation.getRegNum()).child("voteCountLocations");
+            DatabaseReference VoteCountRef = FirebaseDatabase.getInstance().getReference("Location").child(infoBusLocation.getDate()).child(infoBusLocation.getBusName()).child(infoBusLocation.getBusID()).child("/Locations/").child(infoBusLocation.getRegNum()).child("voteCountLocations");
             VoteCountRef.addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override

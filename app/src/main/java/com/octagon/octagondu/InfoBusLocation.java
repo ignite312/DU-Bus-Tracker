@@ -4,6 +4,7 @@ public class InfoBusLocation {
     private String regNum;
     private String busName;
     private String busTime;
+    private String busID;
     private String lastLocation;
     private  String time;
     private String date;
@@ -15,7 +16,15 @@ public class InfoBusLocation {
 
     }
 
-    public InfoBusLocation(String regNum, String busName, String busTime, String lastLocation, String time, String date, String voteCount, String lat, String lon) {
+    public String getBusID() {
+        return busID;
+    }
+
+    public void setBusID(String busID) {
+        this.busID = busID;
+    }
+
+    public InfoBusLocation(String busID, String regNum, String busName, String busTime, String lastLocation, String time, String date, String voteCount, String lat, String lon) {
         this.regNum = regNum;
         this.busName = busName;
         this.busTime = busTime;
@@ -25,6 +34,7 @@ public class InfoBusLocation {
         this.voteCount = voteCount;
         this.lat = lat;
         this.lon = lon;
+        this.busID = busID;
     }
 
     public String getBusName() {
