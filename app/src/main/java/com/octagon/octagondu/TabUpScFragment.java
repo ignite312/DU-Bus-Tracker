@@ -21,7 +21,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class TabUpScFragment extends Fragment {
@@ -50,7 +55,20 @@ public class TabUpScFragment extends Fragment {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Bus Schedule").child(busName);
-
+        Comparator<InfoBusDetails> timeComparator = new Comparator<InfoBusDetails>() {
+            @Override
+            public int compare(InfoBusDetails bus1, InfoBusDetails bus2) {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                try {
+                    Date time1 = sdf.parse(bus1.getTime());
+                    Date time2 = sdf.parse(bus2.getTime());
+                    return time1.compareTo(time2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+            }
+        };
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -68,6 +86,7 @@ public class TabUpScFragment extends Fragment {
                     if (busListUp.isEmpty()) {
                         showCustomToast("Up Schedule Empty");
                     } else {
+                        Collections.sort(busListUp, timeComparator);
                         busAdapterUp = new AdapterBusDetails(busListUp);
                         recyclerViewUp.setAdapter(busAdapterUp);
                         busAdapterUp.setFlag(flag);

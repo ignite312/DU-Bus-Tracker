@@ -28,7 +28,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class ListTimeForLocation extends AppCompatActivity {
@@ -74,7 +79,20 @@ public class ListTimeForLocation extends AppCompatActivity {
         recyclerViewUp.setLayoutManager(new LinearLayoutManager(this));
         busAdapterUp = new AdapterBusDetails(new ArrayList<>());
         recyclerViewUp.setAdapter(busAdapterUp);
-
+        Comparator<InfoBusDetails> timeComparator = new Comparator<InfoBusDetails>() {
+            @Override
+            public int compare(InfoBusDetails bus1, InfoBusDetails bus2) {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                try {
+                    Date time1 = sdf.parse(bus1.getTime());
+                    Date time2 = sdf.parse(bus2.getTime());
+                    return time1.compareTo(time2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+            }
+        };
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -96,6 +114,7 @@ public class ListTimeForLocation extends AppCompatActivity {
                         finish();
                     } else {
                         /*Recycler View Up*/
+                        Collections.sort(busListUp, timeComparator);
                         busAdapterUp = new AdapterBusDetails(busListUp);
                         recyclerViewUp.setAdapter(busAdapterUp);
                         busAdapterUp.setFlag("LC");
