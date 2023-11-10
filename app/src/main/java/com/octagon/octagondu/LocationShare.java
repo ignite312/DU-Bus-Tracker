@@ -166,12 +166,12 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
                         databaseReference.child("busTime").setValue(busTime);
                         databaseReference.child("voteCountLocations").setValue(0);
                         if (haversine(du_tsc_lat, du_tsc_long, latitude, longitude) <= 1.00) {
-                            databaseReference.child("lastLocation").setValue("Near TSC");
+                            databaseReference.child("lastLocation").setValue("TSC");
                             showToast("Reached DU");
                             finish();
                         }
                         if (haversine(du_cur_lat, du_cur_long, latitude, longitude) <= 1.00) {
-                            databaseReference.child("lastLocation").setValue("Near Curzon");
+                            databaseReference.child("lastLocation").setValue("Curzon");
                             showToast("Reached DU");
                             finishLocationSharing();
                         }
