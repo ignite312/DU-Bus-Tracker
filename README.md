@@ -1,5 +1,5 @@
 # DU BUS TRACKER
-Application Development Lab Project 2-2. A Bus Community for Dhaka University Students. Get the latest News, Schedule, and Locations
+Application Development Lab Project 2-2. A Bus Community for Dhaka University Students. Get the latest News, Schedule, and Locations!
 
 
 # Resources
