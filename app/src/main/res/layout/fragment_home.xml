@@ -1,30 +1,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <SearchView
+        android:background="@drawable/border_box"
+        android:id="@+id/searchView"
+        app:iconifiedByDefault="false"
+        android:queryHint="Search Bus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchView"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="100dp"
         android:fontFamily="@font/montserrat_semibold"
         android:gravity="center"
-        android:text="Hey,Welcome to Dhaka University Bus Community. Let's Make Our University Life Better Together!"
+        android:text="Welcome to the Dhaka University Bus Community! We're here to enhance our university life together. Feel free to share your live location while on the bus to help others stay updated on the latest whereabouts. Let's contribute to creating a more connected and supportive community!"
         android:textColor="@color/black"
-        android:textSize="25sp" />
+        android:textSize="18sp" />
+
     <LinearLayout
-        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
         <ImageView
             android:layout_width="100dp"
-            android:src="@drawable/app_logo"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp"
+            android:src="@drawable/app_logo" />
+
         <ImageView
             android:layout_width="100dp"
-            android:src="@drawable/logo_du"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp"
+            android:src="@drawable/logo_du" />
     </LinearLayout>
 </LinearLayout>

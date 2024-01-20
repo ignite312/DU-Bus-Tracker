@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="Backend and Frontend Developer" />
+                        android:text="Backend and Frontend" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -160,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="Backend Developer" />
+                        android:text="Backend" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -219,7 +219,7 @@
 
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_semibold"
-                        android:text="Frontend Developer" />
+                        android:text="Frontend" />
 
                     <TextView
                         android:layout_width="wrap_content"

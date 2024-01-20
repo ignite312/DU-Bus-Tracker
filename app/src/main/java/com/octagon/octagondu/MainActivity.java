@@ -23,6 +23,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -32,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     Button logout_button;
     public static String DUREGNUM = "0";
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentLocation = new FragmentLocation();
         fragmentProfileMy = new FragmentProfileMy();
         createPost = new CreatePost();
+
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         logout_button = findViewById(R.id.logout);
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             logout_button.setText("Logout");
         }
+
         logout_button.setOnClickListener(View -> {
             if (mAuth.getCurrentUser() != null) showCustomToast("Goodbye!, See you again!");
             FirebaseAuth.getInstance().signOut();
@@ -75,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(emailIntent);
                     } catch (ActivityNotFoundException e) {
                     }
-//                    showCustomToast("Will added later");
+                    showCustomToast("Will added later");
                 } else if (itemId == R.id.details) {
                     Intent intent = new Intent(getApplicationContext(), DeveloperDetails.class);
                     startActivity(intent);

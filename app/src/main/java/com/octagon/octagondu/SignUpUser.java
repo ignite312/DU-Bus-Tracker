@@ -1,9 +1,11 @@
 package com.octagon.octagondu;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,8 +36,10 @@ public class SignUpUser extends AppCompatActivity {
     private TextInputEditText editPassword;
     private Button signUpButton;
     private TextView alreadyHaveAccount;
-    String selectedImageResourceId;
+    private String selectedImageResourceId;
     private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,7 @@ public class SignUpUser extends AppCompatActivity {
         signUpButton = findViewById(R.id.signUpButton);
         alreadyHaveAccount = findViewById(R.id.alreadyHaveAccount);
         mAuth = FirebaseAuth.getInstance();
+        progressBar = findViewById(R.id.progressBar);
 
         Spinner imageSpinner = findViewById(R.id.spinnerProfilePic);
 
@@ -84,9 +89,9 @@ public class SignUpUser extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // Get the selected image resource ID
-                if(position < 10) {
+                if (position < 10) {
                     selectedImageResourceId = "ProfilePic/Boys/" + "b" + String.valueOf(position + 1) + ".png";
-                }else {
+                } else {
                     selectedImageResourceId = "ProfilePic/Girls/" + "g" + String.valueOf(position - 9) + ".png";
                 }
             }
@@ -107,26 +112,31 @@ public class SignUpUser extends AppCompatActivity {
                 String email = editEmailId.getText().toString();
                 String phoneNumber = editPhoneNumber.getText().toString();
                 String password = editPassword.getText().toString();
+                progressBar.setVisibility(View.VISIBLE);
                 if (!(fullName.isEmpty() || regNum.isEmpty() || department.isEmpty() || session.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || password.isEmpty())) {
-                                    mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignUpUser.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                                InfoUser user = new InfoUser(regNum, phoneNumber, fullName , department, session, "User", email, "", selectedImageResourceId, nickName, 0, 0);
-                                databaseReference.child("UserInfo").child(regNum).setValue(user);
-                                showToast("Signup successful!");
-                                FirebaseAuth.getInstance().signOut();
-                                Intent intent = new Intent(SignUpUser.this, SignInUser.class);
-                                startActivity(intent);
-                                finish();
-                                } else {
-                                    showToast("Error!");
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(SignUpUser.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                                        InfoUser user = new InfoUser(regNum, phoneNumber, fullName, department, session, "User", email, "", selectedImageResourceId, nickName, 0, 0);
+                                        databaseReference.child("UserInfo").child(regNum).setValue(user);
+                                        showToast("Signup successful!");
+                                        FirebaseAuth.getInstance().signOut();
+                                        progressBar.setVisibility(View.GONE);
+                                        Intent intent = new Intent(SignUpUser.this, SignInUser.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        showToast("Error!");
+                                        progressBar.setVisibility(View.GONE);
+                                    }
                                 }
-                            }
-                        });
+                            });
                 } else {
                     showToast("Something is Empty");
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -136,9 +146,11 @@ public class SignUpUser extends AppCompatActivity {
                 // Start the SignInUser activity
                 Intent intent = new Intent(SignUpUser.this, SignInUser.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
+
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".LoginAdmin">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -24,10 +24,10 @@
         android:padding="16dp">
 
         <ImageView
-            android:layout_marginTop="150dp"
             android:id="@+id/logo_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:layout_marginTop="150dp"
             android:src="@drawable/logo_du"
             android:transitionName="app_icon"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold"
             android:includeFontPadding="false"
-            android:text="@string/sign_in_to_continue"
+            android:text="Password Reset"
             android:textSize="18sp"
             android:transitionName="@string/sign_in_to_continue"
             app:layout_constraintStart_toStartOf="@+id/welcome_message"
@@ -63,90 +63,60 @@
             android:id="@+id/username"
             style="@style/CustomEditTextTheme"
             android:layout_marginTop="16dp"
-            android:hint="Institution Email"
-            app:errorEnabled="false"
+            android:hint="Enter your institution email address"
             android:transitionName="@string/username"
+            app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_in_message">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:id="@+id/editUsername"/>
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
-            style="@style/CustomEditTextTheme"
-            android:hint="@string/password"
-            app:errorEnabled="false"
-            android:transitionName="@string/password"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:id="@+id/editPassword"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <TextView
-            android:id="@+id/forgetPass"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_light"
-            android:includeFontPadding="false"
-            android:text="@string/forget_password"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:background="@drawable/selector_button_rectangle"
-            android:textColor="#FF0000"
-            android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:transitionName="@string/sign_in_to_continue"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/goButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:transitionName="@string/go"
-            android:id="@+id/goButton"
             android:includeFontPadding="false"
-            android:text="@string/go"
+            android:text="Send"
+            android:transitionName="@string/go"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
+            app:layout_constraintTop_toBottomOf="@+id/username" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="horizontal"
             android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="MissingConstraints">
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/guestLogin"
-                android:layout_gravity="left"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:text="Login as Guest"
                 android:transitionName="@string/new_user_sign_up"
                 app:layout_constraintHorizontal_bias="0.0" />
+
             <com.google.android.material.button.MaterialButton
-                android:layout_marginLeft="5dp"
-                android:id="@+id/signUpButton"
+                android:id="@+id/loginButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/new_user_sign_up"
+                android:layout_marginLeft="5dp"
+                android:text="BACK TO LOGIN"
                 android:transitionName="@string/new_user_sign_up"
                 app:layout_constraintHorizontal_bias="1.0" />
         </LinearLayout>
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

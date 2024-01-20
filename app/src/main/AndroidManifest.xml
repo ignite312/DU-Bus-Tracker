@@ -22,6 +22,10 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
+            android:name=".ForgetPass"
+            android:exported="false"
+            android:theme="@style/FullScreen"/>
+        <activity
             android:name=".CreateNotice"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
@@ -35,7 +39,8 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,7 +77,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCiZDfdN01zCLURmF-APohotLgaH3W-wLA" />
+            android:value="place your api key" />
 
         <activity
             android:name=".DeveloperDetails"

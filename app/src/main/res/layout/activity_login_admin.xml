@@ -35,7 +35,7 @@
         android:padding="15dp"
         tools:context=".LoginDeveloper" >
         <ImageView
-            android:background="@drawable/bg_with_border"
+            android:background="@drawable/border_box"
             android:layout_width="370dp"
             android:layout_height="225dp"
             android:src="@drawable/login"/>
@@ -44,6 +44,7 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:gravity="center"
+            android:textColor="#FF0000"
             android:fontFamily="@font/montserrat_bold"
             android:layout_marginTop="20dp"
             android:text="Contact The Developer For Login Access!"

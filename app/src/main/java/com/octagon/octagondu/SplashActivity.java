@@ -27,7 +27,6 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
         if(mAuth.getCurrentUser() == null) {
             new Handler().postDelayed(new Runnable() {
                 @Override

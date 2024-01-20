@@ -25,7 +25,15 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:padding="16dp">
-
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <ImageView
                 android:id="@+id/logo_image"
                 android:layout_width="150dp"
@@ -127,7 +135,6 @@
                     android:popupElevation="100dp"
                     tools:ignore="MissingConstraints" />
             </LinearLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/du_reg"
@@ -255,7 +262,6 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

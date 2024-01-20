@@ -271,7 +271,7 @@ public class LocationShare extends AppCompatActivity implements OnMapReadyCallba
     private void showConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Are you sure you are in " + busName + " " + busTime + "?");
-        builder.setMessage("Please be cautious when sharing your location. If you are not on the bus, kindly refrain from sharing your location. By sharing your location, you can help other students and contribute to our community.");
+        builder.setMessage("Please be cautious when sharing your location. If you are not on the bus, kindly refrain from sharing your location. By sharing your location, you can help other students and contribute to our community!");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

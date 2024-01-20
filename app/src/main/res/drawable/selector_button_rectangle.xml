@@ -3,7 +3,7 @@
     <!-- When pressed -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#688297" /> <!-- Change to the desired pressed color -->
+            <solid android:color="#DDD8D8" /> <!-- Change to the desired pressed color -->
         </shape>
     </item>
 </selector>

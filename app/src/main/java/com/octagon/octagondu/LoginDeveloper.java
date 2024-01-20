@@ -76,8 +76,8 @@ public class LoginDeveloper extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(getApplicationContext(), DataEntry.class);
-                intent.putExtra("busName", "HEHE");
-                intent.putExtra("flag", "DV");
+                intent.putExtra("BUSNAME", "HEHE");
+                intent.putExtra("FLAG", "DV");
                 startActivity(intent);
             }
         });

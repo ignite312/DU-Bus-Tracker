@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ public class SignInUser extends AppCompatActivity {
     FirebaseAuth mAuth;
     private Button goButton, signUpButton, guestLogin;
     private TextInputEditText editUserName, editPassword;
+    private ProgressBar progressBar;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class SignInUser extends AppCompatActivity {
         goButton = findViewById(R.id.goButton);
         signUpButton = findViewById(R.id.signUpButton);
         guestLogin  = findViewById(R.id.guestLogin);
+        progressBar = findViewById(R.id.progressBar);
+        textView = findViewById(R.id.forgetPass);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +67,15 @@ public class SignInUser extends AppCompatActivity {
                 Intent intent = new Intent(SignInUser.this, MainActivity.class);
                 intent.putExtra("DUREGNUM", "0");
                 startActivity(intent);
+                finish();
+            }
+        });
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInUser.this, ForgetPass.class);
+                startActivity(intent);
+                finish();
             }
         });
         goButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +91,7 @@ public class SignInUser extends AppCompatActivity {
                     showToast("Enter Password");
                     return;
                 }
+                progressBar.setVisibility(View.VISIBLE);
                 authenticate(email, password);
             }
         });
@@ -90,6 +105,7 @@ public class SignInUser extends AppCompatActivity {
                     getReg();
                 } else {
                     showToast("Authentication failed.");
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -127,6 +143,7 @@ public class SignInUser extends AppCompatActivity {
                                     intent.putExtra("DUREGNUM", String.valueOf(snapshot.child("regNum").getValue()));
                                     showToast("Hey " + snapshot.child("nickName").getValue());
                                     startActivity(intent);
+                                    progressBar.setVisibility(View.GONE);
                                     finish();
                                 }
                             }
