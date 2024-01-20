@@ -8,4 +8,4 @@ Application Development Lab Project 2-2. A Bus Community for Dhaka University St
 - **Video:** [Watch the demonstration video](https://youtu.be/xXtqRQ9cYj8)
 
 # UI
-![DU Bus Tracker](https://drive.google.com/file/d/1dwIrgTMJtxE-tfs6kPANwpGmxlmXMKYz/view?usp=share_link)
+![DU Bus Tracker](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.21.06%20PM.png)
