@@ -9,7 +9,6 @@ Application Development Lab Project 2-2. A Bus Community for Dhaka University St
 
 # UI
 ![DU Bus Tracker](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.21.06%20PM.png)
-![Screenshot 1](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%2010.45.11%20PM.png)
 ![Screenshot 2](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.21.13%20PM.png)
 ![Screenshot 3](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.21.19%20PM.png)
 ![Screenshot 4](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.21.25%20PM.png)
@@ -25,5 +24,6 @@ Application Development Lab Project 2-2. A Bus Community for Dhaka University St
 ![Screenshot 14](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.22.28%20PM.png)
 ![Screenshot 15](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.22.34%20PM.png)
 ![Screenshot 16](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.22.41%20PM.png)
-![Screenshot 17](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.22.47%20PM.png)
 ![Screenshot 18](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.22.53%20PM.png)
+![Screenshot 17](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%209.22.47%20PM.png)
+![Screenshot 1](https://github.com/ignite312/DU-Bus-Tracker/blob/main/UI/Screenshot%202024-01-20%20at%2010.45.11%20PM.png)
